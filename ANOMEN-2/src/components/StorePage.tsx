@@ -1,4 +1,5 @@
 import { ProductCard } from "./ProductCard";
+import { motion } from "motion/react";
 
 const products = [
   {
@@ -63,9 +64,14 @@ export function StorePage() {
       {/* Header - Editorial Layout */}
       <section className="px-4 md:px-12 lg:px-20 py-16 md:py-32 lg:py-48 relative border-b border-black">
         <div className="max-w-[1600px] mx-auto">
-          <div className="absolute top-8 left-4 md:top-20 md:left-12 lg:left-20 text-xs md:text-sm">
+          <motion.div
+            className="absolute top-8 left-4 md:top-20 md:left-12 lg:left-20 text-xs md:text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, delay: 0.3 }}
+          >
             P. 02
-          </div>
+          </motion.div>
 
           <h1 className="font-heading uppercase tracking-tight text-[12vw] md:text-[8vw] leading-[0.85] mb-8 md:mb-16 lg:mb-24">
             STORE
