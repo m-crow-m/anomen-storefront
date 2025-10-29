@@ -1,7 +1,7 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "./ui/sheet";
 import { X, Minus, Plus } from "lucide-react@0.487.0";
 import { useCart } from "../contexts/CartContext";
-import { SHOPIFY_HAS_CUSTOM_CREDENTIALS, SHOPIFY_USING_DEMO_STORE } from "../lib/shopify";
+import { SHOPIFY_USING_DEMO_STORE } from "../lib/shopify";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -22,7 +22,6 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   // Check if cart has mock products
   const hasMockProducts = cart.some(item => item.variantId.includes('mock-'));
   const usingDemoStore = SHOPIFY_USING_DEMO_STORE || hasMockProducts;
-  const hasCustomCredentials = SHOPIFY_HAS_CUSTOM_CREDENTIALS;
   const isCheckoutDisabled = isLoading || !checkoutUrl;
 
   const checkoutLabel = (() => {
@@ -114,11 +113,6 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 {!checkoutUrl && !usingDemoStore && (
                   <p className="text-xs text-center opacity-70">
                     Add your Shopify domain and Storefront API token to the Netlify environment to enable checkout.
-                  </p>
-                )}
-                {!hasCustomCredentials && (
-                  <p className="text-xs text-center opacity-70">
-                    Currently connected to the demo Shopify store. Update your environment variables to point to your live shop.
                   </p>
                 )}
               </div>

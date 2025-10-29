@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { createCheckout, updateCheckout, SHOPIFY_CONFIGURED } from '../lib/shopify';
+import { createCheckout, updateCheckout, SHOPIFY_CONFIGURED, SHOPIFY_DOMAIN } from '../lib/shopify';
 
 interface CartItem {
   variantId: string;
@@ -56,11 +56,48 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [cart]);
 
+  const buildCheckoutFallbackUrl = (items: CartItem[]) => {
+    const permalinkParts = items
+      .map((item) => {
+        const parts = item.variantId.split('/');
+        const variantToken = parts[parts.length - 1];
+        if (!variantToken || variantToken.includes('mock-')) {
+          return null;
+        }
+
+        const quantity = Number.isFinite(item.quantity) ? Math.max(1, Math.floor(item.quantity)) : 1;
+        return `${variantToken}:${quantity}`;
+      })
+      .filter((value): value is string => Boolean(value));
+
+    if (permalinkParts.length === 0) {
+      return null;
+    }
+
+    return `https://${SHOPIFY_DOMAIN}/cart/${permalinkParts.join(',')}`;
+  };
+
+  const applyFallbackCheckout = (items: CartItem[]) => {
+    const fallbackUrl = buildCheckoutFallbackUrl(items);
+
+    setCheckoutId(null);
+    localStorage.removeItem('anomen-checkout-id');
+
+    if (fallbackUrl) {
+      setCheckoutUrl(fallbackUrl);
+      localStorage.setItem('anomen-checkout-url', fallbackUrl);
+    } else {
+      setCheckoutUrl(null);
+      localStorage.removeItem('anomen-checkout-url');
+    }
+  };
+
   // Sync with Shopify checkout
   const syncWithShopify = async (items: CartItem[]) => {
     // Skip Shopify sync if environment variables are not set
     if (!SHOPIFY_CONFIGURED) {
-      console.log('Shopify credentials not configured. Cart will work in local-only mode.');
+      console.log('Shopify credentials not configured. Falling back to direct cart permalink checkout.');
+      applyFallbackCheckout(items);
       return;
     }
 
@@ -68,6 +105,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const hasMockProducts = items.some(item => item.variantId.includes('mock-'));
     if (hasMockProducts) {
       console.log('Cart contains mock products. Skipping Shopify sync.');
+      applyFallbackCheckout(items);
       return;
     }
 
@@ -96,6 +134,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error('Error syncing with Shopify:', error);
+      applyFallbackCheckout(items);
     } finally {
       setIsLoading(false);
     }
