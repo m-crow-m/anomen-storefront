@@ -58,15 +58,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Sync with Shopify checkout
   const syncWithShopify = async (items: CartItem[]) => {
-    // Skip Shopify sync if environment variables are not set
-    const domain = (import.meta.env?.VITE_SHOPIFY_STORE_DOMAIN as string) || '';
-    const token = (import.meta.env?.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as string) || '';
-    
-    if (!domain || domain.trim() === '' || !token || token.trim() === '') {
-      console.log('Shopify credentials not configured. Cart will work in local-only mode.');
-      return;
-    }
-
     // Skip sync for mock products (variant IDs starting with "gid://shopify/ProductVariant/mock-")
     const hasMockProducts = items.some(item => item.variantId.includes('mock-'));
     if (hasMockProducts) {
