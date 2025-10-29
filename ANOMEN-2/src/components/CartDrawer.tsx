@@ -1,6 +1,7 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "./ui/sheet";
 import { X, Minus, Plus } from "lucide-react@0.487.0";
 import { useCart } from "../contexts/CartContext";
+import { SHOPIFY_HAS_CUSTOM_CREDENTIALS, SHOPIFY_USING_DEMO_STORE } from "../lib/shopify";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -20,7 +21,16 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
   // Check if cart has mock products
   const hasMockProducts = cart.some(item => item.variantId.includes('mock-'));
-  const isCheckoutDisabled = isLoading || (!checkoutUrl && !hasMockProducts);
+  const usingDemoStore = SHOPIFY_USING_DEMO_STORE || hasMockProducts;
+  const hasCustomCredentials = SHOPIFY_HAS_CUSTOM_CREDENTIALS;
+  const isCheckoutDisabled = isLoading || !checkoutUrl;
+
+  const checkoutLabel = (() => {
+    if (isLoading) return 'LOADING...';
+    if (checkoutUrl) return 'CHECKOUT';
+    if (usingDemoStore) return 'CHECKOUT (DEMO MODE)';
+    return 'CONFIGURE SHOPIFY CHECKOUT';
+  })();
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -99,11 +109,16 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   disabled={isCheckoutDisabled}
                   className="w-full bg-white text-black py-4 font-heading uppercase tracking-wider text-sm hover:opacity-80 transition-opacity border border-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isLoading ? 'LOADING...' : checkoutUrl ? 'CHECKOUT' : 'CHECKOUT (DEMO MODE)'}
+                  {checkoutLabel}
                 </button>
-                {!checkoutUrl && hasMockProducts && (
+                {!checkoutUrl && !usingDemoStore && (
                   <p className="text-xs text-center opacity-70">
-                    Configure Shopify to enable real checkout
+                    Add your Shopify domain and Storefront API token to the Netlify environment to enable checkout.
+                  </p>
+                )}
+                {!hasCustomCredentials && (
+                  <p className="text-xs text-center opacity-70">
+                    Currently connected to the demo Shopify store. Update your environment variables to point to your live shop.
                   </p>
                 )}
               </div>

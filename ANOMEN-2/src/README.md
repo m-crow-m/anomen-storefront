@@ -38,6 +38,8 @@ The store connects to Shopify via Storefront API:
    - `VITE_SHOPIFY_STORE_DOMAIN=anomen-2.myshopify.com`
    - `VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN=6f9587abfe036bb79929b2614c91ff74`
 
+   Replace these demo credentials with your own Shopify store domain and Storefront API access token to enable production checkout links.
+
 ## Project Structure
 
 ```
