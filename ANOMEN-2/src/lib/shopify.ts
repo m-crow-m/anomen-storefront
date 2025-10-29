@@ -1,25 +1,43 @@
 // Shopify Storefront API Client
-// Fallback to hardcoded values if .env is not available
-const domain = (import.meta.env?.VITE_SHOPIFY_STORE_DOMAIN as string) || 'anomen-2.myshopify.com';
-const storefrontAccessToken = (import.meta.env?.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as string) || '6f9587abfe036bb79929b2614c91ff74';
+// Fallback to demo credentials if project-specific environment variables are not provided
+const DEMO_STORE_DOMAIN = 'anomen-2.myshopify.com';
+const DEMO_STOREFRONT_ACCESS_TOKEN = '6f9587abfe036bb79929b2614c91ff74';
 
-async function ShopifyData(query: string) {
-  // Check if credentials are configured
-  if (!domain || domain.trim() === '' || !storefrontAccessToken || storefrontAccessToken.trim() === '') {
-    throw new Error("Shopify credentials not configured. Please set VITE_SHOPIFY_STORE_DOMAIN and VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN in your .env file.");
+const FALLBACK_STORE_DOMAIN = DEMO_STORE_DOMAIN;
+const FALLBACK_STOREFRONT_ACCESS_TOKEN = DEMO_STOREFRONT_ACCESS_TOKEN;
+
+const envDomain = (import.meta.env?.VITE_SHOPIFY_STORE_DOMAIN as string | undefined)?.trim() ?? '';
+const envToken = (import.meta.env?.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as string | undefined)?.trim() ?? '';
+
+export const SHOPIFY_DOMAIN = (envDomain || FALLBACK_STORE_DOMAIN).trim();
+export const SHOPIFY_STOREFRONT_ACCESS_TOKEN = (envToken || FALLBACK_STOREFRONT_ACCESS_TOKEN).trim();
+
+const usingDefaultDemoStore =
+  SHOPIFY_DOMAIN === DEMO_STORE_DOMAIN && SHOPIFY_STOREFRONT_ACCESS_TOKEN === DEMO_STOREFRONT_ACCESS_TOKEN;
+
+export const SHOPIFY_HAS_CUSTOM_CREDENTIALS = !usingDefaultDemoStore;
+export const SHOPIFY_CONFIGURED = Boolean(SHOPIFY_DOMAIN && SHOPIFY_STOREFRONT_ACCESS_TOKEN);
+export const SHOPIFY_USING_DEMO_STORE = usingDefaultDemoStore;
+
+type GraphQLVariables = Record<string, unknown> | undefined;
+
+async function ShopifyData(query: string, variables?: GraphQLVariables) {
+  if (!SHOPIFY_CONFIGURED) {
+    throw new Error(
+      "Shopify credentials not configured. Please set VITE_SHOPIFY_STORE_DOMAIN and VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN in your .env file."
+    );
   }
 
-  const URL = `https://${domain}/api/2024-01/graphql.json`;
+  const URL = `https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`;
 
-  const options = {
-    endpoint: URL,
+  const options: RequestInit = {
     method: "POST",
     headers: {
-      "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
+      "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_ACCESS_TOKEN,
       "Accept": "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query, variables }),
   };
 
   try {
@@ -162,13 +180,8 @@ export async function getProduct(handle: string) {
 // Create checkout
 export async function createCheckout(lineItems: any[]) {
   const query = `
-    mutation {
-      checkoutCreate(input: {
-        lineItems: [${lineItems.map(item => `{
-          variantId: "${item.variantId}",
-          quantity: ${item.quantity}
-        }`).join(',')}]
-      }) {
+    mutation checkoutCreate($input: CheckoutCreateInput!) {
+      checkoutCreate(input: $input) {
         checkout {
           id
           webUrl
@@ -181,18 +194,38 @@ export async function createCheckout(lineItems: any[]) {
             }
           }
         }
+        checkoutUserErrors {
+          code
+          field
+          message
+        }
       }
     }
   `;
 
-  const response = await ShopifyData(query);
-  
-  if (!response.data || !response.data.checkoutCreate) {
+  const variables = {
+    input: {
+      lineItems: lineItems.map(item => ({
+        variantId: item.variantId,
+        quantity: item.quantity,
+      })),
+    },
+  };
+
+  const response = await ShopifyData(query, variables);
+  const checkoutCreate = response.data?.checkoutCreate;
+
+  if (!checkoutCreate) {
     throw new Error("Failed to create checkout");
   }
-  
-  const checkout = response.data.checkoutCreate.checkout;
-  
+
+  const userErrors = checkoutCreate.checkoutUserErrors;
+  if (userErrors && userErrors.length > 0) {
+    throw new Error(`Failed to create checkout: ${userErrors.map((error: any) => error.message).join('; ')}`);
+  }
+
+  const checkout = checkoutCreate.checkout;
+
   if (!checkout) {
     throw new Error("Checkout creation returned null");
   }
@@ -203,42 +236,51 @@ export async function createCheckout(lineItems: any[]) {
 // Update checkout
 export async function updateCheckout(checkoutId: string, lineItems: any[]) {
   const query = `
-    mutation {
-      checkoutLineItemsReplace(checkoutId: "${checkoutId}", lineItems: [${lineItems.map(item => `{
-        variantId: "${item.variantId}",
-        quantity: ${item.quantity}
-      }`).join(',')}]) {
+    mutation checkoutLineItemsReplace($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
+      checkoutLineItemsReplace(checkoutId: $checkoutId, lineItems: $lineItems) {
         checkout {
           id
           webUrl
           lineItems(first: 25) {
             edges {
               node {
-                id
                 title
                 quantity
-                variant {
-                  priceV2 {
-                    amount
-                    currencyCode
-                  }
-                }
               }
             }
           }
+        }
+        checkoutUserErrors {
+          code
+          field
+          message
         }
       }
     }
   `;
 
-  const response = await ShopifyData(query);
-  
-  if (!response.data || !response.data.checkoutLineItemsReplace) {
+  const variables = {
+    checkoutId,
+    lineItems: lineItems.map(item => ({
+      variantId: item.variantId,
+      quantity: item.quantity,
+    })),
+  };
+
+  const response = await ShopifyData(query, variables);
+  const checkoutLineItemsReplace = response.data?.checkoutLineItemsReplace;
+
+  if (!checkoutLineItemsReplace) {
     throw new Error("Failed to update checkout");
   }
-  
-  const checkout = response.data.checkoutLineItemsReplace.checkout;
-  
+
+  const userErrors = checkoutLineItemsReplace.checkoutUserErrors;
+  if (userErrors && userErrors.length > 0) {
+    throw new Error(`Failed to update checkout: ${userErrors.map((error: any) => error.message).join('; ')}`);
+  }
+
+  const checkout = checkoutLineItemsReplace.checkout;
+
   if (!checkout) {
     throw new Error("Checkout update returned null");
   }

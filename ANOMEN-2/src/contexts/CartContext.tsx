@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { createCheckout, updateCheckout } from '../lib/shopify';
+import { createCheckout, updateCheckout, SHOPIFY_CONFIGURED } from '../lib/shopify';
 
 interface CartItem {
   variantId: string;
@@ -59,10 +59,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Sync with Shopify checkout
   const syncWithShopify = async (items: CartItem[]) => {
     // Skip Shopify sync if environment variables are not set
-    const domain = (import.meta.env?.VITE_SHOPIFY_STORE_DOMAIN as string) || '';
-    const token = (import.meta.env?.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as string) || '';
-    
-    if (!domain || domain.trim() === '' || !token || token.trim() === '') {
+    if (!SHOPIFY_CONFIGURED) {
       console.log('Shopify credentials not configured. Cart will work in local-only mode.');
       return;
     }
@@ -86,12 +83,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
         checkout = await updateCheckout(checkoutId, lineItems);
       } else {
         checkout = await createCheckout(lineItems);
+      }
+
+      if (checkout?.id) {
         setCheckoutId(checkout.id);
         localStorage.setItem('anomen-checkout-id', checkout.id);
       }
 
-      setCheckoutUrl(checkout.webUrl);
-      localStorage.setItem('anomen-checkout-url', checkout.webUrl);
+      if (checkout?.webUrl) {
+        setCheckoutUrl(checkout.webUrl);
+        localStorage.setItem('anomen-checkout-url', checkout.webUrl);
+      }
     } catch (error) {
       console.error('Error syncing with Shopify:', error);
     } finally {

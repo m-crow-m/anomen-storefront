@@ -38,6 +38,10 @@ The store connects to Shopify via Storefront API:
    - `VITE_SHOPIFY_STORE_DOMAIN=anomen-2.myshopify.com`
    - `VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN=6f9587abfe036bb79929b2614c91ff74`
 
+   Replace these demo credentials with your own Shopify store domain and Storefront API access token to enable production checkout links.
+
+   > **Tip:** if you prefer to bake your live credentials directly into the build (for example while experimenting locally), you can edit `DEMO_STORE_DOMAIN` and `DEMO_STOREFRONT_ACCESS_TOKEN` inside `src/lib/shopify.ts`. Updating those defaults now counts as a “custom” configuration so the cart no longer displays the demo warning when you do.
+
 ## Project Structure
 
 ```
