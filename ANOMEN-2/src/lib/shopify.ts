@@ -1,7 +1,10 @@
 // Shopify Storefront API Client
 // Fallback to demo credentials if project-specific environment variables are not provided
-const FALLBACK_STORE_DOMAIN = 'anomen-2.myshopify.com';
-const FALLBACK_STOREFRONT_ACCESS_TOKEN = '6f9587abfe036bb79929b2614c91ff74';
+const DEMO_STORE_DOMAIN = 'anomen-2.myshopify.com';
+const DEMO_STOREFRONT_ACCESS_TOKEN = '6f9587abfe036bb79929b2614c91ff74';
+
+const FALLBACK_STORE_DOMAIN = DEMO_STORE_DOMAIN;
+const FALLBACK_STOREFRONT_ACCESS_TOKEN = DEMO_STOREFRONT_ACCESS_TOKEN;
 
 const envDomain = (import.meta.env?.VITE_SHOPIFY_STORE_DOMAIN as string | undefined)?.trim() ?? '';
 const envToken = (import.meta.env?.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as string | undefined)?.trim() ?? '';
@@ -9,12 +12,12 @@ const envToken = (import.meta.env?.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as strin
 export const SHOPIFY_DOMAIN = (envDomain || FALLBACK_STORE_DOMAIN).trim();
 export const SHOPIFY_STOREFRONT_ACCESS_TOKEN = (envToken || FALLBACK_STOREFRONT_ACCESS_TOKEN).trim();
 
-export const SHOPIFY_HAS_CUSTOM_CREDENTIALS = Boolean(envDomain && envToken);
+const usingDefaultDemoStore =
+  SHOPIFY_DOMAIN === DEMO_STORE_DOMAIN && SHOPIFY_STOREFRONT_ACCESS_TOKEN === DEMO_STOREFRONT_ACCESS_TOKEN;
+
+export const SHOPIFY_HAS_CUSTOM_CREDENTIALS = !usingDefaultDemoStore;
 export const SHOPIFY_CONFIGURED = Boolean(SHOPIFY_DOMAIN && SHOPIFY_STOREFRONT_ACCESS_TOKEN);
-export const SHOPIFY_USING_DEMO_STORE =
-  !SHOPIFY_HAS_CUSTOM_CREDENTIALS &&
-  SHOPIFY_DOMAIN === FALLBACK_STORE_DOMAIN &&
-  SHOPIFY_STOREFRONT_ACCESS_TOKEN === FALLBACK_STOREFRONT_ACCESS_TOKEN;
+export const SHOPIFY_USING_DEMO_STORE = usingDefaultDemoStore;
 
 type GraphQLVariables = Record<string, unknown> | undefined;
 
