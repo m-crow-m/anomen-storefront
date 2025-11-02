@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import { PortfolioCard } from "./PortfolioCard";
 import { ProjectDetailDialog } from "./ProjectDetailDialog";
 import { motion } from "motion/react";
+import metalMagazine1 from "../assets/Metal_Magazine_1.pdf";
+import metalMagazine2 from "../assets/Metal_Magazine_2.pdf";
+import metalMagazine3 from "../assets/Metal_Magazine_3.pdf";
+import metalMagazine4 from "../assets/Metal_Magazine_4.pdf";
 
 const portfolioProjects = [
   {
     id: 1,
-    title: "NOISE 01",
-    description: "Exploring the boundaries between form and disruption through geometric abstraction.",
-    imageUrl: "https://images.unsplash.com/photo-1583058623568-cc203df63da1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGdlb21ldHJpYyUyMGJsYWNrJTIwd2hpdGV8ZW58MXx8fHwxNzYxMjYzMzE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    images: [
-      "https://images.unsplash.com/photo-1583058623568-cc203df63da1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGdlb21ldHJpYyUyMGJsYWNrJTIwd2hpdGV8ZW58MXx8fHwxNzYxMjYzMzE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "https://images.unsplash.com/photo-1612565894226-2515de67df0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMG1pbmltYWwlMjBkZXNpZ258ZW58MXx8fHwxNzYxMjYzNjU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "https://images.unsplash.com/photo-1729653809906-010c303eb11e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnZW9tZXRyaWMlMjBwYXR0ZXJuJTIwbWluaW1hbHxlbnwxfHx8fDE3NjExODQxOTd8MA&ixlib=rb-4.1.0&q=80&w=1080"
-    ],
-    details: "A study in geometric abstraction that challenges traditional notions of order and chaos. This project explores how noise can be structured, how disruption can be intentional, and how form emerges from seeming formlessness.\n\nCompleted in collaboration with Studio Null, 2024."
+    title: "Room Magazine",
+    description: "ergonomic layout design",
+    imageUrl: metalMagazine1,
+    images: [metalMagazine1, metalMagazine2, metalMagazine3, metalMagazine4],
+    details: "Editorial spread designed for ROOM Magazine 2025"
   },
   {
     id: 2,
