@@ -29,6 +29,8 @@ const portfolioProjects = [
     description: "Poster & logo design for Neon Groove Dance Studio, 2025.",
     imageUrl: brandingInsta3,
     images: [brandingBillboard, brandingInsta1, brandingInsta2, brandingInsta3, brandingPoster],
+    imageUrl: brandingPoster,
+    images: [brandingPoster, brandingBillboard, brandingInsta1, brandingInsta2, brandingInsta3],
     details: "Poster and logo design for \"neon groove dance studio\" 2025"
   },
   {
