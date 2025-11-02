@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { PortfolioCard } from "./PortfolioCard";
 import { ProjectDetailDialog } from "./ProjectDetailDialog";
-import { motion } from "motion/react";
-import metalMagazine1 from "../assets/Metal_Magazine_1.pdf";
-import metalMagazine2 from "../assets/Metal_Magazine_2.pdf";
-import metalMagazine3 from "../assets/Metal_Magazine_3.pdf";
-import metalMagazine4 from "../assets/Metal_Magazine_4.pdf";
+import { motion } from "framer-motion";
+import metalMagazine1 from "../assets/Metal_Magazine_JIC.jpg";
+import metalMagazine2 from "../assets/Metal_Magazine_JIC2.jpg";
+import metalMagazine3 from "../assets/Metal_Magazine_JIC3.jpg";
+import metalMagazine4 from "../assets/Metal_Magazine_JIC4.jpg";
+import metalMagazine5 from "../assets/Metal_Magazine_JIC5.jpg";
+import metalMagazine6 from "../assets/Metal_Magazine_JIC6.jpg";
 
 const portfolioProjects = [
   {
@@ -13,7 +15,7 @@ const portfolioProjects = [
     title: "Room Magazine",
     description: "ergonomic layout design",
     imageUrl: metalMagazine1,
-    images: [metalMagazine1, metalMagazine2, metalMagazine3, metalMagazine4],
+    images: [metalMagazine1, metalMagazine2, metalMagazine3, metalMagazine4, metalMagazine5, metalMagazine6],
     details: "Editorial spread designed for ROOM Magazine 2025"
   },
   {
