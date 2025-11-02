@@ -26,7 +26,7 @@ export function ProductCard({ name, price, imageUrl, productId, productHandle }:
         <ImageWithFallback
           src={imageUrl}
           alt={name}
-          className="w-full h-full object-cover grayscale"
+          className="w-full h-full object-cover"
         />
       </div>
       

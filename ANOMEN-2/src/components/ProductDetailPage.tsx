@@ -156,7 +156,7 @@ export function ProductDetailPage() {
             <ImageWithFallback
               src={product.images.edges[currentImageIndex]?.node.url || ""}
               alt={product.title}
-              className="w-full h-full object-cover grayscale"
+              className="w-full h-full object-cover"
             />
           </div>
 
@@ -174,7 +174,7 @@ export function ProductDetailPage() {
                   <ImageWithFallback
                     src={image.node.url}
                     alt={`${product.title} view ${index + 1}`}
-                    className="w-full h-full object-cover grayscale"
+                    className="w-full h-full object-cover"
                   />
                 </button>
               ))}
