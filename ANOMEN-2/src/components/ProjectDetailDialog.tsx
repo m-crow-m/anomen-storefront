@@ -96,12 +96,9 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
           {/* Project Info Sidebar - Smaller text, white on dark */}
           <div className="lg:w-80 xl:w-96 overflow-y-auto space-y-4 md:space-y-6 text-white max-h-[40vh] lg:max-h-none">
             <div>
-              <h2 className="font-heading uppercase tracking-wider text-base md:text-lg lg:text-xl mb-2 md:mb-3">
+              <h2 className="font-heading uppercase tracking-wider text-base md:text-lg lg:text-xl">
                 {project.title}
               </h2>
-              <p className="text-xs md:text-sm leading-relaxed opacity-90">
-                {project.description}
-              </p>
             </div>
 
             <div className="border-t border-white/20 pt-4 md:pt-6">
