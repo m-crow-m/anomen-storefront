@@ -28,50 +28,8 @@ const portfolioProjects = [
     title: "BRANDING 1",
     description: "Poster & logo design for Neon Groove Dance Studio, 2025.",
     imageUrl: brandingInsta3,
-    images: [brandingBillboard, brandingInsta1, brandingInsta2, brandingInsta3, brandingPoster],
-    imageUrl: brandingPoster,
-    images: [brandingPoster, brandingBillboard, brandingInsta1, brandingInsta2, brandingInsta3],
+    images: [brandingInsta3, brandingBillboard, brandingInsta1, brandingInsta2, brandingPoster],
     details: "Poster and logo design for \"neon groove dance studio\" 2025"
-  },
-  {
-    id: 3,
-    title: "CONCRETE MEDITATION",
-    description: "Material presence and absence in dialogue with spatial memory.",
-    imageUrl: "https://images.unsplash.com/photo-1630950823804-a3df06166896?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jcmV0ZSUyMHN0cnVjdHVyZSUyMG1pbmltYWx8ZW58MXx8fHwxNzYxMjYzMzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    images: [
-      "https://images.unsplash.com/photo-1630950823804-a3df06166896?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jcmV0ZSUyMHN0cnVjdHVyZSUyMG1pbmltYWx8ZW58MXx8fHwxNzYxMjYzMzIwfDA&ixlib=rb-4.1.0&q=80&w=1080"
-    ],
-    details: "This installation explores the paradox of concrete as both monument and ruin. By isolating fragments of larger structures, the work invites contemplation on impermanence, weight, and the poetry found in industrial materials.\n\nInstallation view, 2024."
-  },
-  {
-    id: 4,
-    title: "PATTERN STUDY",
-    description: "Repetition as transformation, texture as information.",
-    imageUrl: "https://images.unsplash.com/photo-1547787991-50d8eb41e2ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibGFjayUyMHdoaXRlJTIwcGF0dGVybiUyMHRleHR1cmV8ZW58MXx8fHwxNzYxMjYzMzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    images: [
-      "https://images.unsplash.com/photo-1547787991-50d8eb41e2ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibGFjayUyMHdoaXRlJTIwcGF0dGVybiUyMHRleHR1cmV8ZW58MXx8fHwxNzYxMjYzMzIwfDA&ixlib=rb-4.1.0&q=80&w=1080"
-    ],
-    details: "An ongoing exploration of how repetition creates meaning and how pattern degrades into texture. Each iteration slightly shifts the rules, documenting the moment when order becomes ornament.\n\nDigital series, 2023-present."
-  },
-  {
-    id: 5,
-    title: "TYPOGRAPHIC ECHO",
-    description: "Letters as objects, words as architecture, meaning as form.",
-    imageUrl: "https://images.unsplash.com/photo-1617050318658-a9a3175e34cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0eXBvZ3JhcGh5JTIwZGVzaWduJTIwYmxhY2slMjB3aGl0ZXxlbnwxfHx8fDE3NjEyNjMzMjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    images: [
-      "https://images.unsplash.com/photo-1617050318658-a9a3175e34cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0eXBvZ3JhcGh5JTIwZGVzaWduJTIwYmxhY2slMjB3aGl0ZXxlbnwxfHx8fDE3NjEyNjMzMjB8MA&ixlib=rb-4.1.0&q=80&w=1080"
-    ],
-    details: "Typography reimagined as sculptural form. This project treats letterforms as architectural elements, exploring their weight, their negative space, and their capacity to occupy both physical and conceptual territory.\n\nCommissioned work, 2024."
-  },
-  {
-    id: 6,
-    title: "MINIMAL SCULPTURE",
-    description: "Three-dimensional studies in reduction and spatial tension.",
-    imageUrl: "https://images.unsplash.com/photo-1577703025450-4a543d6b4976?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsJTIwc2N1bHB0dXJlJTIwYmxhY2slMjB3aGl0ZXxlbnwxfHx8fDE3NjEyNjMzMjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    images: [
-      "https://images.unsplash.com/photo-1577703025450-4a543d6b4976?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsJTIwc2N1bHB0dXJlJTIwYmxhY2slMjB3aGl0ZXxlbnwxfHx8fDE3NjEyNjMzMjF8MA&ixlib=rb-4.1.0&q=80&w=1080"
-    ],
-    details: "A series of minimal sculptures that investigate the relationship between object and void, presence and absence. Each piece is reduced to its essential gesture, hovering at the threshold of recognition.\n\nSteel and concrete series, 2023."
   }
 ];
 
@@ -217,9 +175,9 @@ export function HomePage() {
             </div>
           </div>
 
-          {/* Projects 2 & 3 - Side by Side */}
+          {/* Project 2 */}
           <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-5 md:col-start-3">
+            <div className="col-span-12 md:col-span-6 md:col-start-4">
               <div className="text-xs md:text-sm mb-4 md:mb-8">
                 <div>P. 29</div>
                 <div className="mt-2">02</div>
@@ -229,62 +187,6 @@ export function HomePage() {
                 description={portfolioProjects[1].description}
                 imageUrl={portfolioProjects[1].imageUrl}
                 onClick={() => handleProjectClick(portfolioProjects[1])}
-              />
-            </div>
-            <div className="col-span-12 md:col-span-4 mt-12 md:mt-24 lg:mt-48">
-              <div className="text-xs md:text-sm mb-4 md:mb-8">
-                <div>P. 59</div>
-                <div className="mt-2">03</div>
-              </div>
-              <PortfolioCard
-                title={portfolioProjects[2].title}
-                description={portfolioProjects[2].description}
-                imageUrl={portfolioProjects[2].imageUrl}
-                onClick={() => handleProjectClick(portfolioProjects[2])}
-              />
-            </div>
-          </div>
-
-          {/* Project 4 - Large with text overlay concept */}
-          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8 relative">
-            <div className="col-span-12 md:col-span-7 md:col-start-4">
-              <div className="text-xs md:text-sm mb-4 md:mb-8">
-                <div>P. 85</div>
-                <div className="mt-2">04</div>
-              </div>
-              <PortfolioCard
-                title={portfolioProjects[3].title}
-                description={portfolioProjects[3].description}
-                imageUrl={portfolioProjects[3].imageUrl}
-                onClick={() => handleProjectClick(portfolioProjects[3])}
-              />
-            </div>
-          </div>
-
-          {/* Projects 5 & 6 - Offset */}
-          <div className="grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-4 md:col-start-2">
-              <div className="text-xs md:text-sm mb-4 md:mb-8">
-                <div>P. 131</div>
-                <div className="mt-2">05</div>
-              </div>
-              <PortfolioCard
-                title={portfolioProjects[4].title}
-                description={portfolioProjects[4].description}
-                imageUrl={portfolioProjects[4].imageUrl}
-                onClick={() => handleProjectClick(portfolioProjects[4])}
-              />
-            </div>
-            <div className="col-span-12 md:col-span-5 mt-12 md:mt-32 lg:mt-64">
-              <div className="text-xs md:text-sm mb-4 md:mb-8">
-                <div>P. 155</div>
-                <div className="mt-2">06</div>
-              </div>
-              <PortfolioCard
-                title={portfolioProjects[5].title}
-                description={portfolioProjects[5].description}
-                imageUrl={portfolioProjects[5].imageUrl}
-                onClick={() => handleProjectClick(portfolioProjects[5])}
               />
             </div>
           </div>
