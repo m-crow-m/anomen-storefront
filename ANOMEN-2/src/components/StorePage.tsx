@@ -1,5 +1,5 @@
 import { ProductCard } from "./ProductCard";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 const products = [
   {

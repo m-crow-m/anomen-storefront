@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ProductCard } from "./ProductCard";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { getAllProducts } from "../lib/shopify";
 
 interface ShopifyProduct {
