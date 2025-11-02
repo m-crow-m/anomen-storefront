@@ -62,7 +62,7 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
             <ImageWithFallback
               src={project.images[currentImageIndex]}
               alt={`${project.title} - Image ${currentImageIndex + 1}`}
-              className="max-w-full max-h-full object-contain grayscale"
+              className="max-w-full max-h-full object-contain"
             />
 
             {/* Navigation Arrows */}

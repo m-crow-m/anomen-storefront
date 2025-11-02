@@ -66,6 +66,8 @@
     --color-gray-100: oklch(.967 .003 264.542);
     --color-black: #000;
     --color-white: #fff;
+    --cursor-default: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='6' cy='6' r='5' fill='%23000'/%3E%3Ccircle cx='6' cy='6' r='2' fill='%23fff'/%3E%3C/svg%3E") 6 6, auto;
+    --cursor-active: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='6' cy='6' r='5' fill='%23e10600'/%3E%3Ccircle cx='6' cy='6' r='2' fill='%23fff'/%3E%3C/svg%3E") 6 6, auto;
     --spacing: .25rem;
     --container-xs: 20rem;
     --container-sm: 24rem;
@@ -135,6 +137,31 @@
 
   body {
     line-height: inherit;
+    cursor: var(--cursor-default);
+  }
+
+  body.cursor-active {
+    cursor: var(--cursor-active);
+  }
+
+  a,
+  button,
+  [role="button"],
+  .cursor-pointer {
+    cursor: var(--cursor-default);
+  }
+
+  body.cursor-active a,
+  body.cursor-active button,
+  body.cursor-active [role="button"],
+  body.cursor-active .cursor-pointer {
+    cursor: var(--cursor-active);
+  }
+
+  input,
+  textarea,
+  select {
+    cursor: text;
   }
 
   hr {

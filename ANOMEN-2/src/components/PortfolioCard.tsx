@@ -14,7 +14,7 @@ export function PortfolioCard({ title, description, imageUrl, onClick }: Portfol
         <ImageWithFallback
           src={imageUrl}
           alt={title}
-          className="w-full h-full object-cover grayscale"
+          className="w-full h-full object-cover"
         />
       </div>
 
