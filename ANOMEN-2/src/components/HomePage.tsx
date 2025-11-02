@@ -8,6 +8,11 @@ import metalMagazine3 from "../assets/Metal_Magazine_JIC3.jpg";
 import metalMagazine4 from "../assets/Metal_Magazine_JIC4.jpg";
 import metalMagazine5 from "../assets/Metal_Magazine_JIC5.jpg";
 import metalMagazine6 from "../assets/Metal_Magazine_JIC6.jpg";
+import brandingPoster from "../assets/NG.jpg";
+import brandingBillboard from "../assets/billboard_neon2.png";
+import brandingInsta1 from "../assets/insta-post_neon.png";
+import brandingInsta2 from "../assets/insta-post3_neon.png";
+import brandingInsta3 from "../assets/insta-postcool_neon.png";
 
 const portfolioProjects = [
   {
@@ -20,14 +25,11 @@ const portfolioProjects = [
   },
   {
     id: 2,
-    title: "BRUTALIST ECHOES",
-    description: "Architecture as a language of pure structure, stripped to essential elements.",
-    imageUrl: "https://images.unsplash.com/photo-1668503029155-815b248219ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsJTIwYXJjaGl0ZWN0dXJlJTIwYnJ1dGFsaXN0fGVufDF8fHx8MTc2MTI2MzMxOXww&ixlib=rb-4.1.0&q=80&w=1080",
-    images: [
-      "https://images.unsplash.com/photo-1668503029155-815b248219ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsJTIwYXJjaGl0ZWN0dXJlJTIwYnJ1dGFsaXN0fGVufDF8fHx8MTc2MTI2MzMxOXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "https://images.unsplash.com/photo-1759882609577-e78a307beed4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxicnV0YWxpc3QlMjBhcmNoaXRlY3R1cmUlMjBkZXRhaWx8ZW58MXx8fHwxNzYxMjYzNjU1fDA&ixlib=rb-4.1.0&q=80&w=1080"
-    ],
-    details: "An architectural documentation series that examines brutalist structures not as buildings, but as language. Each photograph captures moments where concrete speaks—through shadow, through void, through unapologetic mass.\n\nPhotography series, 2023-2024."
+    title: "BRANDING 1",
+    description: "Poster & logo design for Neon Groove Dance Studio, 2025.",
+    imageUrl: brandingPoster,
+    images: [brandingPoster, brandingBillboard, brandingInsta1, brandingInsta2, brandingInsta3],
+    details: "Poster and logo design for \"neon groove dance studio\" 2025"
   },
   {
     id: 3,
