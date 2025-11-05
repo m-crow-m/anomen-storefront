@@ -4,6 +4,7 @@ import { Navigation } from "./components/Navigation";
 import { HomePage } from "./components/HomePage";
 import { StorePageShopify } from "./components/StorePageShopify";
 import { ProductDetailPage } from "./components/ProductDetailPage";
+import { ContactPage } from "./components/ContactPage";
 import { CartDrawer } from "./components/CartDrawer";
 import { CartProvider } from "./contexts/CartContext";
 
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/store" element={<StorePageShopify />} />
             <Route path="/product/:productHandle" element={<ProductDetailPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
 
