@@ -25,6 +25,13 @@ export function Navigation({ onCartClick }: NavigationProps) {
             STORE
           </Link>
 
+          <Link
+            to="/contact"
+            className="uppercase tracking-wider hover:text-red-600 transition-colors"
+          >
+            CONTACT
+          </Link>
+
           <button
             onClick={onCartClick}
             className="uppercase tracking-wider hover:text-red-600 transition-colors flex items-center gap-2 md:gap-3 relative"
