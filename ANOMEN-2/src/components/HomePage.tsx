@@ -38,6 +38,14 @@ export function HomePage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [strobeState, setStrobeState] = useState(0);
   const [loopCount, setLoopCount] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateIsMobile = () => setIsMobile(window.innerWidth < 768);
+    updateIsMobile();
+    window.addEventListener("resize", updateIsMobile);
+    return () => window.removeEventListener("resize", updateIsMobile);
+  }, []);
 
   useEffect(() => {
     let currentIndex = 0;
@@ -118,8 +126,8 @@ export function HomePage() {
   return (
     <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32 bg-white">
       {/* Hero Section - Editorial Layout */}
-      <section className="px-4 md:px-8 py-8 md:py-12 lg:py-16 relative overflow-hidden">
-        <div className="max-w-[1600px] mx-auto">
+      <section className="relative overflow-hidden px-4 md:px-8 py-8 md:py-12 lg:py-16 min-h-[calc(100vh-4rem)] md:min-h-0 flex flex-col">
+        <div className="max-w-[1600px] mx-auto flex-1 flex flex-col">
           <motion.div
             className="absolute top-4 left-4 md:top-8 md:left-8 text-xs md:text-sm"
             initial={{ opacity: 0 }}
@@ -129,15 +137,15 @@ export function HomePage() {
             P. 01
           </motion.div>
 
-          <div className="flex justify-center items-center">
+          <div className="flex flex-1 items-center justify-center">
             <h1
-              className="font-heading uppercase tracking-[-0.15em] text-[35vw] md:text-[38vw] leading-[0.75] select-none"
+              className="font-heading uppercase tracking-[0.08em] md:tracking-[-0.15em] text-[58vh] md:text-[38vw] leading-[0.8] md:leading-[0.75] select-none [writing-mode:vertical-rl] md:[writing-mode:horizontal-tb]"
               style={{
                 WebkitTextStroke: currentStrobe.fill === "#ffffff" ? "2px black" : "4px black",
                 textStroke: currentStrobe.fill === "#ffffff" ? "2px black" : "4px black",
                 color: currentStrobe.fill,
                 WebkitTextFillColor: currentStrobe.fill,
-                transform: `rotateX(${currentStrobe.rotate}deg) scaleX(0.75)`,
+                transform: `rotateX(${currentStrobe.rotate}deg) scaleX(${isMobile ? 1.25 : 0.75})`,
                 transformStyle: "preserve-3d",
                 transformOrigin: "center center",
               }}
@@ -146,12 +154,21 @@ export function HomePage() {
             </h1>
           </div>
 
-          <div className="mt-12 md:mt-24 lg:mt-32 text-xs md:text-sm max-w-xs">
+          <div className="mt-6 md:mt-24 lg:mt-32 text-xs md:text-sm max-w-xs md:max-w-none md:w-auto">
             A COLLECTION OF WORK<br />
             EXPLORING STRUCTURE,<br />
             MATERIAL, AND FORM
           </div>
         </div>
+
+        <motion.div
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.4em] uppercase text-black/40 md:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0.6, 0.2, 0.6] }}
+          transition={{ duration: 2.8, repeat: Infinity, repeatType: "loop" }}
+        >
+          scroll down for portfolio
+        </motion.div>
       </section>
 
       {/* Portfolio Grid - Editorial Asymmetric Layout */}
