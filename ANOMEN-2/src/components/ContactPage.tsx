@@ -27,16 +27,16 @@ export function ContactPage() {
             </h1>
             <p className="mt-6 max-w-3xl text-sm md:text-base leading-relaxed text-neutral-700">
               Share the vision for your next project and I'll reach out within two business
-              days. Include as many details as you can—timeline, deliverables, tone, or any
+              days. Include as many details as you can - timeline, deliverables, tone, or any
               references that are inspiring you.
             </p>
           </header>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-12 lg:gap-16 max-w-3xl lg:max-w-none">
             <form
               method="POST"
               action={formEndpoint}
-              className="space-y-6 border border-black p-6 md:p-10 bg-white shadow-[8px_8px_0_0_rgba(0,0,0,1)]"
+              className="space-y-6 border border-black p-6 md:p-10 bg-white shadow-[8px_8px_0_0_rgba(0,0,0,1)] max-w-xl"
             >
               <input type="hidden" name="_subject" value="New inquiry from ANOMEN" />
               <input type="hidden" name="_captcha" value="false" />
