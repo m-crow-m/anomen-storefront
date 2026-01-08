@@ -17,7 +17,7 @@ export function ContactPage() {
   return (
     <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32 bg-white">
       <div className="px-4 md:px-12 lg:px-20">
-        <section className="max-w-5xl mx-auto">
+        <section className="max-w-3xl mx-auto">
           <header className="mb-12">
             <p className="uppercase tracking-[0.3em] text-xs text-neutral-500 mb-4">
               Let's work together
@@ -25,18 +25,18 @@ export function ContactPage() {
             <h1 className="font-heading text-3xl md:text-5xl tracking-wider uppercase">
               Contact
             </h1>
-            <p className="mt-6 max-w-3xl text-sm md:text-base leading-relaxed text-neutral-700">
+            <p className="mt-6 max-w-2xl text-sm md:text-base leading-relaxed text-neutral-700">
               Share the vision for your next project and I'll reach out within two business
               days. Include as many details as you can - timeline, deliverables, tone, or any
               references that are inspiring you.
             </p>
           </header>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-12 lg:gap-16 max-w-3xl lg:max-w-none">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-12 lg:gap-16">
             <form
               method="POST"
               action={formEndpoint}
-              className="space-y-6 border border-black p-6 md:p-10 bg-white shadow-[8px_8px_0_0_rgba(0,0,0,1)] max-w-xl"
+              className="space-y-6 border border-black p-6 md:p-10 bg-white shadow-[8px_8px_0_0_rgba(0,0,0,1)]"
             >
               <input type="hidden" name="_subject" value="New inquiry from ANOMEN" />
               <input type="hidden" name="_captcha" value="false" />
