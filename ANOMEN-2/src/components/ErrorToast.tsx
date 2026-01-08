@@ -4,7 +4,7 @@
  */
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react@0.487.0";
+import { X } from "lucide-react";
 
 interface ErrorToastProps {
   isVisible: boolean;

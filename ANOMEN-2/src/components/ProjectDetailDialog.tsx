@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react@0.487.0";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 interface ProjectDetailDialogProps {

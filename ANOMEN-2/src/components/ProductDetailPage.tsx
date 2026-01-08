@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react@0.487.0";
+import { ChevronLeft } from "lucide-react";
 
 // Components
 import { ImageWithFallback } from "./figma/ImageWithFallback";

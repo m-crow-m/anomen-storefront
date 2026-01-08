@@ -3,7 +3,7 @@
  * Slide-out cart panel with item management and checkout
  */
 
-import { X, Minus, Plus } from "lucide-react@0.487.0";
+import { X, Minus, Plus } from "lucide-react";
 
 // UI Components
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "./ui/sheet";
