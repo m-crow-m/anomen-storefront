@@ -159,8 +159,8 @@ export function HomePage() {
 
           <div className="mt-12 md:mt-24 lg:mt-32 text-xs md:text-sm max-w-xs">
             A COLLECTION OF WORK<br />
-            EXPLORING STRUCTURE,<br />
-            MATERIAL, AND FORM
+            EMPHASIZING HUMANITY,<br />
+            STRUCTURE, AND SPACE
           </div>
         </div>
       </section>
