@@ -1,3 +1,8 @@
+/**
+ * Add to Cart Toast Component
+ * Animated notification for successful cart additions
+ */
+
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react@0.487.0";
 

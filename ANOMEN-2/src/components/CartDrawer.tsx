@@ -1,5 +1,14 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "./ui/sheet";
+/**
+ * Cart Drawer Component
+ * Slide-out cart panel with item management and checkout
+ */
+
 import { X, Minus, Plus } from "lucide-react@0.487.0";
+
+// UI Components
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "./ui/sheet";
+
+// Hooks & Config
 import { useCart } from "../contexts/CartContext";
 import { SHOPIFY_USING_DEMO_STORE } from "../lib/shopify";
 

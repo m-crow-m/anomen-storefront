@@ -1,8 +1,18 @@
+/**
+ * Store Page Component
+ * Product catalog with Shopify Storefront API integration
+ */
+
 import { useState, useEffect } from "react";
-import { ProductCard } from "./ProductCard";
 import { motion } from "framer-motion";
+
+// Components
+import { ProductCard } from "./ProductCard";
+
+// API
 import { getAllProducts } from "../lib/shopify";
 
+// Types
 interface ShopifyProduct {
   node: {
     id: string;

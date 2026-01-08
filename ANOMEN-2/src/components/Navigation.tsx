@@ -1,3 +1,8 @@
+/**
+ * Navigation Component
+ * Fixed header with site navigation and cart access
+ */
+
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react@0.487.0";
 import { useCart } from "../contexts/CartContext";

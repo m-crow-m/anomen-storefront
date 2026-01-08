@@ -1,6 +1,12 @@
+/**
+ * Contact Page Component
+ * Contact form with FormSubmit integration for inquiries
+ */
+
 import { useMemo } from "react";
 
-const formEndpoint = "https://formsubmit.co/jaedenivescrow@yahoo.com";
+// Form submission endpoint
+const FORM_ENDPOINT = "https://formsubmit.co/jaedenivescrow@yahoo.com";
 
 export function ContactPage() {
   const contactDetails = useMemo(
@@ -35,7 +41,7 @@ export function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-12 lg:gap-16">
             <form
               method="POST"
-              action={formEndpoint}
+              action={FORM_ENDPOINT}
               className="space-y-6 border border-black p-6 md:p-10 bg-white shadow-[8px_8px_0_0_rgba(0,0,0,1)]"
             >
               <input type="hidden" name="_subject" value="New inquiry from ANOMEN" />

@@ -1,3 +1,8 @@
+/**
+ * Error Toast Component
+ * Animated notification for error messages
+ */
+
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react@0.487.0";
 

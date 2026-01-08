@@ -1,7 +1,15 @@
+/**
+ * ANOMEN Storefront - Global Styles
+ * Design system variables and base typography for brutalist aesthetic
+ */
+
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
+/* ============================================
+   Design Tokens - Light Theme
+   ============================================ */
 :root {
   --font-size: 16px;
   --background: #ffffff;
@@ -43,6 +51,9 @@
   --sidebar-ring: #000000;
 }
 
+/* ============================================
+   Design Tokens - Dark Theme
+   ============================================ */
 .dark {
   --background: #000000;
   --foreground: #ffffff;
@@ -80,6 +91,9 @@
   --sidebar-ring: #ffffff;
 }
 
+/* ============================================
+   Tailwind Theme Extensions
+   ============================================ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -121,6 +135,9 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ============================================
+   Base Styles
+   ============================================ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -132,9 +149,10 @@
   }
 }
 
-/**
- * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
- */
+/* ============================================
+   Base Typography
+   Applied to elements without Tailwind text classes
+   ============================================ */
 @layer base {
   :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
     h1 {
@@ -187,11 +205,14 @@
   }
 }
 
+/* ============================================
+   Global Utilities
+   ============================================ */
 html {
   font-size: var(--font-size);
 }
 
-/* Brutalist Typography */
+/* Brutalist Typography - Primary heading font */
 .font-heading {
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-weight: 700;

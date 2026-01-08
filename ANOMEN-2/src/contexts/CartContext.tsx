@@ -1,6 +1,12 @@
+/**
+ * Cart Context
+ * Global state management for shopping cart with Shopify checkout integration
+ */
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { createCheckout, updateCheckout, SHOPIFY_CONFIGURED, SHOPIFY_DOMAIN } from '../lib/shopify';
 
+// Types
 interface CartItem {
   variantId: string;
   productId: string;

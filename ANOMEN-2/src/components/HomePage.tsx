@@ -1,7 +1,16 @@
+/**
+ * Home Page Component
+ * Landing page with animated hero section and portfolio showcase
+ */
+
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+
+// Components
 import { PortfolioCard } from "./PortfolioCard";
 import { ProjectDetailDialog } from "./ProjectDetailDialog";
-import { motion } from "framer-motion";
+
+// Portfolio Assets
 import metalMagazine1 from "../assets/Metal_Magazine_JIC.jpg";
 import metalMagazine2 from "../assets/Metal_Magazine_JIC2.jpg";
 import metalMagazine3 from "../assets/Metal_Magazine_JIC3.jpg";
@@ -14,7 +23,8 @@ import brandingInsta1 from "../assets/insta-post_neon.png";
 import brandingInsta2 from "../assets/insta-post3_neon.png";
 import brandingInsta3 from "../assets/insta-postcool_neon.png";
 
-const portfolioProjects = [
+// Portfolio project data
+const PORTFOLIO_PROJECTS = [
   {
     id: 1,
     title: "Room Magazine",
@@ -34,16 +44,17 @@ const portfolioProjects = [
 ];
 
 export function HomePage() {
-  const [selectedProject, setSelectedProject] = useState<typeof portfolioProjects[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_PROJECTS[0] | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [strobeState, setStrobeState] = useState(0);
   const [loopCount, setLoopCount] = useState(0);
 
+  // Strobe animation effect for hero text
   useEffect(() => {
     let currentIndex = 0;
     let currentLoop = 0;
-    const baseInterval = 150; // 150ms between strobes
-    const pauseDuration = 800; // 800ms pause
+    const baseInterval = 150;
+    const pauseDuration = 800;
 
     const getSequence = (isOddLoop: boolean) => {
       const base = [
@@ -110,7 +121,7 @@ export function HomePage() {
   const currentSequence = getSequence(loopCount % 2 === 1);
   const currentStrobe = currentSequence[strobeState] || currentSequence[0];
 
-  const handleProjectClick = (project: typeof portfolioProjects[0]) => {
+  const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
     setSelectedProject(project);
     setIsDialogOpen(true);
   };
@@ -167,10 +178,10 @@ export function HomePage() {
             </div>
             <div className="col-span-12 md:col-span-6">
               <PortfolioCard
-                title={portfolioProjects[0].title}
-                description={portfolioProjects[0].description}
-                imageUrl={portfolioProjects[0].imageUrl}
-                onClick={() => handleProjectClick(portfolioProjects[0])}
+                title={PORTFOLIO_PROJECTS[0].title}
+                description={PORTFOLIO_PROJECTS[0].description}
+                imageUrl={PORTFOLIO_PROJECTS[0].imageUrl}
+                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[0])}
               />
             </div>
           </div>
@@ -183,10 +194,10 @@ export function HomePage() {
                 <div className="mt-2">02</div>
               </div>
               <PortfolioCard
-                title={portfolioProjects[1].title}
-                description={portfolioProjects[1].description}
-                imageUrl={portfolioProjects[1].imageUrl}
-                onClick={() => handleProjectClick(portfolioProjects[1])}
+                title={PORTFOLIO_PROJECTS[1].title}
+                description={PORTFOLIO_PROJECTS[1].description}
+                imageUrl={PORTFOLIO_PROJECTS[1].imageUrl}
+                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[1])}
               />
             </div>
           </div>

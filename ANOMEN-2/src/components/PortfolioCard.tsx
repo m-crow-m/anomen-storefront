@@ -1,3 +1,8 @@
+/**
+ * Portfolio Card Component
+ * Displays portfolio project thumbnail for homepage showcase
+ */
+
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 interface PortfolioCardProps {

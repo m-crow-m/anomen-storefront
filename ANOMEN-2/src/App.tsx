@@ -1,16 +1,32 @@
+/**
+ * ANOMEN Storefront - Main Application
+ * A brutalist design studio storefront with Shopify integration
+ */
+
 import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+// Layout Components
 import { Navigation } from "./components/Navigation";
+import { CartDrawer } from "./components/CartDrawer";
+
+// Page Components
 import { HomePage } from "./components/HomePage";
 import { StorePageShopify } from "./components/StorePageShopify";
 import { ProductDetailPage } from "./components/ProductDetailPage";
 import { ContactPage } from "./components/ContactPage";
-import { CartDrawer } from "./components/CartDrawer";
+
+// Context Providers
 import { CartProvider } from "./contexts/CartContext";
 
+/**
+ * Root application component
+ * Handles routing, global state, and custom cursor interactions
+ */
 export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  // Custom cursor effect for brutalist aesthetic
   useEffect(() => {
     const handleMouseDown = () => document.body.classList.add("cursor-active");
     const handleMouseUp = () => document.body.classList.remove("cursor-active");

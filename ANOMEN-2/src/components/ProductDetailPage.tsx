@@ -1,11 +1,20 @@
+/**
+ * Product Detail Page Component
+ * Individual product view with variant selection and add-to-cart functionality
+ */
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { ChevronLeft } from "lucide-react@0.487.0";
-import { useCart } from "../contexts/CartContext";
-import { getProduct } from "../lib/shopify";
+
+// Components
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { AddToCartToast } from "./AddToCartToast";
 import { ErrorToast } from "./ErrorToast";
+
+// Hooks & API
+import { useCart } from "../contexts/CartContext";
+import { getProduct } from "../lib/shopify";
 
 export function ProductDetailPage() {
   const { productHandle } = useParams<{ productHandle: string }>();

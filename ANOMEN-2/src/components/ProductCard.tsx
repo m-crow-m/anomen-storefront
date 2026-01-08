@@ -1,5 +1,10 @@
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+/**
+ * Product Card Component
+ * Displays product thumbnail with hover effects for store grid
+ */
+
 import { useNavigate } from "react-router-dom";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 interface ProductCardProps {
   name: string;

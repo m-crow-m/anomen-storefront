@@ -1,14 +1,20 @@
-// Shopify Storefront API Client
-// Fallback to demo credentials if project-specific environment variables are not provided
+/**
+ * Shopify Storefront API Client
+ * Handles all communication with Shopify's GraphQL Storefront API
+ */
+
+// Demo store credentials (fallback when custom credentials not provided)
 const DEMO_STORE_DOMAIN = 'anomen-2.myshopify.com';
 const DEMO_STOREFRONT_ACCESS_TOKEN = '6f9587abfe036bb79929b2614c91ff74';
 
 const FALLBACK_STORE_DOMAIN = DEMO_STORE_DOMAIN;
 const FALLBACK_STOREFRONT_ACCESS_TOKEN = DEMO_STOREFRONT_ACCESS_TOKEN;
 
+// Environment configuration
 const envDomain = (import.meta.env?.VITE_SHOPIFY_STORE_DOMAIN as string | undefined)?.trim() ?? '';
 const envToken = (import.meta.env?.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as string | undefined)?.trim() ?? '';
 
+// Exported configuration
 export const SHOPIFY_DOMAIN = (envDomain || FALLBACK_STORE_DOMAIN).trim();
 export const SHOPIFY_STOREFRONT_ACCESS_TOKEN = (envToken || FALLBACK_STOREFRONT_ACCESS_TOKEN).trim();
 

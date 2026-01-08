@@ -1,6 +1,11 @@
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { ChevronLeft, ChevronRight, X } from "lucide-react@0.487.0";
+/**
+ * Project Detail Dialog Component
+ * Fullscreen modal for portfolio project gallery view
+ */
+
 import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react@0.487.0";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 interface ProjectDetailDialogProps {
   isOpen: boolean;
