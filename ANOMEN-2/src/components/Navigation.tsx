@@ -16,7 +16,7 @@ export function Navigation({ onCartClick }: NavigationProps) {
   const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-black">
       <div className="px-4 md:px-12 lg:px-20 py-4 md:py-6 lg:py-8 flex items-center justify-between">
         <Link to="/" className="font-heading uppercase tracking-wider text-xs md:text-sm hover:text-red-600 transition-colors">
           ANOMEN

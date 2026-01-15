@@ -21,7 +21,7 @@ export function ContactPage() {
   );
 
   return (
-    <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32 bg-white">
+    <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
       <div className="px-4 md:px-12 lg:px-20">
         <section className="max-w-3xl mx-auto">
           <header className="mb-12">

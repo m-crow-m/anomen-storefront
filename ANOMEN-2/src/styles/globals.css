@@ -149,6 +149,46 @@
   }
 }
 
+/* Paper texture - visible overlay on the page */
+body {
+  background-color: #f8f5ef !important; /* Warm paper color */
+  position: relative;
+}
+
+/* Paper texture overlay - subtle so ink stands out */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../assets/paper_texture.png');
+  background-repeat: repeat;
+  background-size: 500px 500px;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+/* Rich ink-like text color */
+body {
+  color: #0a0908 !important; /* Deep rich ink black */
+}
+
+/* All text gets rich ink treatment */
+h1, h2, h3, h4, h5, h6,
+p, span, a, li, label,
+button, [role="button"],
+.font-heading {
+  color: #0a0908 !important;
+}
+
+/* Headings get the darkest ink */
+h1, h2, h3 {
+  color: #000000 !important;
+}
+
 /* ============================================
    Base Typography
    Applied to elements without Tailwind text classes
@@ -217,4 +257,61 @@ html {
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+/* ============================================
+   Ink & Print Effect
+   Text blends with paper texture for authentic print look
+   ============================================ */
+
+/* Subtle pressed/emboss effect for text */
+body * {
+  text-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.5),
+    0 -0.5px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Headings get slightly more emboss */
+h1, h2, h3, h4, h5, h6,
+.font-heading {
+  text-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.6),
+    0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Remove text effects from images and media */
+img, svg, video, canvas, iframe {
+  text-shadow: none !important;
+}
+
+/* ============================================
+   Printed Image Effect
+   Makes images look like they were printed on paper
+   ============================================ */
+
+/* All images get printed/posterized look */
+img {
+  filter: 
+    grayscale(100%) 
+    contrast(1.3) 
+    brightness(1.05);
+  opacity: 0.88;
+  mix-blend-mode: multiply;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hover state - slightly less filtered to show detail */
+img:hover {
+  filter: 
+    grayscale(100%) 
+    contrast(1.15) 
+    brightness(1.02);
+  opacity: 0.95;
+}
+
+/* SVG icons should remain normal */
+svg {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
 }

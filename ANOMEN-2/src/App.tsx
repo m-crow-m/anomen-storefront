@@ -45,7 +45,7 @@ export default function App() {
   return (
     <CartProvider>
       <Router>
-        <div className="min-h-screen bg-white text-black">
+        <div className="min-h-screen">
           <Navigation onCartClick={() => setIsCartOpen(true)} />
           
           <Routes>

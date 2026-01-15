@@ -60,7 +60,7 @@ export function StorePageShopify() {
 
   if (loading) {
     return (
-      <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32 bg-white">
+      <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
         <div className="flex items-center justify-center h-[50vh]">
           <div className="text-center">
             <div className="font-heading uppercase tracking-wider">Loading...</div>
@@ -72,7 +72,7 @@ export function StorePageShopify() {
 
   if (error) {
     return (
-      <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32 bg-white">
+      <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
         <div className="flex items-center justify-center h-[50vh]">
           <div className="text-center max-w-2xl px-4">
             <div className="font-heading uppercase tracking-wider mb-4">Shopify Not Configured</div>
@@ -111,7 +111,7 @@ export function StorePageShopify() {
   };
 
   return (
-    <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32 bg-white">
+    <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
       {/* Header - Editorial Layout */}
       <section className="px-4 md:px-12 lg:px-20 py-16 md:py-32 lg:py-48 relative border-b border-black">
         <div className="max-w-[1600px] mx-auto">

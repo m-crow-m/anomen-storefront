@@ -1,9 +1,9 @@
 /**
  * Home Page Component
- * Landing page with animated hero section and portfolio showcase
+ * Landing page with hero section and portfolio showcase
  */
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 // Components
@@ -67,80 +67,6 @@ const PORTFOLIO_PROJECTS = [
 export function HomePage() {
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_PROJECTS[0] | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [strobeState, setStrobeState] = useState(0);
-  const [loopCount, setLoopCount] = useState(0);
-
-  // Strobe animation effect for hero text
-  useEffect(() => {
-    let currentIndex = 0;
-    let currentLoop = 0;
-    const baseInterval = 150;
-    const pauseDuration = 800;
-
-    const getSequence = (isOddLoop: boolean) => {
-      const base = [
-        { fill: "#000000", rotate: 0 },      // black, normal
-        { fill: "#ffffff", rotate: 0 },      // white, normal  
-        { fill: "#000000", rotate: 0 },      // black, normal
-        { fill: "#ffffff", rotate: 0 },      // white, normal
-        { fill: "#000000", rotate: 0 },      // black, normal
-        { fill: "#ffffff", rotate: 0 },      // white, normal
-        { fill: "#000000", rotate: 180 },    // black, upside down
-        { fill: "#ffffff", rotate: 180 },    // white, upside down
-      ];
-      
-      // Alternate ending: odd loops end on white, even loops end on black
-      if (isOddLoop) {
-        return [...base, { fill: "#ffffff", rotate: 0 }]; // end on white
-      } else {
-        return [...base, { fill: "#000000", rotate: 0 }]; // end on black
-      }
-    };
-
-    const runSequence = () => {
-      const isOddLoop = currentLoop % 2 === 1;
-      const sequence = getSequence(isOddLoop);
-      setLoopCount(currentLoop);
-      
-      const interval = setInterval(() => {
-        currentIndex++;
-        if (currentIndex >= sequence.length) {
-          clearInterval(interval);
-          setTimeout(() => {
-            currentLoop++;
-            currentIndex = -1;
-            runSequence();
-          }, pauseDuration);
-        } else {
-          setStrobeState(currentIndex);
-        }
-      }, baseInterval);
-    };
-
-    runSequence();
-  }, []);
-
-  const getSequence = (isOddLoop: boolean) => {
-    const base = [
-      { fill: "#000000", rotate: 0 },
-      { fill: "#ffffff", rotate: 0 },
-      { fill: "#000000", rotate: 0 },
-      { fill: "#ffffff", rotate: 0 },
-      { fill: "#000000", rotate: 0 },
-      { fill: "#ffffff", rotate: 0 },
-      { fill: "#000000", rotate: 180 },
-      { fill: "#ffffff", rotate: 180 },
-    ];
-    
-    if (isOddLoop) {
-      return [...base, { fill: "#ffffff", rotate: 0 }];
-    } else {
-      return [...base, { fill: "#000000", rotate: 0 }];
-    }
-  };
-
-  const currentSequence = getSequence(loopCount % 2 === 1);
-  const currentStrobe = currentSequence[strobeState] || currentSequence[0];
 
   const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
     setSelectedProject(project);
@@ -148,7 +74,7 @@ export function HomePage() {
   };
 
   return (
-    <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32 bg-white">
+    <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
       {/* Hero Section - Editorial Layout */}
       <section className="px-4 md:px-8 py-8 md:py-12 lg:py-16 relative overflow-hidden">
         <div className="max-w-[1600px] mx-auto">
@@ -165,13 +91,10 @@ export function HomePage() {
             <h1
               className="font-heading uppercase tracking-[-0.15em] text-[35vw] md:text-[38vw] leading-[0.75] select-none"
               style={{
-                WebkitTextStroke: currentStrobe.fill === "#ffffff" ? "2px black" : "4px black",
-                textStroke: currentStrobe.fill === "#ffffff" ? "2px black" : "4px black",
-                color: currentStrobe.fill,
-                WebkitTextFillColor: currentStrobe.fill,
-                transform: `rotateX(${currentStrobe.rotate}deg) scaleX(0.75)`,
-                transformStyle: "preserve-3d",
-                transformOrigin: "center center",
+                WebkitTextStroke: "4px black",
+                color: "#000000",
+                WebkitTextFillColor: "#000000",
+                transform: "scaleX(0.75)",
               }}
             >
               NOISE
