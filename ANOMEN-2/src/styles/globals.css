@@ -176,12 +176,59 @@ body {
   color: #0a0908 !important; /* Deep rich ink black */
 }
 
-/* All text gets rich ink treatment */
+/* All text gets rich ink treatment - except elements with explicit text color classes */
 h1, h2, h3, h4, h5, h6,
-p, span, a, li, label,
-button, [role="button"],
+p, span, li,
 .font-heading {
   color: #0a0908 !important;
+}
+
+/* Labels only get ink treatment when not styled explicitly */
+label:not([class*="text-["]) {
+  color: #0a0908 !important;
+}
+
+/* Inputs and textareas respect their own color classes */
+input[class*="text-["], 
+textarea[class*="text-["],
+label[class*="text-["] {
+  color: inherit;
+}
+
+/* Links and buttons allow hover color changes */
+a, button, [role="button"] {
+  color: #0a0908;
+}
+
+a:hover, button:hover, [role="button"]:hover {
+  color: #dc2626 !important; /* red-600 */
+}
+
+/* Contact form - off-white text on black background */
+.bg-black label,
+.bg-black input,
+.bg-black textarea {
+  color: #f8f5ef !important;
+}
+
+.bg-black input,
+.bg-black textarea {
+  border-color: #f8f5ef !important;
+}
+
+.bg-black input::placeholder,
+.bg-black textarea::placeholder {
+  color: rgba(248, 245, 239, 0.5) !important;
+}
+
+.bg-black button[type="submit"] {
+  background-color: #f8f5ef !important;
+  color: #000000 !important;
+}
+
+.bg-black button[type="submit"]:hover {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
 }
 
 /* Headings get the darkest ink */

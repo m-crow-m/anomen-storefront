@@ -24,8 +24,8 @@ export function ContactPage() {
     <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
       <div className="px-4 md:px-12 lg:px-20">
         <section className="max-w-3xl mx-auto">
-          <header className="mb-12">
-            <p className="uppercase tracking-[0.3em] text-xs text-neutral-500 mb-4">
+          <header style={{ marginBottom: '3.5rem' }}>
+            <p className="uppercase tracking-[0.3em] text-xs text-neutral-500 mb-4" style={{ marginTop: '2rem' }}>
               Let's work together
             </p>
             <h1 className="font-heading text-3xl md:text-5xl tracking-wider uppercase">
@@ -42,13 +42,13 @@ export function ContactPage() {
             <form
               method="POST"
               action={FORM_ENDPOINT}
-              className="space-y-6 border border-black p-6 md:p-10 bg-white shadow-[8px_8px_0_0_rgba(0,0,0,1)]"
+              className="space-y-6 border border-black p-6 md:p-10 bg-black shadow-[8px_8px_0_0_rgba(0,0,0,1)]"
             >
               <input type="hidden" name="_subject" value="New inquiry from ANOMEN" />
               <input type="hidden" name="_captcha" value="false" />
 
               <div className="space-y-2">
-                <label htmlFor="name" className="uppercase text-xs tracking-[0.2em]">
+                <label htmlFor="name" className="uppercase text-xs tracking-[0.2em] text-[#f8f5ef]">
                   Name
                 </label>
                 <input
@@ -57,13 +57,13 @@ export function ContactPage() {
                   type="text"
                   required
                   placeholder="Your full name"
-                  className="w-full border border-black bg-white px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full border border-[#f8f5ef] bg-black text-[#f8f5ef] px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-[#f8f5ef] placeholder:text-[#f8f5ef]/50"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="email" className="uppercase text-xs tracking-[0.2em]">
+                  <label htmlFor="email" className="uppercase text-xs tracking-[0.2em] text-[#f8f5ef]">
                     Email
                   </label>
                   <input
@@ -72,12 +72,12 @@ export function ContactPage() {
                     type="email"
                     required
                     placeholder="name@example.com"
-                    className="w-full border border-black bg-white px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-black"
+                    className="w-full border border-[#f8f5ef] bg-black text-[#f8f5ef] px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-[#f8f5ef] placeholder:text-[#f8f5ef]/50"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="uppercase text-xs tracking-[0.2em]">
+                  <label htmlFor="phone" className="uppercase text-xs tracking-[0.2em] text-[#f8f5ef]">
                     Phone
                   </label>
                   <input
@@ -85,13 +85,13 @@ export function ContactPage() {
                     name="phone"
                     type="tel"
                     placeholder="Optional"
-                    className="w-full border border-black bg-white px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-black"
+                    className="w-full border border-[#f8f5ef] bg-black text-[#f8f5ef] px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-[#f8f5ef] placeholder:text-[#f8f5ef]/50"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="subject" className="uppercase text-xs tracking-[0.2em]">
+                <label htmlFor="subject" className="uppercase text-xs tracking-[0.2em] text-[#f8f5ef]">
                   Subject
                 </label>
                 <input
@@ -99,12 +99,12 @@ export function ContactPage() {
                   name="subject"
                   type="text"
                   placeholder="Project or opportunity"
-                  className="w-full border border-black bg-white px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full border border-[#f8f5ef] bg-black text-[#f8f5ef] px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-[#f8f5ef] placeholder:text-[#f8f5ef]/50"
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="inquiry" className="uppercase text-xs tracking-[0.2em]">
+                <label htmlFor="inquiry" className="uppercase text-xs tracking-[0.2em] text-[#f8f5ef]">
                   Inquiry
                 </label>
                 <textarea
@@ -113,13 +113,13 @@ export function ContactPage() {
                   required
                   rows={6}
                   placeholder="Tell me about your project, timeline, and goals."
-                  className="w-full border border-black bg-white px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-black resize-none"
+                  className="w-full border border-[#f8f5ef] bg-black text-[#f8f5ef] px-4 py-3 text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-[#f8f5ef] resize-none placeholder:text-[#f8f5ef]/50"
                 />
               </div>
 
               <button
                 type="submit"
-                className="uppercase tracking-[0.2em] text-xs bg-black text-white px-6 py-3 hover:bg-red-600 transition-colors"
+                className="uppercase tracking-[0.2em] text-xs bg-[#f8f5ef] text-black px-6 py-3 hover:!bg-red-600 hover:!text-white transition-colors"
               >
                 Send Inquiry
               </button>
