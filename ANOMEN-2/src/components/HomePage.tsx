@@ -8,7 +8,16 @@ import { motion } from "framer-motion";
 
 // Components
 import { PortfolioCard } from "./PortfolioCard";
+import { InteractiveCard } from "./InteractiveCard";
 import { ProjectDetailDialog } from "./ProjectDetailDialog";
+import { FigmaPrototypeDialog } from "./FigmaPrototypeDialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 // Portfolio Assets
 import metalMagazine1 from "../assets/Metal_Magazine_JIC.jpg";
@@ -35,6 +44,9 @@ import calendar10 from "../assets/Calender2026-10.jpg";
 import calendar11 from "../assets/Calender2026-11.jpg";
 import calendar12 from "../assets/Calender2026-12.jpg";
 import calendar13 from "../assets/Calender2026-13.jpg";
+
+// Interactive Work Assets
+import treadmillThumbnail from "../assets/treadmill_thumbnail.png";
 
 // Portfolio project data
 const PORTFOLIO_PROJECTS = [
@@ -65,13 +77,46 @@ const PORTFOLIO_PROJECTS = [
   }
 ];
 
+// Interactive Figma prototypes data
+const INTERACTIVE_PROJECTS = [
+  {
+    id: 1,
+    title: "Mobile App Prototype",
+    description: "Interactive mobile app design concept",
+    thumbnailUrl: "https://via.placeholder.com/800x600/1a1a1a/ffffff?text=Mobile+App",
+    figmaEmbedUrl: "https://www.figma.com/embed?embed_host=share&url=YOUR_FIGMA_URL_1",
+  },
+  {
+    id: 2,
+    title: "Dashboard UI",
+    description: "Data visualization dashboard prototype",
+    thumbnailUrl: "https://via.placeholder.com/800x600/1a1a1a/ffffff?text=Dashboard+UI",
+    figmaEmbedUrl: "https://www.figma.com/embed?embed_host=share&url=YOUR_FIGMA_URL_2",
+  },
+  {
+    id: 3,
+    title: "Smart Treadmill Interface",
+    description: "Interactive prototype for a smart treadmill interface",
+    thumbnailUrl: treadmillThumbnail,
+    figmaEmbedUrl: "https://embed.figma.com/proto/opZfpVN4JxgRKEWbzQdufj/UX-1-Project--2--Treadmill-Jaeden-Crow?node-id=2068-924&scaling=scale-down&content-scaling=fixed&page-id=1%3A428&starting-point-node-id=2068%3A914&embed-host=share",
+  }
+];
+
 export function HomePage() {
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_PROJECTS[0] | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [workType, setWorkType] = useState<"print" | "interactive">("print");
+  const [selectedInteractive, setSelectedInteractive] = useState<typeof INTERACTIVE_PROJECTS[0] | null>(null);
+  const [isFigmaDialogOpen, setIsFigmaDialogOpen] = useState(false);
 
   const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
     setSelectedProject(project);
     setIsDialogOpen(true);
+  };
+
+  const handleInteractiveClick = (project: typeof INTERACTIVE_PROJECTS[0]) => {
+    setSelectedInteractive(project);
+    setIsFigmaDialogOpen(true);
   };
 
   return (
@@ -113,41 +158,57 @@ export function HomePage() {
       {/* Portfolio Grid - Editorial Asymmetric Layout */}
       <section className="px-4 md:px-12 lg:px-20 py-12 md:py-24 lg:py-32">
         <div className="max-w-[1600px] mx-auto">
-          {/* Project 1 - Large */}
-          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
-              <div className="text-xs md:text-sm space-y-1">
-                <div>P. 13</div>
-                <div className="mt-4 md:mt-8">01</div>
-              </div>
-            </div>
-            <div className="col-span-12 md:col-span-6">
-              <PortfolioCard
-                title={PORTFOLIO_PROJECTS[0].title}
-                description={PORTFOLIO_PROJECTS[0].description}
-                imageUrl={PORTFOLIO_PROJECTS[0].imageUrl}
-                images={PORTFOLIO_PROJECTS[0].images}
-                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[0])}
-              />
-            </div>
+          {/* Work Type Selector */}
+          <div className="mb-12 md:mb-16 flex items-center gap-4">
+            <span className="text-xs md:text-sm uppercase tracking-wider" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>Viewing:</span>
+            <Select value={workType} onValueChange={(value: "print" | "interactive") => setWorkType(value)}>
+              <SelectTrigger className="w-[180px] md:w-[220px] border-black bg-transparent text-xs md:text-sm uppercase tracking-wider px-4 py-3" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-white border-black">
+                <SelectItem value="print" className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>print</SelectItem>
+                <SelectItem value="interactive" className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>ux / ui</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
-          {/* Project 2 */}
-          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-6 md:col-start-4">
-              <div className="text-xs md:text-sm mb-4 md:mb-8">
-                <div>P. 29</div>
-                <div className="mt-2">02</div>
+          {workType === "print" ? (
+            <>
+              {/* Project 1 - Large */}
+              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
+                <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
+                  <div className="text-xs md:text-sm space-y-1">
+                    <div>P. 13</div>
+                    <div className="mt-4 md:mt-8">01</div>
+                  </div>
+                </div>
+                <div className="col-span-12 md:col-span-6">
+                  <PortfolioCard
+                    title={PORTFOLIO_PROJECTS[0].title}
+                    description={PORTFOLIO_PROJECTS[0].description}
+                    imageUrl={PORTFOLIO_PROJECTS[0].imageUrl}
+                    images={PORTFOLIO_PROJECTS[0].images}
+                    onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[0])}
+                  />
+                </div>
               </div>
-              <PortfolioCard
-                title={PORTFOLIO_PROJECTS[1].title}
-                description={PORTFOLIO_PROJECTS[1].description}
-                imageUrl={PORTFOLIO_PROJECTS[1].imageUrl}
-                images={PORTFOLIO_PROJECTS[1].images}
-                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[1])}
-              />
-            </div>
-          </div>
+
+              {/* Project 2 */}
+              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
+                <div className="col-span-12 md:col-span-6 md:col-start-4">
+                  <div className="text-xs md:text-sm mb-4 md:mb-8">
+                    <div>P. 29</div>
+                    <div className="mt-2">02</div>
+                  </div>
+                  <PortfolioCard
+                    title={PORTFOLIO_PROJECTS[1].title}
+                    description={PORTFOLIO_PROJECTS[1].description}
+                    imageUrl={PORTFOLIO_PROJECTS[1].imageUrl}
+                    images={PORTFOLIO_PROJECTS[1].images}
+                    onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[1])}
+                  />
+                </div>
+              </div>
 
           {/* Project 3 - Calendar */}
           <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
@@ -168,6 +229,28 @@ export function HomePage() {
               />
             </div>
           </div>
+            </>
+          ) : (
+            /* Interactive Work Grid */
+            <>
+              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
+                <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
+                  <div className="text-xs md:text-sm space-y-1">
+                    <div>INT. 03</div>
+                    <div className="mt-4 md:mt-8">03</div>
+                  </div>
+                </div>
+                <div className="col-span-12 md:col-span-6">
+                  <InteractiveCard
+                    title={INTERACTIVE_PROJECTS[2].title}
+                    description={INTERACTIVE_PROJECTS[2].description}
+                    thumbnailUrl={INTERACTIVE_PROJECTS[2].thumbnailUrl}
+                    onClick={() => handleInteractiveClick(INTERACTIVE_PROJECTS[2])}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
@@ -176,6 +259,13 @@ export function HomePage() {
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         project={selectedProject}
+      />
+
+      {/* Figma Prototype Dialog */}
+      <FigmaPrototypeDialog
+        isOpen={isFigmaDialogOpen}
+        onClose={() => setIsFigmaDialogOpen(false)}
+        project={selectedInteractive}
       />
     </main>
   );
