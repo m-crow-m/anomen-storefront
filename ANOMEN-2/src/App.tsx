@@ -49,11 +49,12 @@ export default function App() {
           <Navigation onCartClick={() => setIsCartOpen(true)} />
           
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Navigate to="/portfolio" replace />} />
+            <Route path="/portfolio" element={<HomePage />} />
             <Route path="/store" element={<StorePageShopify />} />
             <Route path="/product/:productHandle" element={<ProductDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/portfolio" replace />} />
           </Routes>
 
           <CartDrawer

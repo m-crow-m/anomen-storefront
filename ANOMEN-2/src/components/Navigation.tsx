@@ -18,11 +18,21 @@ export function Navigation({ onCartClick }: NavigationProps) {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-black">
       <div className="px-4 md:px-12 lg:px-20 py-4 md:py-6 lg:py-8 flex items-center justify-between">
-        <Link to="/" className="font-heading uppercase tracking-wider text-xs md:text-sm hover:text-red-600 transition-colors">
-          ANOMEN
-        </Link>
+        <div className="font-heading tracking-wider text-xs md:text-sm">
+          <span className="uppercase">CROW</span>{" "}
+          <span className="lowercase" style={{ fontWeight: 100 }}>
+            design
+          </span>
+        </div>
 
         <div className="flex items-center gap-4 md:gap-8 lg:gap-12 text-xs md:text-sm">
+          <Link
+            to="/portfolio"
+            className="uppercase tracking-wider hover:text-red-600 transition-colors"
+          >
+            PORTFOLIO
+          </Link>
+
           <Link
             to="/store"
             className="uppercase tracking-wider hover:text-red-600 transition-colors"

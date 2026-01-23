@@ -39,11 +39,14 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('dialog-open');
     } else {
       document.body.style.overflow = 'unset';
+      document.body.classList.remove('dialog-open');
     }
     return () => {
       document.body.style.overflow = 'unset';
+      document.body.classList.remove('dialog-open');
     };
   }, [isOpen]);
 

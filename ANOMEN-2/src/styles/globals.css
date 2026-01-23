@@ -171,6 +171,11 @@ body::after {
   z-index: 10000;
 }
 
+/* Disable texture overlay while portfolio dialog is open */
+body.dialog-open::after {
+  opacity: 0;
+}
+
 /* Rich ink-like text color */
 body {
   color: #0a0908 !important; /* Deep rich ink black */

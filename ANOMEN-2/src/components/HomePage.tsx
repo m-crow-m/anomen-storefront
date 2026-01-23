@@ -55,6 +55,7 @@ import terrainPoster from "../assets/Terrain_poster_2025.jpg";
 import theGreatSong01 from "../assets/theGreatSong01.jpg";
 import theGreatSong02 from "../assets/theGreatSong02.jpg";
 import theGreatSong03 from "../assets/theGreatSong03.jpg";
+import repurposeLamp from "../assets/Repurpose_Lamp_JIC_10-25.jpg";
 
 // Portfolio project data
 const PORTFOLIO_PROJECTS = [
@@ -99,6 +100,15 @@ const PORTFOLIO_PROJECTS = [
     imageUrl: theGreatSong01,
     images: [theGreatSong01, theGreatSong02, theGreatSong03],
     details: "Personal Project / Risograph printing file",
+    imagePosition: "center"
+  },
+  {
+    id: 6,
+    title: "Repurpose Lamp",
+    description: "Lamp design, poster and tutorial for Art Salvage Spokane",
+    imageUrl: repurposeLamp,
+    images: [repurposeLamp],
+    details: "Lamp design, poster and tutorial for Art Salvage Spokane",
     imagePosition: "center"
   }
 ];
@@ -208,7 +218,7 @@ export function HomePage() {
                     <div className="mt-4 md:mt-8">01</div>
                   </div>
                 </div>
-                <div className="col-span-12 md:col-span-6">
+                <div className="col-span-12 md:col-span-6 md:col-start-4 lg:col-start-5">
                   <PortfolioCard
                     title={PORTFOLIO_PROJECTS[0].title}
                     description={PORTFOLIO_PROJECTS[0].description}
@@ -221,7 +231,7 @@ export function HomePage() {
 
               {/* Project 2 */}
               <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-                <div className="col-span-12 md:col-span-6 md:col-start-4">
+                <div className="col-span-12 md:col-span-6 md:col-start-3 lg:col-start-2">
                   <div className="text-xs md:text-sm mb-4 md:mb-8">
                     <div>P. 29</div>
                     <div className="mt-2">02</div>
@@ -244,7 +254,7 @@ export function HomePage() {
                 <div className="mt-4 md:mt-8">03</div>
               </div>
             </div>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 md:col-span-6 md:col-start-3 lg:col-start-4">
               <PortfolioCard
                 title={PORTFOLIO_PROJECTS[2].title}
                 description={PORTFOLIO_PROJECTS[2].description}
@@ -264,7 +274,7 @@ export function HomePage() {
                 <div className="mt-4 md:mt-8">04</div>
               </div>
             </div>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 md:col-span-6 md:col-start-2 lg:col-start-1">
               <PortfolioCard
                 title={PORTFOLIO_PROJECTS[3].title}
                 description={PORTFOLIO_PROJECTS[3].description}
@@ -284,7 +294,7 @@ export function HomePage() {
                 <div className="mt-4 md:mt-8">05</div>
               </div>
             </div>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 md:col-span-6 md:col-start-5 lg:col-start-6">
               <PortfolioCard
                 title={PORTFOLIO_PROJECTS[4].title}
                 description={PORTFOLIO_PROJECTS[4].description}
@@ -292,6 +302,26 @@ export function HomePage() {
                 images={PORTFOLIO_PROJECTS[4].images}
                 imagePosition={PORTFOLIO_PROJECTS[4].imagePosition}
                 onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[4])}
+              />
+            </div>
+          </div>
+
+          {/* Project 6 - Repurpose Lamp */}
+          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
+            <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
+              <div className="text-xs md:text-sm space-y-1">
+                <div>P. 71</div>
+                <div className="mt-4 md:mt-8">06</div>
+              </div>
+            </div>
+            <div className="col-span-12 md:col-span-6 md:col-start-3 lg:col-start-2">
+              <PortfolioCard
+                title={PORTFOLIO_PROJECTS[5].title}
+                description={PORTFOLIO_PROJECTS[5].description}
+                imageUrl={PORTFOLIO_PROJECTS[5].imageUrl}
+                images={PORTFOLIO_PROJECTS[5].images}
+                imagePosition={PORTFOLIO_PROJECTS[5].imagePosition}
+                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[5])}
               />
             </div>
           </div>
