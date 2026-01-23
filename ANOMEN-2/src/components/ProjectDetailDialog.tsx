@@ -21,6 +21,21 @@ interface ProjectDetailDialogProps {
 export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailDialogProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Reset image index when project changes
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [project?.title]);
+
+  // Preload all images when dialog opens
+  useEffect(() => {
+    if (isOpen && project) {
+      project.images.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+      });
+    }
+  }, [isOpen, project]);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -43,7 +58,7 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center dialog-overlay">
       {/* Backdrop with blur */}
       <div 
         className="absolute inset-0 bg-black/95 backdrop-blur-md"
@@ -52,10 +67,10 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
 
       {/* Content */}
       <div className="relative z-10 w-full h-full flex items-center justify-center p-4 md:p-8 lg:p-16">
-        {/* Close Button */}
+        {/* Close Button - More visible */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 md:top-8 md:right-8 z-50 text-white hover:opacity-50 transition-opacity"
+          className="absolute top-4 right-4 md:top-8 md:right-8 z-50 bg-white text-black p-2 hover:bg-black hover:text-white transition-colors"
           aria-label="Close"
         >
           <X className="w-6 h-6 md:w-8 md:h-8" />
@@ -67,7 +82,7 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
             <ImageWithFallback
               src={project.images[currentImageIndex]}
               alt={`${project.title} - Image ${currentImageIndex + 1}`}
-              className="max-w-full max-h-full object-contain"
+              className="max-w-full max-h-full object-contain dialog-image"
             />
 
             {/* Navigation Arrows */}
@@ -91,8 +106,8 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
             )}
 
             {/* Image Counter */}
-            <div className="absolute bottom-0 left-0 bg-white border-2 border-white px-2 py-1 md:px-4 md:py-2">
-              <span className="font-heading text-black text-xs md:text-sm">
+            <div className="absolute bottom-0 left-0 px-2 py-1 md:px-4 md:py-2">
+              <span className="font-heading text-white text-xs md:text-sm">
                 {currentImageIndex + 1} / {project.images.length}
               </span>
             </div>

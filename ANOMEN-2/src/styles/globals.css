@@ -183,6 +183,20 @@ p, span, li,
   color: #0a0908 !important;
 }
 
+/* Dialog overlay text should be light (white) on dark background */
+.dialog-overlay h1,
+.dialog-overlay h2,
+.dialog-overlay h3,
+.dialog-overlay h4,
+.dialog-overlay h5,
+.dialog-overlay h6,
+.dialog-overlay p,
+.dialog-overlay span,
+.dialog-overlay li,
+.dialog-overlay .font-heading {
+  color: #ffffff !important;
+}
+
 /* Labels only get ink treatment when not styled explicitly */
 label:not([class*="text-["]) {
   color: #0a0908 !important;
@@ -332,28 +346,34 @@ img, svg, video, canvas, iframe {
 }
 
 /* ============================================
-   Printed Image Effect
-   Makes images look like they were printed on paper
+   Printed Image Effect - DISABLED
+   Previous effect made images look like they were printed on paper
    ============================================ */
 
-/* All images get printed/posterized look */
+/* All images show in full color */
 img {
-  filter: 
-    grayscale(100%) 
-    contrast(1.3) 
-    brightness(1.05);
-  opacity: 0.88;
-  mix-blend-mode: multiply;
-  transition: filter 0.3s ease, opacity 0.3s ease;
+  filter: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+  transition: filter 0.3s ease, opacity 0.3s ease, mix-blend-mode 0.3s ease;
 }
 
-/* Hover state - slightly less filtered to show detail */
+/* Hover state - no change needed */
 img:hover {
-  filter: 
-    grayscale(100%) 
-    contrast(1.15) 
-    brightness(1.02);
-  opacity: 0.95;
+  filter: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+
+/* Dialog images should show in full color - NO effects whatsoever */
+img.dialog-image,
+img.dialog-image:hover,
+img.dialog-image:focus,
+img.dialog-image:active {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+  -webkit-filter: none !important;
 }
 
 /* SVG icons should remain normal */

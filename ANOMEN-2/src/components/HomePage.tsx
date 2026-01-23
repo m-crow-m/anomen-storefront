@@ -22,19 +22,19 @@ import brandingBillboard from "../assets/billboard_neon2.png";
 import brandingInsta1 from "../assets/insta-post_neon.png";
 import brandingInsta2 from "../assets/insta-post3_neon.png";
 import brandingInsta3 from "../assets/insta-postcool_neon.png";
-import calendar01 from "../assets/Calender2026-01.png";
-import calendar02 from "../assets/Calender2026-02.png";
-import calendar03 from "../assets/Calender2026-03.png";
-import calendar04 from "../assets/Calender2026-04.png";
-import calendar05 from "../assets/Calender2026-05.png";
-import calendar06 from "../assets/Calender2026-06.png";
-import calendar07 from "../assets/Calender2026-07.png";
-import calendar08 from "../assets/Calender2026-08.png";
-import calendar09 from "../assets/Calender2026-09.png";
-import calendar10 from "../assets/Calender2026-10.png";
-import calendar11 from "../assets/Calender2026-11.png";
-import calendar12 from "../assets/Calender2026-12.png";
-import calendar13 from "../assets/Calender2026-13.png";
+import calendar01 from "../assets/Calender2026-01.jpg";
+import calendar02 from "../assets/Calender2026-02.jpg";
+import calendar03 from "../assets/Calender2026-03.jpg";
+import calendar04 from "../assets/Calender2026-04.jpg";
+import calendar05 from "../assets/Calender2026-05.jpg";
+import calendar06 from "../assets/Calender2026-06.jpg";
+import calendar07 from "../assets/Calender2026-07.jpg";
+import calendar08 from "../assets/Calender2026-08.jpg";
+import calendar09 from "../assets/Calender2026-09.jpg";
+import calendar10 from "../assets/Calender2026-10.jpg";
+import calendar11 from "../assets/Calender2026-11.jpg";
+import calendar12 from "../assets/Calender2026-12.jpg";
+import calendar13 from "../assets/Calender2026-13.jpg";
 
 // Portfolio project data
 const PORTFOLIO_PROJECTS = [
@@ -58,9 +58,10 @@ const PORTFOLIO_PROJECTS = [
     id: 3,
     title: "CALENDAR",
     description: "2026 calendar",
-    imageUrl: calendar13,
-    images: [calendar13, calendar01, calendar02, calendar03, calendar04, calendar05, calendar06, calendar07, calendar08, calendar09, calendar10, calendar11, calendar12],
-    details: "2026 calendar"
+    imageUrl: calendar04,
+    images: [calendar01, calendar02, calendar03, calendar04, calendar05, calendar06, calendar07, calendar08, calendar09, calendar10, calendar11, calendar12, calendar13],
+    details: "2026 calendar",
+    imagePosition: "center 15%"
   }
 ];
 
@@ -125,6 +126,7 @@ export function HomePage() {
                 title={PORTFOLIO_PROJECTS[0].title}
                 description={PORTFOLIO_PROJECTS[0].description}
                 imageUrl={PORTFOLIO_PROJECTS[0].imageUrl}
+                images={PORTFOLIO_PROJECTS[0].images}
                 onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[0])}
               />
             </div>
@@ -141,6 +143,7 @@ export function HomePage() {
                 title={PORTFOLIO_PROJECTS[1].title}
                 description={PORTFOLIO_PROJECTS[1].description}
                 imageUrl={PORTFOLIO_PROJECTS[1].imageUrl}
+                images={PORTFOLIO_PROJECTS[1].images}
                 onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[1])}
               />
             </div>
@@ -159,6 +162,8 @@ export function HomePage() {
                 title={PORTFOLIO_PROJECTS[2].title}
                 description={PORTFOLIO_PROJECTS[2].description}
                 imageUrl={PORTFOLIO_PROJECTS[2].imageUrl}
+                images={PORTFOLIO_PROJECTS[2].images}
+                imagePosition={PORTFOLIO_PROJECTS[2].imagePosition}
                 onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[2])}
               />
             </div>

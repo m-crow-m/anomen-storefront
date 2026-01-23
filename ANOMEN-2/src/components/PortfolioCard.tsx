@@ -9,17 +9,30 @@ interface PortfolioCardProps {
   title: string;
   description: string;
   imageUrl: string;
+  images?: string[]; // All images for preloading on hover
+  imagePosition?: string; // CSS object-position value
   onClick: () => void;
 }
 
-export function PortfolioCard({ title, description, imageUrl, onClick }: PortfolioCardProps) {
+export function PortfolioCard({ title, description, imageUrl, images, imagePosition, onClick }: PortfolioCardProps) {
+  // Preload all project images on hover
+  const handleMouseEnter = () => {
+    if (images) {
+      images.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+      });
+    }
+  };
+
   return (
-    <div className="group cursor-pointer" onClick={onClick}>
+    <div className="group cursor-pointer" onClick={onClick} onMouseEnter={handleMouseEnter}>
       <div className="aspect-[4/3] overflow-visible border border-black mb-4 md:mb-8 relative bg-white transition-shadow duration-300 group-hover:shadow-[0_0_0_4px_rgba(0,0,0,1)] md:group-hover:shadow-[0_0_0_8px_rgba(0,0,0,1)]">
         <ImageWithFallback
           src={imageUrl}
           alt={title}
           className="w-full h-full object-cover"
+          style={imagePosition ? { objectPosition: imagePosition } : undefined}
         />
       </div>
 
