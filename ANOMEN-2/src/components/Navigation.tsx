@@ -3,7 +3,7 @@
  * Fixed header with site navigation and cart access
  */
 
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
@@ -47,12 +47,15 @@ export function Navigation({ onCartClick }: NavigationProps) {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black">
       <div className="px-4 md:px-12 lg:px-20 py-4 md:py-6 lg:py-8 flex items-center justify-between">
-        <div className="font-heading tracking-wider text-xs md:text-sm">
+        <Link
+          to="/portfolio"
+          className="font-heading tracking-wider text-xs md:text-sm hover:text-red-600 transition-colors"
+        >
           <span className="uppercase">CROW</span>{" "}
           <span className="lowercase" style={{ fontWeight: 100 }}>
             design
           </span>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-4 md:gap-8 lg:gap-12 text-xs md:text-sm">
           <div
@@ -77,34 +80,50 @@ export function Navigation({ onCartClick }: NavigationProps) {
               onMouseEnter={openMenu}
               onMouseLeave={closeMenu}
             >
-              <Link
+              <NavLink
                 to="/portfolio"
-                className="block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
+                className={({ isActive }) =>
+                  `block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-red-600 transition-colors ${
+                    isActive ? "nav-active" : ""
+                  }`
+                }
                 onClick={() => setIsMenuOpen(false)}
               >
                 Portfolio
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/store"
-                className="block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
+                className={({ isActive }) =>
+                  `block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-red-600 transition-colors ${
+                    isActive ? "nav-active" : ""
+                  }`
+                }
                 onClick={() => setIsMenuOpen(false)}
               >
                 Store
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/contact"
-                className="block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
+                className={({ isActive }) =>
+                  `block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-red-600 transition-colors ${
+                    isActive ? "nav-active" : ""
+                  }`
+                }
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contact
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/about"
-                className="block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
+                className={({ isActive }) =>
+                  `block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-red-600 transition-colors ${
+                    isActive ? "nav-active" : ""
+                  }`
+                }
                 onClick={() => setIsMenuOpen(false)}
               >
                 About me
-              </Link>
+              </NavLink>
             </div>
           </div>
 

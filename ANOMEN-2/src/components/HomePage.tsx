@@ -250,9 +250,9 @@ export function HomePage() {
               <SelectTrigger className="w-[180px] md:w-[220px] border-black bg-transparent text-xs md:text-sm uppercase tracking-wider px-4 py-3" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-white border-black">
-                <SelectItem value="print" className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>print</SelectItem>
-                <SelectItem value="interactive" className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>ux / ui</SelectItem>
+              <SelectContent className="bg-white border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+                <SelectItem value="print" className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3 hover:bg-black hover:text-white" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>print</SelectItem>
+                <SelectItem value="interactive" className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3 hover:bg-black hover:text-white" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>ux / ui</SelectItem>
               </SelectContent>
             </Select>
           </div>

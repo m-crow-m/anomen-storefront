@@ -33,7 +33,7 @@ export function ContactPage() {
             </h1>
           </header>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_280px] gap-8 lg:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_280px] gap-8 lg:gap-12 items-start mt-10">
             <form
               method="POST"
               action={FORM_ENDPOINT}

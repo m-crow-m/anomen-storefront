@@ -181,6 +181,17 @@ body {
   color: #0a0908 !important; /* Deep rich ink black */
 }
 
+/* About page text width */
+.about-text {
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .about-text {
+    max-width: 42vw;
+  }
+}
+
 /* All text gets rich ink treatment - except elements with explicit text color classes */
 h1, h2, h3, h4, h5, h6,
 p, span, li,
@@ -221,6 +232,12 @@ a, button, [role="button"] {
 
 a:hover, button:hover, [role="button"]:hover {
   color: #dc2626 !important; /* red-600 */
+}
+
+/* Active nav link color overrides ink treatment */
+.nav-active,
+.nav-active span {
+  color: #dc2626 !important;
 }
 
 /* Contact form - off-white text on black background */
@@ -386,6 +403,32 @@ svg {
   filter: none !important;
   opacity: 1 !important;
   mix-blend-mode: normal !important;
+}
+
+/* Portfolio select dropdown styling to match nav menu */
+[data-slot="select-content"] {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+  box-shadow: 6px 6px 0 0 rgba(0, 0, 0, 1) !important;
+}
+
+[data-slot="select-item"] {
+  color: #0a0908 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: transparent !important;
+}
+
+[data-slot="select-item"] * {
+  color: inherit !important;
+}
+
+[data-slot="select-item"]:hover,
+[data-slot="select-item"][data-highlighted],
+[data-slot="select-item"][data-state="checked"] {
+  background: #000000 !important;
+  color: #dc2626 !important;
 }
 
 /* Hide browser media overlays on hero video (Opera/Chromium) */
