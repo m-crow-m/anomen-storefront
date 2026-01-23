@@ -387,3 +387,18 @@ svg {
   opacity: 1 !important;
   mix-blend-mode: normal !important;
 }
+
+/* Hide browser media overlays on hero video (Opera/Chromium) */
+.hero-video::-webkit-media-controls,
+.hero-video::-webkit-media-controls-enclosure,
+.hero-video::-webkit-media-controls-panel,
+.hero-video::-webkit-media-controls-play-button,
+.hero-video::-webkit-media-controls-start-playback-button,
+.hero-video::-webkit-media-controls-overlay-play-button,
+.hero-video::-webkit-media-controls-fullscreen-button,
+.hero-video::-webkit-media-controls-download-button,
+.hero-video::-webkit-media-controls-picture-in-picture-button,
+.hero-video::-webkit-media-controls-timeline {
+  display: none !important;
+  opacity: 0 !important;
+}

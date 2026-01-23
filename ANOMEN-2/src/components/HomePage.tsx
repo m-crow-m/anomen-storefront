@@ -3,7 +3,7 @@
  * Landing page with hero section and portfolio showcase
  */
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 // Components
@@ -56,6 +56,7 @@ import theGreatSong01 from "../assets/theGreatSong01.jpg";
 import theGreatSong02 from "../assets/theGreatSong02.jpg";
 import theGreatSong03 from "../assets/theGreatSong03.jpg";
 import repurposeLamp from "../assets/Repurpose_Lamp_JIC_10-25.jpg";
+import heroAnimation from "../assets/HeroAnimation.webm";
 
 // Portfolio project data
 const PORTFOLIO_PROJECTS = [
@@ -139,11 +140,51 @@ const INTERACTIVE_PROJECTS = [
 ];
 
 export function HomePage() {
+  const heroVideoRef = useRef<HTMLVideoElement | null>(null);
+  const heroCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_PROJECTS[0] | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [workType, setWorkType] = useState<"print" | "interactive">("print");
   const [selectedInteractive, setSelectedInteractive] = useState<typeof INTERACTIVE_PROJECTS[0] | null>(null);
   const [isFigmaDialogOpen, setIsFigmaDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    const canvas = heroCanvasRef.current;
+    if (!video || !canvas) return;
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
+    let rafId = 0;
+    const renderFrame = () => {
+      if (video.readyState >= 2) {
+        if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      }
+      rafId = requestAnimationFrame(renderFrame);
+    };
+
+    const start = () => {
+      if (rafId === 0) {
+        renderFrame();
+      }
+    };
+
+    video.addEventListener("play", start);
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => undefined);
+    }
+
+    return () => {
+      video.removeEventListener("play", start);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
     setSelectedProject(project);
@@ -158,8 +199,8 @@ export function HomePage() {
   return (
     <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
       {/* Hero Section - Editorial Layout */}
-      <section className="px-4 md:px-8 py-8 md:py-12 lg:py-16 relative overflow-hidden">
-        <div className="max-w-[1600px] mx-auto">
+      <section className="px-0 pt-2 pb-8 md:pt-4 md:pb-12 lg:pt-6 lg:pb-16 relative overflow-hidden">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8">
           <motion.div
             className="absolute top-4 left-4 md:top-8 md:left-8 text-xs md:text-sm"
             initial={{ opacity: 0 }}
@@ -169,21 +210,29 @@ export function HomePage() {
             P. 01
           </motion.div>
 
-          <div className="flex justify-center items-center">
-            <h1
-              className="font-heading uppercase tracking-[-0.15em] text-[35vw] md:text-[38vw] leading-[0.75] select-none"
-              style={{
-                WebkitTextStroke: "4px black",
-                color: "#000000",
-                WebkitTextFillColor: "#000000",
-                transform: "scaleX(0.75)",
-              }}
-            >
-              NOISE
-            </h1>
+        </div>
+
+        <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2 -mt-4 md:-mt-6">
+            <div className="relative w-full aspect-video">
+              <canvas
+                ref={heroCanvasRef}
+                className="w-full h-full object-contain pointer-events-none"
+              />
+              <video
+                ref={heroVideoRef}
+                className="hidden"
+                src={heroAnimation}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+              />
+            </div>
           </div>
 
-          <div className="mt-12 md:mt-24 lg:mt-32 text-xs md:text-sm max-w-xs">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8">
+          <div className="mt-3 md:mt-4 text-xs md:text-sm max-w-xs">
             A COLLECTION OF WORK<br />
             EMPHASIZING HUMANITY,<br />
             STRUCTURE, AND SPACE
