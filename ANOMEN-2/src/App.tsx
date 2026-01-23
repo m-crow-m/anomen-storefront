@@ -12,6 +12,7 @@ import { CartDrawer } from "./components/CartDrawer";
 
 // Page Components
 import { HomePage } from "./components/HomePage";
+import { AboutPage } from "./components/AboutPage";
 import { StorePageShopify } from "./components/StorePageShopify";
 import { ProductDetailPage } from "./components/ProductDetailPage";
 import { ContactPage } from "./components/ContactPage";
@@ -51,6 +52,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/portfolio" replace />} />
             <Route path="/portfolio" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/store" element={<StorePageShopify />} />
             <Route path="/product/:productHandle" element={<ProductDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
