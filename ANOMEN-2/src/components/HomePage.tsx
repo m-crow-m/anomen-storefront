@@ -48,6 +48,14 @@ import calendar13 from "../assets/Calender2026-13.jpg";
 // Interactive Work Assets
 import treadmillThumbnail from "../assets/treadmill_thumbnail.png";
 
+// Terrain poster asset
+import terrainPoster from "../assets/Terrain_poster_2025.jpg";
+
+// The Great Song assets
+import theGreatSong01 from "../assets/theGreatSong01.jpg";
+import theGreatSong02 from "../assets/theGreatSong02.jpg";
+import theGreatSong03 from "../assets/theGreatSong03.jpg";
+
 // Portfolio project data
 const PORTFOLIO_PROJECTS = [
   {
@@ -74,6 +82,24 @@ const PORTFOLIO_PROJECTS = [
     images: [calendar01, calendar02, calendar03, calendar04, calendar05, calendar06, calendar07, calendar08, calendar09, calendar10, calendar11, calendar12, calendar13],
     details: "2026 calendar",
     imagePosition: "center 15%"
+  },
+  {
+    id: 4,
+    title: "Event Poster",
+    description: 'Terrain Gallery show poster, "Beasts: The Color of Winter"',
+    imageUrl: terrainPoster,
+    images: [terrainPoster],
+    details: 'Poster for Terrain Gallery show, "Beasts: The Color of Winter"',
+    imagePosition: "center 20%"
+  },
+  {
+    id: 5,
+    title: "The Great Song",
+    description: "Personal Project / Risograph printing file",
+    imageUrl: theGreatSong01,
+    images: [theGreatSong01, theGreatSong02, theGreatSong03],
+    details: "Personal Project / Risograph printing file",
+    imagePosition: "center"
   }
 ];
 
@@ -226,6 +252,46 @@ export function HomePage() {
                 images={PORTFOLIO_PROJECTS[2].images}
                 imagePosition={PORTFOLIO_PROJECTS[2].imagePosition}
                 onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[2])}
+              />
+            </div>
+          </div>
+
+          {/* Project 4 - Terrain Poster */}
+          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
+            <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
+              <div className="text-xs md:text-sm space-y-1">
+                <div>P. 57</div>
+                <div className="mt-4 md:mt-8">04</div>
+              </div>
+            </div>
+            <div className="col-span-12 md:col-span-6">
+              <PortfolioCard
+                title={PORTFOLIO_PROJECTS[3].title}
+                description={PORTFOLIO_PROJECTS[3].description}
+                imageUrl={PORTFOLIO_PROJECTS[3].imageUrl}
+                images={PORTFOLIO_PROJECTS[3].images}
+                imagePosition={PORTFOLIO_PROJECTS[3].imagePosition}
+                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[3])}
+              />
+            </div>
+          </div>
+
+          {/* Project 5 - The Great Song */}
+          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
+            <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
+              <div className="text-xs md:text-sm space-y-1">
+                <div>P. 63</div>
+                <div className="mt-4 md:mt-8">05</div>
+              </div>
+            </div>
+            <div className="col-span-12 md:col-span-6">
+              <PortfolioCard
+                title={PORTFOLIO_PROJECTS[4].title}
+                description={PORTFOLIO_PROJECTS[4].description}
+                imageUrl={PORTFOLIO_PROJECTS[4].imageUrl}
+                images={PORTFOLIO_PROJECTS[4].images}
+                imagePosition={PORTFOLIO_PROJECTS[4].imagePosition}
+                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[4])}
               />
             </div>
           </div>
