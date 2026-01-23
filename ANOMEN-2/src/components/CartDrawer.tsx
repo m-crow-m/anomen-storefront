@@ -43,7 +43,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="bg-black text-white border-l border-white w-full sm:max-w-md">
-        <SheetHeader className="border-b border-white pb-6">
+        <SheetHeader className="border-b border-white pb-6 text-white">
           <SheetTitle className="font-heading uppercase tracking-wider text-white">
             CART
           </SheetTitle>

@@ -47,7 +47,7 @@ export default function App() {
       <Router>
         <div className="min-h-screen">
           <Navigation onCartClick={() => setIsCartOpen(true)} />
-          
+
           <Routes>
             <Route path="/" element={<Navigate to="/portfolio" replace />} />
             <Route path="/portfolio" element={<HomePage />} />
