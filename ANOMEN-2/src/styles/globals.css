@@ -445,3 +445,17 @@ svg {
   display: none !important;
   opacity: 0 !important;
 }
+
+/* Prevent hover-triggered overlays in Chromium-based browsers */
+.hero-video {
+  pointer-events: none;
+}
+
+/* Keep the source video offscreen when drawing to canvas */
+.hero-video-source {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  inset: 0;
+}

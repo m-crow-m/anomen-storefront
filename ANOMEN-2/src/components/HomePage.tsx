@@ -142,33 +142,77 @@ const INTERACTIVE_PROJECTS = [
 
 export function HomePage() {
   const heroVideoRef = useRef<HTMLVideoElement | null>(null);
+  const heroCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_PROJECTS[0] | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [workType, setWorkType] = useState<"print" | "interactive">("print");
   const [selectedInteractive, setSelectedInteractive] = useState<typeof INTERACTIVE_PROJECTS[0] | null>(null);
   const [isFigmaDialogOpen, setIsFigmaDialogOpen] = useState(false);
+  const [useCanvas] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const ua = window.navigator.userAgent.toLowerCase();
+    const hasMediaCapabilities = !!(
+      window.navigator.mediaCapabilities &&
+      window.navigator.mediaCapabilities.decodingInfo
+    );
+    const isSafari =
+      ua.includes("safari") && !ua.includes("chrome") && ua.includes("version/");
+    return !(isSafari && hasMediaCapabilities);
+  });
 
   useEffect(() => {
     const video = heroVideoRef.current;
     if (!video) return;
-    const supportsHevcAlpha = () => {
-      const ua = window.navigator.userAgent.toLowerCase();
-      const hasMediaCapabilities = !!(
-        window.navigator.mediaCapabilities &&
-        window.navigator.mediaCapabilities.decodingInfo
-      );
-      const isSafari =
-        ua.includes("safari") && !ua.includes("chrome") && ua.includes("version/");
-      return isSafari && hasMediaCapabilities;
-    };
-
-    video.src = supportsHevcAlpha() ? heroAnimationMov : heroAnimationWebm;
+    const canvas = heroCanvasRef.current;
+    const shouldUseMov = !useCanvas;
+    video.muted = true;
+    video.loop = true;
+    video.autoplay = true;
+    video.playsInline = true;
+    video.src = shouldUseMov ? heroAnimationMov : heroAnimationWebm;
     video.load();
+
+    let rafId = 0;
+    let onReady: (() => void) | null = null;
+
+    if (!shouldUseMov && canvas) {
+      const ctx = canvas.getContext("2d", { alpha: true });
+      if (!ctx) return;
+
+      const renderFrame = () => {
+        if (video.readyState >= 2) {
+          if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+          }
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        }
+        rafId = requestAnimationFrame(renderFrame);
+      };
+
+      onReady = () => {
+        if (rafId === 0) {
+          renderFrame();
+        }
+      };
+
+      video.addEventListener("loadeddata", onReady);
+      onReady();
+    }
+
     const playPromise = video.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => undefined);
     }
-  }, []);
+
+    return () => {
+      if (onReady) {
+        video.removeEventListener("loadeddata", onReady);
+      }
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [useCanvas]);
 
   const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
     setSelectedProject(project);
@@ -198,12 +242,22 @@ export function HomePage() {
 
         <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2 -mt-4 md:-mt-6">
             <div className="relative w-full aspect-video">
+              {useCanvas ? (
+                <canvas
+                  ref={heroCanvasRef}
+                  className="w-full h-full object-contain pointer-events-none"
+                />
+              ) : null}
               <video
                 ref={heroVideoRef}
-                className="hero-video w-full h-full object-contain"
+                className={`hero-video w-full h-full object-contain${useCanvas ? " hero-video-source" : ""}`}
                 autoPlay
                 loop
                 muted
+                controls={false}
+                controlsList="nodownload noplaybackrate noremoteplayback"
+                disablePictureInPicture
+                disableRemotePlayback
                 playsInline
                 preload="auto"
               />
