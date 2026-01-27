@@ -151,6 +151,19 @@ export function HomePage() {
   useEffect(() => {
     const video = heroVideoRef.current;
     if (!video) return;
+    const supportsHevcAlpha = () => {
+      const ua = window.navigator.userAgent.toLowerCase();
+      const hasMediaCapabilities = !!(
+        window.navigator.mediaCapabilities &&
+        window.navigator.mediaCapabilities.decodingInfo
+      );
+      const isSafari =
+        ua.includes("safari") && !ua.includes("chrome") && ua.includes("version/");
+      return isSafari && hasMediaCapabilities;
+    };
+
+    video.src = supportsHevcAlpha() ? heroAnimationMov : heroAnimationWebm;
+    video.load();
     const playPromise = video.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => undefined);
@@ -193,10 +206,7 @@ export function HomePage() {
                 muted
                 playsInline
                 preload="auto"
-              >
-                <source src={heroAnimationMov} type="video/quicktime" />
-                <source src={heroAnimationWebm} type="video/webm" />
-              </video>
+              />
             </div>
           </div>
 
