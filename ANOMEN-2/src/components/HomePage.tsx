@@ -11,13 +11,7 @@ import { PortfolioCard } from "./PortfolioCard";
 import { InteractiveCard } from "./InteractiveCard";
 import { ProjectDetailDialog } from "./ProjectDetailDialog";
 import { FigmaPrototypeDialog } from "./FigmaPrototypeDialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+
 
 // Portfolio Assets
 import metalMagazine1 from "../assets/Metal_Magazine_JIC.jpg";
@@ -140,12 +134,19 @@ const INTERACTIVE_PROJECTS = [
   }
 ];
 
-export function HomePage() {
+interface HomePageProps {
+  workType: "print" | "interactive";
+  setWorkType: (value: "print" | "interactive") => void;
+}
+
+export function HomePage({ workType, setWorkType }: HomePageProps) {
   const heroVideoRef = useRef<HTMLVideoElement | null>(null);
   const heroCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const heroWrapRef = useRef<HTMLDivElement | null>(null);
+  const heroOuterRef = useRef<HTMLDivElement | null>(null);
+  const heroContentRef = useRef<HTMLDivElement | null>(null);
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_PROJECTS[0] | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [workType, setWorkType] = useState<"print" | "interactive">("print");
   const [selectedInteractive, setSelectedInteractive] = useState<typeof INTERACTIVE_PROJECTS[0] | null>(null);
   const [isFigmaDialogOpen, setIsFigmaDialogOpen] = useState(false);
   const [useCanvas] = useState(() => {
@@ -214,6 +215,57 @@ export function HomePage() {
     };
   }, [useCanvas]);
 
+  useEffect(() => {
+    const target = heroWrapRef.current;
+    const outer = heroOuterRef.current;
+    const content = heroContentRef.current;
+    if (!target || !outer || !content) return;
+
+    const maxScroll = 520;
+    let rafId = 0;
+    let baseHeight = 0;
+
+    const getScrollTop = () =>
+      window.scrollY ||
+      document.scrollingElement?.scrollTop ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+
+    const measure = () => {
+      baseHeight = target.getBoundingClientRect().height;
+      outer.style.height = `${baseHeight}px`;
+    };
+
+    const easeInOut = (t: number) => t * t * (3 - 2 * t);
+
+    const update = () => {
+      rafId = 0;
+      const progress = Math.min(getScrollTop() / maxScroll, 1);
+      const easedProgress = easeInOut(progress);
+      const scaleY = 1 - easedProgress;
+      target.style.transform = `scaleY(${scaleY})`;
+      const collapse = baseHeight * (1 - scaleY) * 0.85;
+      content.style.transform = `translateY(${-collapse}px)`;
+    };
+
+    const onScroll = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(update);
+    };
+
+    measure();
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", measure);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", measure);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
     setSelectedProject(project);
     setIsDialogOpen(true);
@@ -241,29 +293,38 @@ export function HomePage() {
         </div>
 
         <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2 -mt-4 md:-mt-6">
-            <div className="relative w-full aspect-video">
-              {useCanvas ? (
-                <canvas
-                  ref={heroCanvasRef}
-                  className="w-full h-full object-contain pointer-events-none"
-                />
-              ) : null}
-              <video
-                ref={heroVideoRef}
-                className={`hero-video w-full h-full object-contain${useCanvas ? " hero-video-source" : ""}`}
-                autoPlay
-                loop
-                muted
-                controls={false}
-                controlsList="nodownload noplaybackrate noremoteplayback"
-                disablePictureInPicture
-                disableRemotePlayback
-                playsInline
-                preload="auto"
+          <div ref={heroOuterRef} className="w-full overflow-hidden">
+            <div
+              ref={heroWrapRef}
+              className="relative w-full aspect-video origin-top will-change-transform"
+              style={{ transform: "scaleY(1)" }}
+            >
+            {useCanvas ? (
+              <canvas
+                ref={heroCanvasRef}
+                className="w-full h-full object-contain pointer-events-none"
               />
+            ) : null}
+            <video
+              ref={heroVideoRef}
+              className={`hero-video w-full h-full object-contain${useCanvas ? " hero-video-source" : ""}`}
+              autoPlay
+              loop
+              muted
+              controls={false}
+              controlsList="nodownload noplaybackrate noremoteplayback"
+              disablePictureInPicture
+              disableRemotePlayback
+              playsInline
+              preload="auto"
+            />
             </div>
           </div>
+        </div>
 
+      </section>
+
+      <div ref={heroContentRef} className="relative will-change-transform">
         <div className="max-w-[1600px] mx-auto px-4 md:px-8">
           <div className="mt-3 md:mt-4 text-xs md:text-sm max-w-xs">
             A COLLECTION OF WORK<br />
@@ -271,24 +332,11 @@ export function HomePage() {
             STRUCTURE, AND SPACE
           </div>
         </div>
-      </section>
 
-      {/* Portfolio Grid - Editorial Asymmetric Layout */}
-      <section className="px-4 md:px-12 lg:px-20 py-12 md:py-24 lg:py-32">
+        {/* Portfolio Grid - Editorial Asymmetric Layout */}
+        <section className="px-4 md:px-12 lg:px-20 py-12 md:py-24 lg:py-32">
         <div className="max-w-[1600px] mx-auto">
-          {/* Work Type Selector */}
-          <div className="mb-12 md:mb-16 flex items-center gap-4">
-            <span className="text-xs md:text-sm uppercase tracking-wider" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>Viewing:</span>
-            <Select value={workType} onValueChange={(value: "print" | "interactive") => setWorkType(value)}>
-              <SelectTrigger className="w-[180px] md:w-[220px] border-black bg-transparent text-xs md:text-sm uppercase tracking-wider px-4 py-3" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
-                <SelectItem value="print" className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3 hover:bg-black hover:text-white" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>print</SelectItem>
-                <SelectItem value="interactive" className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3 hover:bg-black hover:text-white" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>ux / ui</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <div className="mb-12 md:mb-16" />
 
           {workType === "print" ? (
             <>
@@ -430,7 +478,8 @@ export function HomePage() {
             </>
           )}
         </div>
-      </section>
+        </section>
+      </div>
 
       {/* Project Detail Dialog */}
       <ProjectDetailDialog

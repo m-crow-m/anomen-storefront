@@ -26,6 +26,7 @@ import { CartProvider } from "./contexts/CartContext";
  */
 export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [workType, setWorkType] = useState<"print" | "interactive">("print");
 
   // Custom cursor effect for brutalist aesthetic
   useEffect(() => {
@@ -47,11 +48,18 @@ export default function App() {
     <CartProvider>
       <Router>
         <div className="min-h-screen">
-          <Navigation onCartClick={() => setIsCartOpen(true)} />
+          <Navigation
+            onCartClick={() => setIsCartOpen(true)}
+            workType={workType}
+            setWorkType={setWorkType}
+          />
 
           <Routes>
             <Route path="/" element={<Navigate to="/portfolio" replace />} />
-            <Route path="/portfolio" element={<HomePage />} />
+            <Route
+              path="/portfolio"
+              element={<HomePage workType={workType} setWorkType={setWorkType} />}
+            />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/store" element={<StorePageShopify />} />
             <Route path="/product/:productHandle" element={<ProductDetailPage />} />

@@ -7,12 +7,21 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ChevronDown, ShoppingCart } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 interface NavigationProps {
   onCartClick: () => void;
+  workType: "print" | "interactive";
+  setWorkType: (value: "print" | "interactive") => void;
 }
 
-export function Navigation({ onCartClick }: NavigationProps) {
+export function Navigation({ onCartClick, workType, setWorkType }: NavigationProps) {
   const { cart } = useCart();
   const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,6 +33,7 @@ export function Navigation({ onCartClick }: NavigationProps) {
   const logoRef = useRef<HTMLAnchorElement | null>(null);
   const [logoOffset, setLogoOffset] = useState({ x: 0, y: 0, scale: 1 });
   const [logoReady, setLogoReady] = useState(false);
+  const showWorkType = isScrolled && location.pathname === "/portfolio";
 
   useEffect(() => {
     const root = document.getElementById("root");
@@ -122,53 +132,98 @@ export function Navigation({ onCartClick }: NavigationProps) {
   return (
     <nav className="nav-clear fixed top-0 left-0 right-0 z-50 bg-transparent border-none">
       <div className="nav-shell px-4 md:px-12 lg:px-20 py-4 md:py-6 lg:py-8 flex items-center justify-between relative">
-        <Link
-          ref={logoRef}
-          to="/portfolio"
-          aria-label="CROW design"
-          className={`font-heading tracking-wider text-xs md:text-sm ${
-            isScrolled && isLogoHovered ? "logo-hover" : ""
-          }`}
-          onClick={handleLogoClick}
-          onMouseEnter={() => setIsLogoHovered(true)}
-          onMouseLeave={() => setIsLogoHovered(false)}
-          style={{
-            position: "relative",
-            zIndex: 60,
-            whiteSpace: "nowrap",
-            lineHeight: 1,
-            display: "inline-flex",
-            alignItems: "baseline",
-            transformOrigin: "top left",
-            opacity: logoReady ? 1 : 0,
-            transform: isScrolled
-              ? `translate(${-logoOffset.x}px, ${-logoOffset.y - 3}px) scale(2.6)`
-              : "translate(0, 0) scale(1)",
-            transition:
-              "transform 600ms ease, opacity 300ms ease, letter-spacing 600ms ease",
-          }}
-        >
-          <span
-            className="uppercase"
-            style={{ lineHeight: 1, display: "inline-block" }}
-          >
-            C
-          </span>
-          <span
-            className="inline-block overflow-hidden align-baseline"
+        <div className="flex items-center gap-4 md:gap-8 text-xs md:text-sm">
+          <Link
+            ref={logoRef}
+            to="/portfolio"
+            aria-label="CROW design"
+            className={`font-heading tracking-wider text-xs md:text-sm ${
+              isScrolled && isLogoHovered ? "logo-hover" : ""
+            }`}
+            onClick={handleLogoClick}
+            onMouseEnter={() => setIsLogoHovered(true)}
+            onMouseLeave={() => setIsLogoHovered(false)}
             style={{
-              maxWidth: isScrolled ? 0 : 200,
-              opacity: isScrolled ? 0 : 1,
-              marginLeft: isScrolled ? 0 : 1,
-              transition: "max-width 600ms ease, opacity 400ms ease",
+              position: "relative",
+              zIndex: 60,
+              whiteSpace: "nowrap",
+              lineHeight: 1,
+              display: "inline-flex",
+              alignItems: "baseline",
+              transformOrigin: "top left",
+              opacity: logoReady ? 1 : 0,
+            transform: "translate(0, 0) scale(1)",
+              transition:
+                "transform 600ms ease, opacity 300ms ease, letter-spacing 600ms ease",
             }}
           >
-            <span className="uppercase">ROW</span>{" "}
-            <span className="lowercase" style={{ fontWeight: 100 }}>
-              design
+            <span
+              className="uppercase"
+              style={{
+                lineHeight: 1,
+                display: "inline-block",
+                transform: isScrolled ? "scale(2.6)" : "scale(1)",
+                transformOrigin: "left center",
+                transition: "transform 600ms ease",
+              }}
+            >
+              C
             </span>
-          </span>
-        </Link>
+            <span
+              className="inline-block overflow-hidden align-baseline"
+              style={{
+                maxWidth: isScrolled ? 0 : 200,
+                opacity: isScrolled ? 0 : 1,
+                marginLeft: isScrolled ? 0 : 1,
+                transition: "max-width 600ms ease, opacity 400ms ease",
+              }}
+            >
+              <span className="uppercase">ROW</span>{" "}
+              <span className="lowercase" style={{ fontWeight: 100 }}>
+                design
+              </span>
+            </span>
+          </Link>
+          {showWorkType ? (
+            <div className="flex items-center gap-2">
+              <span
+                className="text-xs md:text-sm uppercase tracking-wider"
+                style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+              >
+                Viewing:
+              </span>
+              <Select
+                value={workType}
+                onValueChange={(value: "print" | "interactive") =>
+                  setWorkType(value)
+                }
+              >
+                <SelectTrigger
+                  className="w-[150px] md:w-[180px] border-black bg-transparent text-xs md:text-sm uppercase tracking-wider px-4 py-3"
+                  style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+                  <SelectItem
+                    value="print"
+                    className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3 hover:bg-black hover:text-white"
+                    style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                  >
+                    print
+                  </SelectItem>
+                  <SelectItem
+                    value="interactive"
+                    className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3 hover:bg-black hover:text-white"
+                    style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                  >
+                    ux / ui
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          ) : null}
+        </div>
 
         <div className="flex items-center gap-4 md:gap-8 lg:gap-12 text-xs md:text-sm">
           <div
