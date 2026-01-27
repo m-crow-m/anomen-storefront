@@ -42,7 +42,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent className="bg-black text-white border-l border-white w-full sm:max-w-md">
+      <SheetContent className="cart-drawer bg-black text-white border-l border-white w-full sm:max-w-md">
         <SheetHeader className="border-b border-white pb-6 text-white">
           <SheetTitle className="font-heading uppercase tracking-wider text-white">
             CART
@@ -115,7 +115,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 <button 
                   onClick={handleCheckout}
                   disabled={isCheckoutDisabled}
-                  className="w-full bg-white text-black py-4 font-heading uppercase tracking-wider text-sm hover:opacity-80 transition-opacity border border-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="cart-cta w-full bg-white text-black py-4 font-heading uppercase tracking-wider text-sm hover:opacity-80 transition-opacity border border-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {checkoutLabel}
                 </button>

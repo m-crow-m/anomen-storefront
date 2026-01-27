@@ -149,31 +149,20 @@
   }
 }
 
-/* Paper texture - visible overlay on the page */
+/* Paper texture - behind all elements on a pure white canvas */
+html {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+    url('../assets/paper_texture.png');
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, cover;
+  background-position: center, center;
+}
+
 body {
-  background-color: #f5f5f0 !important; /* Off-white paper color */
+  background-color: transparent !important;
   position: relative;
-}
-
-/* Paper texture overlay - subtle so ink stands out */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('../assets/paper_texture.png');
-  background-repeat: repeat;
-  background-size: 360px 360px;
-  opacity: 0.22;
-  pointer-events: none;
-  z-index: 10000;
-}
-
-/* Disable texture overlay while portfolio dialog is open */
-body.dialog-open::after {
-  opacity: 0;
 }
 
 /* Rich ink-like text color */
@@ -198,6 +187,30 @@ p, span, li,
 .font-heading {
   color: #0a0908 !important;
 }
+
+.logo-hover,
+.logo-hover span {
+  color: #dc2626 !important;
+}
+
+.cart-drawer,
+.cart-drawer h1,
+.cart-drawer h2,
+.cart-drawer h3,
+.cart-drawer h4,
+.cart-drawer h5,
+.cart-drawer h6,
+.cart-drawer p,
+.cart-drawer span,
+.cart-drawer li,
+.cart-drawer .font-heading {
+  color: #ffffff !important;
+}
+
+.cart-drawer .cart-cta {
+  color: #000000 !important;
+}
+
 
 /* Dialog overlay text should be light (white) on dark background */
 .dialog-overlay h1,

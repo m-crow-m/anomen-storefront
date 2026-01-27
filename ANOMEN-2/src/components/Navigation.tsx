@@ -3,9 +3,9 @@
  * Fixed header with site navigation and cart access
  */
 
-import { Link, NavLink } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { ShoppingCart } from "lucide-react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { ChevronDown, ShoppingCart } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
 
 interface NavigationProps {
@@ -16,14 +16,71 @@ export function Navigation({ onCartClick }: NavigationProps) {
   const { cart } = useCart();
   const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
   const closeTimeoutRef = useRef<number | null>(null);
+  const logoRef = useRef<HTMLAnchorElement | null>(null);
+  const [logoOffset, setLogoOffset] = useState({ x: 0, y: 0, scale: 1 });
+  const [logoReady, setLogoReady] = useState(false);
 
   useEffect(() => {
+    const root = document.getElementById("root");
+    const getScrollTop = () => {
+      if (root && root.scrollHeight > root.clientHeight) {
+        return root.scrollTop;
+      }
+      return (
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0
+      );
+    };
+
+    const handleScroll = () => {
+      setIsScrolled(getScrollTop() > 80);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    document.addEventListener("scroll", handleScroll, {
+      passive: true,
+      capture: true,
+    });
+    root?.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScroll, true);
+      root?.removeEventListener("scroll", handleScroll);
       if (closeTimeoutRef.current) {
         window.clearTimeout(closeTimeoutRef.current);
       }
     };
+  }, []);
+
+  useLayoutEffect(() => {
+    const updateLogoOffset = () => {
+      const logo = logoRef.current;
+      if (!logo) return;
+      const rect = logo.getBoundingClientRect();
+      const isMobile = window.matchMedia("(max-width: 640px)").matches;
+      const targetLeft = isMobile ? 4 : 8;
+      const targetTop = isMobile ? 4 : 6;
+      setLogoOffset({
+        x: rect.left - targetLeft,
+        y: rect.top - targetTop,
+        scale: 1,
+      });
+      setLogoReady(true);
+    };
+
+    updateLogoOffset();
+    window.addEventListener("resize", updateLogoOffset);
+
+    return () => window.removeEventListener("resize", updateLogoOffset);
   }, []);
 
   const openMenu = () => {
@@ -44,16 +101,72 @@ export function Navigation({ onCartClick }: NavigationProps) {
     }, 120);
   };
 
+  const scrollToTop = () => {
+    const root = document.getElementById("root");
+    if (root) {
+      root.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleLogoClick: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (location.pathname !== "/portfolio") {
+      event.preventDefault();
+      navigate("/portfolio");
+      requestAnimationFrame(scrollToTop);
+      return;
+    }
+    scrollToTop();
+  };
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black">
-      <div className="px-4 md:px-12 lg:px-20 py-4 md:py-6 lg:py-8 flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent border-none">
+      <div className="px-4 md:px-12 lg:px-20 py-4 md:py-6 lg:py-8 flex items-center justify-between relative">
         <Link
+          ref={logoRef}
           to="/portfolio"
-          className="font-heading tracking-wider text-xs md:text-sm hover:text-red-600 transition-colors"
+          aria-label="CROW design"
+          className={`font-heading tracking-wider text-xs md:text-sm ${
+            isScrolled && isLogoHovered ? "logo-hover" : ""
+          }`}
+          onClick={handleLogoClick}
+          onMouseEnter={() => setIsLogoHovered(true)}
+          onMouseLeave={() => setIsLogoHovered(false)}
+          style={{
+            position: "relative",
+            zIndex: 60,
+            whiteSpace: "nowrap",
+            lineHeight: 1,
+            display: "inline-flex",
+            alignItems: "baseline",
+            transformOrigin: "top left",
+            opacity: logoReady ? 1 : 0,
+            transform: isScrolled
+              ? `translate(${-logoOffset.x}px, ${-logoOffset.y - 3}px) scale(2.6)`
+              : "translate(0, 0) scale(1)",
+            transition:
+              "transform 600ms ease, opacity 300ms ease, letter-spacing 600ms ease",
+          }}
         >
-          <span className="uppercase">CROW</span>{" "}
-          <span className="lowercase" style={{ fontWeight: 100 }}>
-            design
+          <span
+            className="uppercase"
+            style={{ lineHeight: 1, display: "inline-block" }}
+          >
+            C
+          </span>
+          <span
+            className="inline-block overflow-hidden align-baseline"
+            style={{
+              maxWidth: isScrolled ? 0 : 200,
+              opacity: isScrolled ? 0 : 1,
+              marginLeft: isScrolled ? 0 : 1,
+              transition: "max-width 600ms ease, opacity 400ms ease",
+            }}
+          >
+            <span className="uppercase">ROW</span>{" "}
+            <span className="lowercase" style={{ fontWeight: 100 }}>
+              design
+            </span>
           </span>
         </Link>
 
@@ -65,13 +178,19 @@ export function Navigation({ onCartClick }: NavigationProps) {
           >
             <button
               type="button"
-              className="uppercase tracking-wider hover:text-red-600 transition-colors flex items-center gap-2"
+              className="uppercase tracking-wider hover:text-red-600 transition-colors flex items-center"
               aria-haspopup="true"
               aria-expanded={isMenuOpen}
+              aria-label="Open navigation menu"
               onClick={() => setIsMenuOpen((open) => !open)}
             >
-              MENU
-              <span className="text-[10px]">▼</span>
+              <span className="sr-only">Menu</span>
+              <ChevronDown
+                className={`w-4 h-4 md:w-5 md:h-5 transition-transform ${
+                  isMenuOpen ? "rotate-180" : ""
+                }`}
+                strokeWidth={2.5}
+              />
             </button>
             <div
               className={`absolute left-1/2 -translate-x-1/2 mt-3 min-w-[200px] border border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)] ${
