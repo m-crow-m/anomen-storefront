@@ -56,7 +56,8 @@ import theGreatSong01 from "../assets/theGreatSong01.jpg";
 import theGreatSong02 from "../assets/theGreatSong02.jpg";
 import theGreatSong03 from "../assets/theGreatSong03.jpg";
 import repurposeLamp from "../assets/Repurpose_Lamp_JIC_10-25.jpg";
-import heroAnimation from "../assets/HeroAnimation.webm";
+import heroAnimationMov from "../assets/heroAnimation.mov";
+import heroAnimationWebm from "../assets/HeroAnimation.webm";
 
 // Portfolio project data
 const PORTFOLIO_PROJECTS = [
@@ -141,7 +142,6 @@ const INTERACTIVE_PROJECTS = [
 
 export function HomePage() {
   const heroVideoRef = useRef<HTMLVideoElement | null>(null);
-  const heroCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_PROJECTS[0] | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [workType, setWorkType] = useState<"print" | "interactive">("print");
@@ -150,40 +150,11 @@ export function HomePage() {
 
   useEffect(() => {
     const video = heroVideoRef.current;
-    const canvas = heroCanvasRef.current;
-    if (!video || !canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) return;
-
-    let rafId = 0;
-    const renderFrame = () => {
-      if (video.readyState >= 2) {
-        if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-        }
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      }
-      rafId = requestAnimationFrame(renderFrame);
-    };
-
-    const start = () => {
-      if (rafId === 0) {
-        renderFrame();
-      }
-    };
-
-    video.addEventListener("play", start);
+    if (!video) return;
     const playPromise = video.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => undefined);
     }
-
-    return () => {
-      video.removeEventListener("play", start);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
   }, []);
 
   const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
@@ -214,20 +185,18 @@ export function HomePage() {
 
         <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2 -mt-4 md:-mt-6">
             <div className="relative w-full aspect-video">
-              <canvas
-                ref={heroCanvasRef}
-                className="w-full h-full object-contain pointer-events-none"
-              />
               <video
                 ref={heroVideoRef}
-                className="hidden"
-                src={heroAnimation}
+                className="hero-video w-full h-full object-contain"
                 autoPlay
                 loop
                 muted
                 playsInline
                 preload="auto"
-              />
+              >
+                <source src={heroAnimationMov} type="video/quicktime" />
+                <source src={heroAnimationWebm} type="video/webm" />
+              </video>
             </div>
           </div>
 
