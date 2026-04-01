@@ -16,6 +16,7 @@ import { AboutPage } from "./components/AboutPage";
 import { StorePageShopify } from "./components/StorePageShopify";
 import { ProductDetailPage } from "./components/ProductDetailPage";
 import { ContactPage } from "./components/ContactPage";
+import { ResumePage } from "./components/ResumePage";
 
 // Context Providers
 import { CartProvider } from "./contexts/CartContext";
@@ -64,6 +65,7 @@ export default function App() {
             <Route path="/store" element={<StorePageShopify />} />
             <Route path="/product/:productHandle" element={<ProductDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/resume" element={<ResumePage />} />
             <Route path="*" element={<Navigate to="/portfolio" replace />} />
           </Routes>
 

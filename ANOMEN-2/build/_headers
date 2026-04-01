@@ -1,0 +1,7 @@
+/assets/*.mov
+  Content-Type: video/quicktime
+  Accept-Ranges: bytes
+
+/assets/*.webm
+  Content-Type: video/webm
+  Accept-Ranges: bytes

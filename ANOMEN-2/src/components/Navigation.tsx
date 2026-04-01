@@ -296,7 +296,18 @@ export function Navigation({ onCartClick, workType, setWorkType }: NavigationPro
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                About me
+                About
+              </NavLink>
+              <NavLink
+                to="/resume"
+                className={({ isActive }) =>
+                  `block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-red-600 transition-colors ${
+                    isActive ? "nav-active" : ""
+                  }`
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Resume
               </NavLink>
             </div>
           </div>
