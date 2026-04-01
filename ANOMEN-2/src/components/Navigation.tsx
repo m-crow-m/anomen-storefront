@@ -263,7 +263,7 @@ export function Navigation({ onCartClick, workType, setWorkType }: NavigationPro
                 }
                 onClick={() => setIsMenuOpen(false)}
               >
-                Portfolio
+                Work
               </NavLink>
               <NavLink
                 to="/store"

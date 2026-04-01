@@ -4,7 +4,6 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 
 // Components
 import { PortfolioCard } from "./PortfolioCard";
@@ -221,9 +220,10 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
     const content = heroContentRef.current;
     if (!target || !outer || !content) return;
 
-    const maxScroll = 520;
+    const maxScroll = 420;
     let rafId = 0;
     let baseHeight = 0;
+    const minScaleY = 0.05;
 
     const getScrollTop = () =>
       window.scrollY ||
@@ -237,15 +237,18 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
       outer.style.height = `${baseHeight}px`;
     };
 
-    const easeInOut = (t: number) => t * t * (3 - 2 * t);
+    const easeCollapse = (t: number) => 1 - Math.pow(1 - t, 3);
 
     const update = () => {
       rafId = 0;
       const progress = Math.min(getScrollTop() / maxScroll, 1);
-      const easedProgress = easeInOut(progress);
-      const scaleY = 1 - easedProgress;
-      target.style.transform = `scaleY(${scaleY})`;
-      const collapse = baseHeight * (1 - scaleY) * 0.85;
+      const easedProgress = easeCollapse(progress);
+      const scaleY = 1 - easedProgress * (1 - minScaleY);
+      const scaleX = 1 - easedProgress * 0.08;
+      const opacity = 1 - easedProgress * 0.2;
+      target.style.transform = `scale(${scaleX}, ${scaleY})`;
+      target.style.opacity = `${opacity}`;
+      const collapse = baseHeight * (1 - scaleY) * 0.98;
       content.style.transform = `translateY(${-collapse}px)`;
     };
 
@@ -263,6 +266,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", measure);
       if (rafId) window.cancelAnimationFrame(rafId);
+      target.style.opacity = "1";
     };
   }, []);
 
@@ -281,15 +285,6 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
       {/* Hero Section - Editorial Layout */}
       <section className="px-0 pt-2 pb-8 md:pt-4 md:pb-12 lg:pt-6 lg:pb-16 relative overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-4 md:px-8">
-          <motion.div
-            className="absolute top-4 left-4 md:top-8 md:left-8 text-xs md:text-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.3 }}
-          >
-            P. 01
-          </motion.div>
-
         </div>
 
         <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2 -mt-4 md:-mt-6">
@@ -325,14 +320,6 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
       </section>
 
       <div ref={heroContentRef} className="relative will-change-transform">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-8">
-          <div className="mt-3 md:mt-4 text-xs md:text-sm max-w-xs">
-            A COLLECTION OF WORK<br />
-            EMPHASIZING HUMANITY,<br />
-            STRUCTURE, AND SPACE
-          </div>
-        </div>
-
         {/* Portfolio Grid - Editorial Asymmetric Layout */}
         <section className="px-4 md:px-12 lg:px-20 py-12 md:py-24 lg:py-32">
         <div className="max-w-[1600px] mx-auto">
@@ -342,12 +329,6 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
             <>
               {/* Project 1 - Large */}
               <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-                <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
-                  <div className="text-xs md:text-sm space-y-1">
-                    <div>P. 13</div>
-                    <div className="mt-4 md:mt-8">01</div>
-                  </div>
-                </div>
                 <div className="col-span-12 md:col-span-6 md:col-start-4 lg:col-start-5">
                   <PortfolioCard
                     title={PORTFOLIO_PROJECTS[0].title}
@@ -362,10 +343,6 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
               {/* Project 2 */}
               <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
                 <div className="col-span-12 md:col-span-6 md:col-start-3 lg:col-start-2">
-                  <div className="text-xs md:text-sm mb-4 md:mb-8">
-                    <div>P. 29</div>
-                    <div className="mt-2">02</div>
-                  </div>
                   <PortfolioCard
                     title={PORTFOLIO_PROJECTS[1].title}
                     description={PORTFOLIO_PROJECTS[1].description}
@@ -378,12 +355,6 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
 
           {/* Project 3 - Calendar */}
           <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
-              <div className="text-xs md:text-sm space-y-1">
-                <div>P. 45</div>
-                <div className="mt-4 md:mt-8">03</div>
-              </div>
-            </div>
             <div className="col-span-12 md:col-span-6 md:col-start-3 lg:col-start-4">
               <PortfolioCard
                 title={PORTFOLIO_PROJECTS[2].title}
@@ -398,12 +369,6 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
 
           {/* Project 4 - Terrain Poster */}
           <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
-              <div className="text-xs md:text-sm space-y-1">
-                <div>P. 57</div>
-                <div className="mt-4 md:mt-8">04</div>
-              </div>
-            </div>
             <div className="col-span-12 md:col-span-6 md:col-start-2 lg:col-start-1">
               <PortfolioCard
                 title={PORTFOLIO_PROJECTS[3].title}
@@ -418,12 +383,6 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
 
           {/* Project 5 - The Great Song */}
           <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
-              <div className="text-xs md:text-sm space-y-1">
-                <div>P. 63</div>
-                <div className="mt-4 md:mt-8">05</div>
-              </div>
-            </div>
             <div className="col-span-12 md:col-span-6 md:col-start-5 lg:col-start-6">
               <PortfolioCard
                 title={PORTFOLIO_PROJECTS[4].title}
@@ -438,12 +397,6 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
 
           {/* Project 6 - Repurpose Lamp */}
           <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
-              <div className="text-xs md:text-sm space-y-1">
-                <div>P. 71</div>
-                <div className="mt-4 md:mt-8">06</div>
-              </div>
-            </div>
             <div className="col-span-12 md:col-span-6 md:col-start-3 lg:col-start-2">
               <PortfolioCard
                 title={PORTFOLIO_PROJECTS[5].title}
@@ -460,12 +413,6 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
             /* Interactive Work Grid */
             <>
               <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-                <div className="col-span-12 md:col-span-2 flex items-start mb-4 md:mb-0">
-                  <div className="text-xs md:text-sm space-y-1">
-                    <div>INT. 03</div>
-                    <div className="mt-4 md:mt-8">03</div>
-                  </div>
-                </div>
                 <div className="col-span-12 md:col-span-6">
                   <InteractiveCard
                     title={INTERACTIVE_PROJECTS[2].title}

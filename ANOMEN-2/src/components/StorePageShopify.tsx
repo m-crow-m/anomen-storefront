@@ -127,12 +127,6 @@ export function StorePageShopify() {
           <h1 className="font-heading uppercase tracking-tight text-[12vw] md:text-[8vw] leading-[0.85] mb-8 md:mb-16 lg:mb-24">
             STORE
           </h1>
-
-          <div className="grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-6 md:col-start-7 text-xs md:text-sm leading-relaxed">
-              A CURATED SELECTION OF LIMITED EDITION GARMENTS AND OBJECTS. EACH PIECE EMBODIES OUR PHILOSOPHY OF REDUCTION, STRUCTURE, AND TRANSFORMATION.
-            </div>
-          </div>
         </div>
       </section>
 

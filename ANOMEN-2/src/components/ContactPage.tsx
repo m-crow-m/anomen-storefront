@@ -3,37 +3,15 @@
  * Contact form with FormSubmit integration for inquiries
  */
 
-import { useMemo } from "react";
-
 // Form submission endpoint
 const FORM_ENDPOINT = "https://formsubmit.co/jaedenivescrow@yahoo.com";
 
 export function ContactPage() {
-  const contactDetails = useMemo(
-    () => [
-      {
-        label: "Email",
-        value: "jaedenivescrow@yahoo.com",
-        href: "mailto:jaedenivescrow@yahoo.com"
-      }
-    ],
-    []
-  );
-
   return (
     <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
       <div className="px-4 md:px-12 lg:px-20">
         <section className="max-w-5xl mx-auto">
-          <header className="mb-8 md:mb-12 lg:mb-14">
-            <p className="uppercase tracking-[0.3em] text-xs text-neutral-500 mb-4 mt-8">
-              Contact / Inquiries
-            </p>
-            <h1 className="font-heading text-[13vw] sm:text-6xl md:text-7xl lg:text-8xl tracking-[-0.06em] uppercase leading-[0.85]">
-              CONTACT
-            </h1>
-          </header>
-
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_280px] gap-8 lg:gap-12 items-start mt-10">
+          <div className="mt-10">
             <form
               method="POST"
               action={FORM_ENDPOINT}
@@ -119,40 +97,6 @@ export function ContactPage() {
                 Send Inquiry
               </button>
             </form>
-
-            <aside className="space-y-10 pt-8">
-              <div className="space-y-4">
-                <h2 className="uppercase text-[10px] tracking-[0.3em] text-neutral-500">
-                  Direct Contact
-                </h2>
-                <div className="space-y-3">
-                  {contactDetails.map((item) => (
-                    <div key={item.label} className="pb-3">
-                      <span className="block text-[10px] uppercase tracking-[0.3em] text-neutral-500">
-                        {item.label}
-                      </span>
-                      <a
-                        href={item.href}
-                        className="text-sm md:text-base tracking-wide hover:text-red-600 transition-colors"
-                      >
-                        {item.value}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h2 className="uppercase text-[10px] tracking-[0.3em] text-neutral-500">
-                  Send
-                </h2>
-                <div className="space-y-3 text-sm md:text-base tracking-wide text-neutral-700">
-                  <p>Project goals + deliverables.</p>
-                  <p>Ideal timeline and launch dates.</p>
-                  <p>Budget guidance if available.</p>
-                </div>
-              </div>
-            </aside>
           </div>
         </section>
       </div>
