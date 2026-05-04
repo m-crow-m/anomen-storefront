@@ -40,6 +40,8 @@ import calendar13 from "../assets/Calender2026-13.jpg";
 
 // Interactive Work Assets
 import treadmillThumbnail from "../assets/treadmill_thumbnail.png";
+import zipsKioskThumbnail from "../assets/zips_kiosk_thumbnail.png";
+import mlFoodBankThumbnail from "../assets/ml_food_bank_thumbnail.png";
 
 // Terrain poster asset
 import terrainPoster from "../assets/Terrain_poster_2025.jpg";
@@ -112,24 +114,27 @@ const PORTFOLIO_PROJECTS = [
 const INTERACTIVE_PROJECTS = [
   {
     id: 1,
-    title: "Mobile App Prototype",
-    description: "Interactive mobile app design concept",
-    thumbnailUrl: "https://via.placeholder.com/800x600/1a1a1a/ffffff?text=Mobile+App",
-    figmaEmbedUrl: "https://www.figma.com/embed?embed_host=share&url=YOUR_FIGMA_URL_1",
+    title: "Zip's Ordering Kiosk",
+    description: "Fast food ordering kiosk prototype with a multilingual welcome flow",
+    thumbnailUrl: zipsKioskThumbnail,
+    figmaUrl: "https://www.figma.com/proto/5iPATilzci4nna38SlgXDp/UX-1-Project--3--Zip-s-Order-Kiosk--Spring-2025---Community-?node-id=2350-81&t=hWwhBGY9rsGWHeZz-1&scaling=scale-down&content-scaling=fixed&page-id=1%3A9&starting-point-node-id=106%3A31",
+    figmaEmbedUrl: "https://embed.figma.com/proto/5iPATilzci4nna38SlgXDp/UX-1-Project--3--Zip-s-Order-Kiosk--Spring-2025---Community-?node-id=2350-81&scaling=scale-down&content-scaling=fixed&page-id=1%3A9&starting-point-node-id=106%3A31&embed-host=share",
   },
   {
     id: 2,
-    title: "Dashboard UI",
-    description: "Data visualization dashboard prototype",
-    thumbnailUrl: "https://via.placeholder.com/800x600/1a1a1a/ffffff?text=Dashboard+UI",
-    figmaEmbedUrl: "https://www.figma.com/embed?embed_host=share&url=YOUR_FIGMA_URL_2",
-  },
-  {
-    id: 3,
     title: "Smart Treadmill Interface",
     description: "Interactive prototype for a smart treadmill interface",
     thumbnailUrl: treadmillThumbnail,
+    figmaUrl: "https://www.figma.com/proto/opZfpVN4JxgRKEWbzQdufj/UX-1-Project--2--Treadmill-Jaeden-Crow?node-id=2068-924&scaling=scale-down&content-scaling=fixed&page-id=1%3A428&starting-point-node-id=2068%3A914",
     figmaEmbedUrl: "https://embed.figma.com/proto/opZfpVN4JxgRKEWbzQdufj/UX-1-Project--2--Treadmill-Jaeden-Crow?node-id=2068-924&scaling=scale-down&content-scaling=fixed&page-id=1%3A428&starting-point-node-id=2068%3A914&embed-host=share",
+  },
+  {
+    id: 3,
+    title: "Moses Lake Food Bank Redesign",
+    description: "Website redesign prototype for the Moses Lake Food Bank focused on pantry access, updates, and outreach",
+    thumbnailUrl: mlFoodBankThumbnail,
+    figmaUrl: "https://www.figma.com/proto/PEBxrKI8xvgE4PLZNY4F0Y/UX-2-Project--3--ML-Food-Bank-Website--Community-?node-id=4301-1108&t=73WcGuNGu7DHGLco-1&scaling=scale-down&content-scaling=fixed&page-id=2001%3A6",
+    figmaEmbedUrl: "https://embed.figma.com/proto/PEBxrKI8xvgE4PLZNY4F0Y/UX-2-Project--3--ML-Food-Bank-Website--Community-?node-id=4301-1108&scaling=scale-down&content-scaling=fixed&page-id=2001%3A6&embed-host=share",
   }
 ];
 
@@ -413,7 +418,29 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
             /* Interactive Work Grid */
             <>
               <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-                <div className="col-span-12 md:col-span-6">
+                <div className="col-span-12 md:col-span-7 lg:col-span-6">
+                  <InteractiveCard
+                    title={INTERACTIVE_PROJECTS[0].title}
+                    description={INTERACTIVE_PROJECTS[0].description}
+                    thumbnailUrl={INTERACTIVE_PROJECTS[0].thumbnailUrl}
+                    onClick={() => handleInteractiveClick(INTERACTIVE_PROJECTS[0])}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
+                <div className="col-span-12 md:col-span-6 md:col-start-6 lg:col-span-5 lg:col-start-7">
+                  <InteractiveCard
+                    title={INTERACTIVE_PROJECTS[1].title}
+                    description={INTERACTIVE_PROJECTS[1].description}
+                    thumbnailUrl={INTERACTIVE_PROJECTS[1].thumbnailUrl}
+                    onClick={() => handleInteractiveClick(INTERACTIVE_PROJECTS[1])}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
+                <div className="col-span-12 md:col-span-7 md:col-start-3 lg:col-span-6 lg:col-start-4">
                   <InteractiveCard
                     title={INTERACTIVE_PROJECTS[2].title}
                     description={INTERACTIVE_PROJECTS[2].description}

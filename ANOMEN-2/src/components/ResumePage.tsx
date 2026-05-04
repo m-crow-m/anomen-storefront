@@ -122,16 +122,6 @@ export function ResumePage() {
   return (
     <main className="min-h-screen pt-20 md:pt-24 pb-10 md:pb-16 px-4 md:px-8 lg:px-12">
       <div className="mx-auto max-w-[1280px]">
-        <div className="mb-8 flex justify-center">
-          <a
-            href={resumePdf}
-            download="Jaeden_I-C_Resume-2026.pdf"
-            className="inline-flex items-center justify-center border border-black px-6 py-3 text-[11px] uppercase tracking-[0.28em] transition-colors hover:bg-black hover:text-white"
-          >
-            Download
-          </a>
-        </div>
-
         {isLoading ? (
           <div className="py-24 text-center text-xs uppercase tracking-[0.28em] text-neutral-500">
             Loading
@@ -149,6 +139,17 @@ export function ResumePage() {
             ref={containerRef}
             className={`mx-auto flex flex-col items-center ${error ? "hidden" : ""} ${isLoading ? "opacity-0" : "opacity-100"}`}
           />
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <a
+            href={resumePdf}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center border border-black px-6 py-3 text-[11px] uppercase tracking-[0.28em] transition-colors hover:bg-black hover:text-white"
+          >
+            Download
+          </a>
         </div>
       </div>
     </main>

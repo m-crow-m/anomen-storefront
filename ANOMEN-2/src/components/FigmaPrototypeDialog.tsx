@@ -15,6 +15,7 @@ interface FigmaPrototypeDialogProps {
     description: string;
     thumbnailUrl: string;
     figmaEmbedUrl: string;
+    figmaUrl?: string;
   } | null;
 }
 
@@ -37,7 +38,7 @@ export function FigmaPrototypeDialog({ isOpen, onClose, project }: FigmaPrototyp
   if (!isOpen || !project) return null;
 
   const handleOpenInFigma = () => {
-    window.open(project.figmaEmbedUrl, '_blank');
+    window.open(project.figmaUrl ?? project.figmaEmbedUrl, '_blank');
   };
 
   return (
