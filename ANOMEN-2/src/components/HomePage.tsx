@@ -163,9 +163,8 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
       <section className="portfolio-name-hero px-4 md:px-12 lg:px-20">
         <div className="max-w-[1440px] mx-auto">
           <h1 className="portfolio-hero-title font-heading">
-            Jaeden Ives-Crow
-            <br />
-            Vaughankraska
+            <span>Jaeden Ives-Crow</span>
+            <span>Vaughankraska</span>
           </h1>
           <a
             href={portfolioPdf}
@@ -180,15 +179,13 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
       <section id="selected-work" className="px-4 md:px-12 lg:px-20 py-16 md:py-24 border-t border-black">
         <div className="max-w-[1440px] mx-auto">
           <div className="portfolio-work-heading flex gap-8 mb-12 md:mb-16">
-            <div>
-              <p className="uppercase tracking-[0.24em] text-[10px] md:text-xs mb-3">
-                Selected work
-              </p>
-              <h2 className="font-heading text-3xl md:text-5xl tracking-[-0.03em]">
-                {workType === "print" ? "Print & identity" : "UX & interactive"}
-              </h2>
-            </div>
-            <div className="inline-flex self-start border border-black p-1 bg-white" aria-label="Filter portfolio work">
+            <p className="portfolio-work-kicker uppercase tracking-[0.24em] text-[10px] md:text-xs">
+              Selected work
+            </p>
+            <h2 className="portfolio-work-title font-heading text-3xl md:text-5xl tracking-[-0.03em]">
+              {workType === "print" ? "Print & identity" : "UX & interactive"}
+            </h2>
+            <div className="portfolio-work-filter inline-flex border border-black bg-white" aria-label="Filter portfolio work">
               {(["print", "interactive"] as const).map((type) => (
                 <button
                   key={type}
