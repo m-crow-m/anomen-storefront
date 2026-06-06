@@ -571,6 +571,10 @@ svg {
   margin-inline: auto;
 }
 
+.interactive-card-media {
+  aspect-ratio: 16 / 9;
+}
+
 .portfolio-filter-button[aria-pressed="true"],
 .portfolio-filter-button[aria-pressed="true"]:hover {
   color: #ffffff !important;

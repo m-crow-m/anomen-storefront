@@ -20,7 +20,7 @@ export function InteractiveCard({ title, description, thumbnailUrl, onClick }: I
       onClick={onClick}
       aria-label={`Open ${title} prototype`}
     >
-      <div className="aspect-[4/3] overflow-hidden border border-black mb-5 md:mb-6 relative bg-white transition-transform duration-300 group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:outline-2 group-focus-visible:outline-offset-4">
+      <div className="interactive-card-media overflow-hidden border border-black mb-5 md:mb-6 relative bg-white transition-transform duration-300 group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:outline-2 group-focus-visible:outline-offset-4">
         <img
           src={thumbnailUrl}
           alt={title}

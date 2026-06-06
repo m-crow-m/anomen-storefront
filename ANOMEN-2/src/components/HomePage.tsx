@@ -40,8 +40,10 @@ import calendar13 from "../assets/Calender2026-13.jpg";
 
 // Interactive Work Assets
 import treadmillThumbnail from "../assets/treadmill_thumbnail.png";
-import zipsKioskThumbnail from "../assets/zips_kiosk_thumbnail.png";
-import mlFoodBankThumbnail from "../assets/ml_food_bank_thumbnail.png";
+import project8Thumbnail from "../assets/Thumbnails/Project8.png";
+import pxlThumbnail from "../assets/Thumbnails/PXL.png";
+import zipsKioskThumbnail from "../assets/Thumbnails/Zipz.png";
+import mlFoodBankThumbnail from "../assets/Thumbnails/ML Food.png";
 
 // Terrain poster asset
 import terrainPoster from "../assets/Terrain_poster_2025.jpg";
@@ -111,6 +113,22 @@ const PORTFOLIO_PROJECTS = [
 
 // Interactive Figma prototypes data
 const INTERACTIVE_PROJECTS = [
+  {
+    id: 8,
+    title: "Project 8",
+    description: "UN sustainability interactive prototype",
+    thumbnailUrl: project8Thumbnail,
+    figmaUrl: "https://www.figma.com/proto/9YXXgAKfZzPukrSJOJniQA/UX3-Project-2--UN-Sustainability--Copy-?node-id=341-1606&t=SJQXgpRx0fAPrMkZ-0&scaling=scale-down&content-scaling=fixed&page-id=171%3A58&starting-point-node-id=341%3A1606",
+    figmaEmbedUrl: "https://embed.figma.com/proto/9YXXgAKfZzPukrSJOJniQA/UX3-Project-2--UN-Sustainability--Copy-?node-id=341-1606&scaling=scale-down&content-scaling=fixed&page-id=171%3A58&starting-point-node-id=341%3A1606&embed-host=share",
+  },
+  {
+    id: 7,
+    title: "Design Library App",
+    description: "Interactive design library app prototype",
+    thumbnailUrl: pxlThumbnail,
+    figmaUrl: "https://www.figma.com/proto/QItpaDkIozGTucRAvCC5s2/Design-Library-App?node-id=2439-457&t=GGBrJahxiIvNihrm-1&scaling=scale-down&content-scaling=fixed&page-id=1%3A21&starting-point-node-id=2439%3A457",
+    figmaEmbedUrl: "https://embed.figma.com/proto/QItpaDkIozGTucRAvCC5s2/Design-Library-App?node-id=2439-457&scaling=scale-down&content-scaling=fixed&page-id=1%3A21&starting-point-node-id=2439%3A457&embed-host=share",
+  },
   {
     id: 1,
     title: "Zip's Ordering Kiosk",
