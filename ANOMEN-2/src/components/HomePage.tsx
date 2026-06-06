@@ -3,7 +3,7 @@
  * Landing page with hero section and portfolio showcase
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 // Components
 import { PortfolioCard } from "./PortfolioCard";
@@ -51,8 +51,7 @@ import theGreatSong01 from "../assets/theGreatSong01.jpg";
 import theGreatSong02 from "../assets/theGreatSong02.jpg";
 import theGreatSong03 from "../assets/theGreatSong03.jpg";
 import repurposeLamp from "../assets/Repurpose_Lamp_JIC_10-25.jpg";
-import heroAnimationMov from "../assets/heroAnimation.mov";
-import heroAnimationWebm from "../assets/HeroAnimation.webm";
+import portfolioPdf from "../assets/Portfolio_0626_JaedenCrow.pdf";
 
 // Portfolio project data
 const PORTFOLIO_PROJECTS = [
@@ -144,136 +143,10 @@ interface HomePageProps {
 }
 
 export function HomePage({ workType, setWorkType }: HomePageProps) {
-  const heroVideoRef = useRef<HTMLVideoElement | null>(null);
-  const heroCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const heroWrapRef = useRef<HTMLDivElement | null>(null);
-  const heroOuterRef = useRef<HTMLDivElement | null>(null);
-  const heroContentRef = useRef<HTMLDivElement | null>(null);
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_PROJECTS[0] | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedInteractive, setSelectedInteractive] = useState<typeof INTERACTIVE_PROJECTS[0] | null>(null);
   const [isFigmaDialogOpen, setIsFigmaDialogOpen] = useState(false);
-  const [useCanvas] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const ua = window.navigator.userAgent.toLowerCase();
-    const hasMediaCapabilities = !!(
-      window.navigator.mediaCapabilities &&
-      window.navigator.mediaCapabilities.decodingInfo
-    );
-    const isSafari =
-      ua.includes("safari") && !ua.includes("chrome") && ua.includes("version/");
-    return !(isSafari && hasMediaCapabilities);
-  });
-
-  useEffect(() => {
-    const video = heroVideoRef.current;
-    if (!video) return;
-    const canvas = heroCanvasRef.current;
-    const shouldUseMov = !useCanvas;
-    video.muted = true;
-    video.loop = true;
-    video.autoplay = true;
-    video.playsInline = true;
-    video.src = shouldUseMov ? heroAnimationMov : heroAnimationWebm;
-    video.load();
-
-    let rafId = 0;
-    let onReady: (() => void) | null = null;
-
-    if (!shouldUseMov && canvas) {
-      const ctx = canvas.getContext("2d", { alpha: true });
-      if (!ctx) return;
-
-      const renderFrame = () => {
-        if (video.readyState >= 2) {
-          if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-          }
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        }
-        rafId = requestAnimationFrame(renderFrame);
-      };
-
-      onReady = () => {
-        if (rafId === 0) {
-          renderFrame();
-        }
-      };
-
-      video.addEventListener("loadeddata", onReady);
-      onReady();
-    }
-
-    const playPromise = video.play();
-    if (playPromise && typeof playPromise.catch === "function") {
-      playPromise.catch(() => undefined);
-    }
-
-    return () => {
-      if (onReady) {
-        video.removeEventListener("loadeddata", onReady);
-      }
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, [useCanvas]);
-
-  useEffect(() => {
-    const target = heroWrapRef.current;
-    const outer = heroOuterRef.current;
-    const content = heroContentRef.current;
-    if (!target || !outer || !content) return;
-
-    const maxScroll = 420;
-    let rafId = 0;
-    let baseHeight = 0;
-    const minScaleY = 0.05;
-
-    const getScrollTop = () =>
-      window.scrollY ||
-      document.scrollingElement?.scrollTop ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0;
-
-    const measure = () => {
-      baseHeight = target.getBoundingClientRect().height;
-      outer.style.height = `${baseHeight}px`;
-    };
-
-    const easeCollapse = (t: number) => 1 - Math.pow(1 - t, 3);
-
-    const update = () => {
-      rafId = 0;
-      const progress = Math.min(getScrollTop() / maxScroll, 1);
-      const easedProgress = easeCollapse(progress);
-      const scaleY = 1 - easedProgress * (1 - minScaleY);
-      const scaleX = 1 - easedProgress * 0.08;
-      const opacity = 1 - easedProgress * 0.2;
-      target.style.transform = `scale(${scaleX}, ${scaleY})`;
-      target.style.opacity = `${opacity}`;
-      const collapse = baseHeight * (1 - scaleY) * 0.98;
-      content.style.transform = `translateY(${-collapse}px)`;
-    };
-
-    const onScroll = () => {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(update);
-    };
-
-    measure();
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", measure);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", measure);
-      if (rafId) window.cancelAnimationFrame(rafId);
-      target.style.opacity = "1";
-    };
-  }, []);
 
   const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
     setSelectedProject(project);
@@ -286,174 +159,83 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
   };
 
   return (
-    <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
-      {/* Hero Section - Editorial Layout */}
-      <section className="px-0 pt-2 pb-8 md:pt-4 md:pb-12 lg:pt-6 lg:pb-16 relative overflow-hidden">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-8">
+    <main className="min-h-screen pt-20 md:pt-28 pb-16 md:pb-24">
+      <section className="portfolio-name-hero px-4 md:px-12 lg:px-20">
+        <div className="max-w-[1440px] mx-auto">
+          <h1 className="portfolio-hero-title font-heading">
+            Jaeden Ives-Crow
+            <br />
+            Vaughankraska
+          </h1>
+          <a
+            href={portfolioPdf}
+            download="Jaeden-Ives-Crow-Vaughankraska-Portfolio.pdf"
+            className="portfolio-download-button font-heading"
+          >
+            Download portfolio
+          </a>
         </div>
-
-        <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2 -mt-4 md:-mt-6">
-          <div ref={heroOuterRef} className="w-full overflow-hidden">
-            <div
-              ref={heroWrapRef}
-              className="relative w-full aspect-video origin-top will-change-transform"
-              style={{ transform: "scaleY(1)" }}
-            >
-            {useCanvas ? (
-              <canvas
-                ref={heroCanvasRef}
-                className="w-full h-full object-contain pointer-events-none"
-              />
-            ) : null}
-            <video
-              ref={heroVideoRef}
-              className={`hero-video w-full h-full object-contain${useCanvas ? " hero-video-source" : ""}`}
-              autoPlay
-              loop
-              muted
-              controls={false}
-              controlsList="nodownload noplaybackrate noremoteplayback"
-              disablePictureInPicture
-              disableRemotePlayback
-              playsInline
-              preload="auto"
-            />
-            </div>
-          </div>
-        </div>
-
       </section>
 
-      <div ref={heroContentRef} className="relative will-change-transform">
-        {/* Portfolio Grid - Editorial Asymmetric Layout */}
-        <section className="px-4 md:px-12 lg:px-20 py-12 md:py-24 lg:py-32">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="mb-12 md:mb-16" />
+      <section id="selected-work" className="px-4 md:px-12 lg:px-20 py-16 md:py-24 border-t border-black">
+        <div className="max-w-[1440px] mx-auto">
+          <div className="portfolio-work-heading flex gap-8 mb-12 md:mb-16">
+            <div>
+              <p className="uppercase tracking-[0.24em] text-[10px] md:text-xs mb-3">
+                Selected work
+              </p>
+              <h2 className="font-heading text-3xl md:text-5xl tracking-[-0.03em]">
+                {workType === "print" ? "Print & identity" : "UX & interactive"}
+              </h2>
+            </div>
+            <div className="inline-flex self-start border border-black p-1 bg-white" aria-label="Filter portfolio work">
+              {(["print", "interactive"] as const).map((type) => (
+                <button
+                  key={type}
+                  type="button"
+                  onClick={() => setWorkType(type)}
+                  className={`portfolio-filter-button font-heading uppercase tracking-[0.14em] text-[10px] md:text-xs px-4 md:px-5 py-3 transition-colors ${
+                    workType === type
+                      ? "bg-black text-white"
+                      : "bg-transparent hover:text-red-600"
+                  }`}
+                  aria-pressed={workType === type}
+                >
+                  {type === "print" ? "Print / brand" : "UX / UI"}
+                </button>
+              ))}
+            </div>
+          </div>
 
           {workType === "print" ? (
-            <>
-              {/* Project 1 - Large */}
-              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-                <div className="col-span-12 md:col-span-6 md:col-start-4 lg:col-start-5">
-                  <PortfolioCard
-                    title={PORTFOLIO_PROJECTS[0].title}
-                    description={PORTFOLIO_PROJECTS[0].description}
-                    imageUrl={PORTFOLIO_PROJECTS[0].imageUrl}
-                    images={PORTFOLIO_PROJECTS[0].images}
-                    onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[0])}
-                  />
-                </div>
-              </div>
-
-              {/* Project 2 */}
-              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-                <div className="col-span-12 md:col-span-6 md:col-start-3 lg:col-start-2">
-                  <PortfolioCard
-                    title={PORTFOLIO_PROJECTS[1].title}
-                    description={PORTFOLIO_PROJECTS[1].description}
-                    imageUrl={PORTFOLIO_PROJECTS[1].imageUrl}
-                    images={PORTFOLIO_PROJECTS[1].images}
-                    onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[1])}
-                  />
-                </div>
-              </div>
-
-          {/* Project 3 - Calendar */}
-          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-6 md:col-start-3 lg:col-start-4">
-              <PortfolioCard
-                title={PORTFOLIO_PROJECTS[2].title}
-                description={PORTFOLIO_PROJECTS[2].description}
-                imageUrl={PORTFOLIO_PROJECTS[2].imageUrl}
-                images={PORTFOLIO_PROJECTS[2].images}
-                imagePosition={PORTFOLIO_PROJECTS[2].imagePosition}
-                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[2])}
-              />
+            <div className="portfolio-project-grid grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-16 md:gap-y-24">
+              {PORTFOLIO_PROJECTS.map((project) => (
+                <PortfolioCard
+                  key={project.id}
+                  title={project.title}
+                  description={project.description}
+                  imageUrl={project.imageUrl}
+                  images={project.images}
+                  imagePosition={project.imagePosition}
+                  onClick={() => handleProjectClick(project)}
+                />
+              ))}
             </div>
-          </div>
-
-          {/* Project 4 - Terrain Poster */}
-          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-6 md:col-start-2 lg:col-start-1">
-              <PortfolioCard
-                title={PORTFOLIO_PROJECTS[3].title}
-                description={PORTFOLIO_PROJECTS[3].description}
-                imageUrl={PORTFOLIO_PROJECTS[3].imageUrl}
-                images={PORTFOLIO_PROJECTS[3].images}
-                imagePosition={PORTFOLIO_PROJECTS[3].imagePosition}
-                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[3])}
-              />
-            </div>
-          </div>
-
-          {/* Project 5 - The Great Song */}
-          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-6 md:col-start-5 lg:col-start-6">
-              <PortfolioCard
-                title={PORTFOLIO_PROJECTS[4].title}
-                description={PORTFOLIO_PROJECTS[4].description}
-                imageUrl={PORTFOLIO_PROJECTS[4].imageUrl}
-                images={PORTFOLIO_PROJECTS[4].images}
-                imagePosition={PORTFOLIO_PROJECTS[4].imagePosition}
-                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[4])}
-              />
-            </div>
-          </div>
-
-          {/* Project 6 - Repurpose Lamp */}
-          <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-12 md:col-span-6 md:col-start-3 lg:col-start-2">
-              <PortfolioCard
-                title={PORTFOLIO_PROJECTS[5].title}
-                description={PORTFOLIO_PROJECTS[5].description}
-                imageUrl={PORTFOLIO_PROJECTS[5].imageUrl}
-                images={PORTFOLIO_PROJECTS[5].images}
-                imagePosition={PORTFOLIO_PROJECTS[5].imagePosition}
-                onClick={() => handleProjectClick(PORTFOLIO_PROJECTS[5])}
-              />
-            </div>
-          </div>
-            </>
           ) : (
-            /* Interactive Work Grid */
-            <>
-              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-                <div className="col-span-12 md:col-span-7 lg:col-span-6">
-                  <InteractiveCard
-                    title={INTERACTIVE_PROJECTS[0].title}
-                    description={INTERACTIVE_PROJECTS[0].description}
-                    thumbnailUrl={INTERACTIVE_PROJECTS[0].thumbnailUrl}
-                    onClick={() => handleInteractiveClick(INTERACTIVE_PROJECTS[0])}
-                  />
-                </div>
-              </div>
-
-              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-                <div className="col-span-12 md:col-span-6 md:col-start-6 lg:col-span-5 lg:col-start-7">
-                  <InteractiveCard
-                    title={INTERACTIVE_PROJECTS[1].title}
-                    description={INTERACTIVE_PROJECTS[1].description}
-                    thumbnailUrl={INTERACTIVE_PROJECTS[1].thumbnailUrl}
-                    onClick={() => handleInteractiveClick(INTERACTIVE_PROJECTS[1])}
-                  />
-                </div>
-              </div>
-
-              <div className="mb-16 md:mb-32 lg:mb-48 grid grid-cols-12 gap-4 md:gap-8">
-                <div className="col-span-12 md:col-span-7 md:col-start-3 lg:col-span-6 lg:col-start-4">
-                  <InteractiveCard
-                    title={INTERACTIVE_PROJECTS[2].title}
-                    description={INTERACTIVE_PROJECTS[2].description}
-                    thumbnailUrl={INTERACTIVE_PROJECTS[2].thumbnailUrl}
-                    onClick={() => handleInteractiveClick(INTERACTIVE_PROJECTS[2])}
-                  />
-                </div>
-              </div>
-            </>
+            <div className="portfolio-project-grid grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-16 md:gap-y-24">
+              {INTERACTIVE_PROJECTS.map((project) => (
+                <InteractiveCard
+                  key={project.id}
+                  title={project.title}
+                  description={project.description}
+                  thumbnailUrl={project.thumbnailUrl}
+                  onClick={() => handleInteractiveClick(project)}
+                />
+              ))}
+            </div>
           )}
         </div>
-        </section>
-      </div>
+      </section>
 
       {/* Project Detail Dialog */}
       <ProjectDetailDialog

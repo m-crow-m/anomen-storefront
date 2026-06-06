@@ -14,36 +14,36 @@ interface InteractiveCardProps {
 
 export function InteractiveCard({ title, description, thumbnailUrl, onClick }: InteractiveCardProps) {
   return (
-    <div className="group cursor-pointer" onClick={onClick}>
-      <div className="aspect-[4/3] overflow-hidden border border-black mb-4 md:mb-8 relative bg-neutral-900 transition-shadow duration-300 group-hover:shadow-[0_0_0_4px_rgba(0,0,0,1)] md:group-hover:shadow-[0_0_0_8px_rgba(0,0,0,1)]">
+    <button
+      type="button"
+      className="group w-full text-left"
+      onClick={onClick}
+      aria-label={`Open ${title} prototype`}
+    >
+      <div className="aspect-[4/3] overflow-hidden border border-black mb-5 md:mb-6 relative bg-white transition-transform duration-300 group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:outline-2 group-focus-visible:outline-offset-4">
         <img
           src={thumbnailUrl}
           alt={title}
-          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
         />
-        {/* Play overlay */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/90 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-            <Play className="w-6 h-6 md:w-8 md:h-8 text-black ml-1" fill="currentColor" />
+          <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white border border-black flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300 shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+            <Play className="w-5 h-5 md:w-6 md:h-6 text-black ml-1" fill="currentColor" />
           </div>
         </div>
-        {/* Interactive badge */}
-        <div className="absolute top-4 right-4 px-3 py-1 bg-black text-white text-xs uppercase tracking-wider">
-          Interactive
-        </div>
+        <span className="absolute top-3 right-3 px-3 py-2 bg-white border border-black text-[10px] uppercase tracking-[0.18em]">
+          Prototype
+        </span>
       </div>
 
-      <div className="space-y-2 md:space-y-4">
-        <h3 className="font-heading uppercase tracking-wider text-sm md:text-base flex items-center gap-2">
+      <div className="space-y-2">
+        <h3 className="font-heading tracking-wide text-base md:text-lg">
           {title}
-          <span className="text-xs font-normal normal-case tracking-normal text-neutral-500">
-            — Click to interact
-          </span>
         </h3>
-        <p className="leading-relaxed text-xs md:text-sm max-w-md">
+        <p className="leading-relaxed text-sm max-w-lg text-neutral-700">
           {description}
         </p>
       </div>
-    </div>
+    </button>
   );
 }

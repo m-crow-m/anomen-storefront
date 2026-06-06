@@ -26,24 +26,30 @@ export function PortfolioCard({ title, description, imageUrl, images, imagePosit
   };
 
   return (
-    <div className="group cursor-pointer" onClick={onClick} onMouseEnter={handleMouseEnter}>
-      <div className="aspect-[4/3] overflow-visible border border-black mb-4 md:mb-8 relative bg-white transition-shadow duration-300 group-hover:shadow-[0_0_0_4px_rgba(0,0,0,1)] md:group-hover:shadow-[0_0_0_8px_rgba(0,0,0,1)]">
+    <button
+      type="button"
+      className="group w-full text-left"
+      onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      aria-label={`View ${title} project`}
+    >
+      <div className="aspect-[4/3] overflow-hidden border border-black mb-5 md:mb-6 relative bg-white transition-transform duration-300 group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:outline-2 group-focus-visible:outline-offset-4">
         <ImageWithFallback
           src={imageUrl}
           alt={title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
           style={imagePosition ? { objectPosition: imagePosition } : undefined}
         />
       </div>
 
-      <div className="space-y-2 md:space-y-4">
-        <h3 className="font-heading uppercase tracking-wider text-sm md:text-base">
+      <div className="space-y-2">
+        <h3 className="font-heading tracking-wide text-base md:text-lg">
           {title}
         </h3>
-        <p className="leading-relaxed text-xs md:text-sm max-w-md">
+        <p className="leading-relaxed text-sm max-w-lg text-neutral-700">
           {description}
         </p>
       </div>
-    </div>
+    </button>
   );
 }
