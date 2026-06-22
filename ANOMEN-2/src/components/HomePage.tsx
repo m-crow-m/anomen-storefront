@@ -44,6 +44,7 @@ import project8Thumbnail from "../assets/Thumbnails/Project8.png";
 import pxlThumbnail from "../assets/Thumbnails/PXL.png";
 import zipsKioskThumbnail from "../assets/Thumbnails/Zipz.png";
 import mlFoodBankThumbnail from "../assets/Thumbnails/ML Food.png";
+import aiProjectThumbnail from "../assets/AI_Project thumbnail.png";
 
 // Terrain poster asset
 import terrainPoster from "../assets/Terrain_poster_2025.jpg";
@@ -111,8 +112,34 @@ const PORTFOLIO_PROJECTS = [
   }
 ];
 
-// Interactive Figma prototypes data
-const INTERACTIVE_PROJECTS = [
+type FigmaProject = {
+  id: number;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  figmaUrl: string;
+  figmaEmbedUrl: string;
+};
+
+type ExternalProject = {
+  id: number;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  externalUrl: string;
+};
+
+type InteractiveProject = FigmaProject | ExternalProject;
+
+// Interactive prototypes and external projects data
+const INTERACTIVE_PROJECTS: InteractiveProject[] = [
+  {
+    id: 9,
+    title: "AI Research Project",
+    description: "Short film exploring AI research and human connection",
+    thumbnailUrl: aiProjectThumbnail,
+    externalUrl: "https://m-crow-m.github.io/notalone/",
+  },
   {
     id: 8,
     title: "Project 8",
@@ -163,7 +190,7 @@ interface HomePageProps {
 export function HomePage({ workType, setWorkType }: HomePageProps) {
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_PROJECTS[0] | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedInteractive, setSelectedInteractive] = useState<typeof INTERACTIVE_PROJECTS[0] | null>(null);
+  const [selectedInteractive, setSelectedInteractive] = useState<FigmaProject | null>(null);
   const [isFigmaDialogOpen, setIsFigmaDialogOpen] = useState(false);
 
   const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
@@ -171,7 +198,12 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
     setIsDialogOpen(true);
   };
 
-  const handleInteractiveClick = (project: typeof INTERACTIVE_PROJECTS[0]) => {
+  const handleInteractiveClick = (project: InteractiveProject) => {
+    if ("externalUrl" in project && project.externalUrl) {
+      window.open(project.externalUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
     setSelectedInteractive(project);
     setIsFigmaDialogOpen(true);
   };
@@ -244,6 +276,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
                   title={project.title}
                   description={project.description}
                   thumbnailUrl={project.thumbnailUrl}
+                  badgeLabel={"externalUrl" in project ? "Film" : "Prototype"}
                   onClick={() => handleInteractiveClick(project)}
                 />
               ))}

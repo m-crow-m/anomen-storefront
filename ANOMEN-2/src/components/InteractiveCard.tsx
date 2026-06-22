@@ -9,16 +9,17 @@ interface InteractiveCardProps {
   title: string;
   description: string;
   thumbnailUrl: string;
+  badgeLabel?: string;
   onClick: () => void;
 }
 
-export function InteractiveCard({ title, description, thumbnailUrl, onClick }: InteractiveCardProps) {
+export function InteractiveCard({ title, description, thumbnailUrl, badgeLabel = "Prototype", onClick }: InteractiveCardProps) {
   return (
     <button
       type="button"
       className="group w-full text-left"
       onClick={onClick}
-      aria-label={`Open ${title} prototype`}
+      aria-label={`Open ${title}`}
     >
       <div className="interactive-card-media overflow-hidden border border-black mb-5 md:mb-6 relative bg-white transition-transform duration-300 group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:outline-2 group-focus-visible:outline-offset-4">
         <img
@@ -32,7 +33,7 @@ export function InteractiveCard({ title, description, thumbnailUrl, onClick }: I
           </div>
         </div>
         <span className="absolute top-3 right-3 px-3 py-2 bg-white border border-black text-[10px] uppercase tracking-[0.18em]">
-          Prototype
+          {badgeLabel}
         </span>
       </div>
 
