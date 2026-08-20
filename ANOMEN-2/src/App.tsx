@@ -1,6 +1,6 @@
 /**
- * ANOMEN Storefront - Main Application
- * A brutalist design studio storefront with Shopify integration
+ * ANOMEN Portfolio - Main Application
+ * A brutalist design portfolio site
  */
 
 import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
@@ -8,25 +8,18 @@ import { useEffect, useState } from "react";
 
 // Layout Components
 import { Navigation } from "./components/Navigation";
-import { CartDrawer } from "./components/CartDrawer";
 
 // Page Components
 import { HomePage } from "./components/HomePage";
 import { AboutPage } from "./components/AboutPage";
-import { StorePageShopify } from "./components/StorePageShopify";
-import { ProductDetailPage } from "./components/ProductDetailPage";
 import { ContactPage } from "./components/ContactPage";
 import { ResumePage } from "./components/ResumePage";
-
-// Context Providers
-import { CartProvider } from "./contexts/CartContext";
 
 /**
  * Root application component
  * Handles routing, global state, and custom cursor interactions
  */
 export default function App() {
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [workType, setWorkType] = useState<"print" | "interactive">("print");
 
   // Custom cursor effect for brutalist aesthetic
@@ -46,35 +39,22 @@ export default function App() {
   }, []);
 
   return (
-    <CartProvider>
-      <Router>
-        <div className="min-h-screen">
-          <Navigation
-            onCartClick={() => setIsCartOpen(true)}
-            workType={workType}
-            setWorkType={setWorkType}
-          />
+    <Router>
+      <div className="min-h-screen">
+        <Navigation workType={workType} setWorkType={setWorkType} />
 
-          <Routes>
-            <Route path="/" element={<Navigate to="/portfolio" replace />} />
-            <Route
-              path="/portfolio"
-              element={<HomePage workType={workType} setWorkType={setWorkType} />}
-            />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/store" element={<StorePageShopify />} />
-            <Route path="/product/:productHandle" element={<ProductDetailPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/resume" element={<ResumePage />} />
-            <Route path="*" element={<Navigate to="/portfolio" replace />} />
-          </Routes>
-
-          <CartDrawer
-            isOpen={isCartOpen}
-            onClose={() => setIsCartOpen(false)}
+        <Routes>
+          <Route path="/" element={<Navigate to="/portfolio" replace />} />
+          <Route
+            path="/portfolio"
+            element={<HomePage workType={workType} setWorkType={setWorkType} />}
           />
-        </div>
-      </Router>
-    </CartProvider>
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/resume" element={<ResumePage />} />
+          <Route path="*" element={<Navigate to="/portfolio" replace />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }

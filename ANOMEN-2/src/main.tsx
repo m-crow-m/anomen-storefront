@@ -1,5 +1,5 @@
 /**
- * ANOMEN Storefront - Entry Point
+ * ANOMEN Portfolio - Entry Point
  * Bootstraps the React application with strict mode enabled
  */
 
