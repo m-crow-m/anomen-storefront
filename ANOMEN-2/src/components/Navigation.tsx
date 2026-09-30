@@ -25,6 +25,8 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeTimeoutRef = useRef<number | null>(null);
   const logoRef = useRef<HTMLAnchorElement | null>(null);
   const [logoOffset, setLogoOffset] = useState({ x: 0, y: 0, scale: 1 });
@@ -66,6 +68,25 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const dismissOutside = (event: PointerEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) setIsMenuOpen(false);
+    };
+    const dismissEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", dismissOutside);
+    document.addEventListener("keydown", dismissEscape);
+    return () => {
+      document.removeEventListener("pointerdown", dismissOutside);
+      document.removeEventListener("keydown", dismissEscape);
+    };
+  }, [isMenuOpen]);
 
   useLayoutEffect(() => {
     const updateLogoOffset = () => {
@@ -181,7 +202,7 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
             </span>
           </Link>
           {showWorkType ? (
-            <div className="flex items-center gap-2">
+            <div className="nav-work-type flex items-center gap-2">
               <span
                 className="text-xs md:text-sm uppercase tracking-wider"
                 style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
@@ -224,16 +245,22 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
         <div className="flex items-center gap-4 md:gap-8 lg:gap-12 text-xs md:text-sm">
           <div
             className="relative group"
-            onMouseEnter={openMenu}
-            onMouseLeave={closeMenu}
+            ref={menuRef}
+            onPointerEnter={(event) => { if (event.pointerType === "mouse") openMenu(); }}
+            onPointerLeave={(event) => { if (event.pointerType === "mouse") closeMenu(); }}
           >
             <button
               type="button"
               className="uppercase tracking-wider hover:text-red-600 transition-colors flex items-center"
+              ref={menuButtonRef}
+              aria-controls="navigation-dropdown"
               aria-haspopup="true"
               aria-expanded={isMenuOpen}
               aria-label="Open navigation menu"
-              onClick={() => setIsMenuOpen((open) => !open)}
+              onClick={() => {
+                if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
+                setIsMenuOpen((open) => !open);
+              }}
             >
               <span className="sr-only">Menu</span>
               <ChevronDown
@@ -244,11 +271,10 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
               />
             </button>
             <div
-              className={`absolute left-1/2 -translate-x-1/2 mt-3 min-w-[200px] border border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)] ${
-                isMenuOpen ? "block" : "hidden group-hover:block"
+              id="navigation-dropdown"
+              className={`navigation-dropdown absolute mt-3 border border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)] ${
+                isMenuOpen ? "block" : "hidden"
               }`}
-              onMouseEnter={openMenu}
-              onMouseLeave={closeMenu}
             >
               <NavLink
                 to="/portfolio"

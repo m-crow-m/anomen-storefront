@@ -611,3 +611,192 @@ svg {
     letter-spacing: 0.14em;
   }
 }
+
+/* Scroll distance and horizontal travel are equal, with no animated lag. */
+.portfolio-carousel {
+  overflow-anchor: none;
+  background: #000;
+  color: #fff;
+}
+.portfolio-carousel * { text-shadow: none; }
+.portfolio-carousel-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  padding: 110px clamp(20px, 5vw, 80px) 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.portfolio-carousel .portfolio-work-heading { margin-bottom: 28px !important; }
+.portfolio-carousel .portfolio-work-filter { color: #000; }
+.portfolio-carousel-viewport {
+  overflow: clip;
+  width: 100%;
+  /* Fade the clipped card into the black section; reveal the final card fully. */
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--edge-fade, 160px)), transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--edge-fade, 160px)), transparent);
+}
+.portfolio-carousel-track {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(24px, 4vw, 64px);
+  width: max-content;
+  will-change: transform;
+  padding: 8px 0;
+}
+.portfolio-carousel-track > button {
+  flex: 0 0 auto;
+  width: min(66vw, 660px, 70svh);
+  color: #fff;
+}
+.portfolio-carousel-track p { color: #fff; }
+.portfolio-carousel-track > button:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+.portfolio-carousel-track .interactive-card-media > span { color: #000; }
+.portfolio-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 24px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+.portfolio-carousel-controls > div { display: flex; gap: 12px; }
+.portfolio-carousel-controls button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 22px;
+}
+.portfolio-carousel-controls button:hover,
+.portfolio-carousel-controls button:focus-visible { background: #fff; color: #000; }
+@media (max-width: 767px) {
+  .portfolio-carousel-sticky { padding-top: 90px; }
+  .portfolio-carousel-track > button { width: min(78vw, 65svh); }
+}
+.portfolio-carousel .portfolio-work-kicker,
+.portfolio-carousel .portfolio-work-title,
+.portfolio-carousel-track h3,
+.portfolio-carousel-track p,
+.portfolio-carousel-controls span,
+.portfolio-carousel-controls button { color: #fff !important; }
+.portfolio-carousel-controls button:hover,
+.portfolio-carousel-controls button:focus-visible { color: #000 !important; }
+body:has(.portfolio-carousel) .nav-shell { background: #fff !important; }
+@media (max-height: 750px) {
+  .portfolio-carousel-sticky { padding-top: 85px; padding-bottom: 16px; }
+  .portfolio-carousel .portfolio-work-heading { margin-bottom: 12px !important; }
+  .portfolio-carousel .portfolio-work-kicker { display: none; }
+  .portfolio-carousel-track > button { width: min(66vw, 48svh); }
+  .portfolio-carousel-controls { margin-top: 12px; }
+}
+
+.portfolio-carousel-controls button { display: grid; place-items: center; }
+.portfolio-carousel-controls svg { width: 20px; height: 20px; }
+.portfolio-carousel-dots { display: none; }
+@media (max-width: 767px) {
+  .nav-work-type { display: none; }
+  .portfolio-carousel-sticky {
+    position: relative;
+    min-height: calc(100svh - 72px);
+    padding: 32px 20px;
+    justify-content: flex-start;
+  }
+  .portfolio-carousel .portfolio-work-heading {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px !important;
+  }
+  .portfolio-carousel .portfolio-work-filter { align-self: center; }
+  .portfolio-carousel-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  .portfolio-carousel-viewport::-webkit-scrollbar { display: none; }
+  .portfolio-carousel-track { width: 100%; gap: 24px; will-change: auto; }
+  .portfolio-carousel-track > button {
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .portfolio-carousel-controls { display: none; }
+  .portfolio-carousel-dots {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    margin-top: auto;
+    padding-top: 28px;
+  }
+  .portfolio-carousel-dots button {
+    display: grid;
+    place-items: center;
+    flex: 0 1 36px;
+    min-width: 0;
+    width: 36px;
+    height: 44px;
+  }
+  .portfolio-carousel-dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #666;
+  }
+  .portfolio-carousel-dots button[aria-current="true"] span { background: #fff; }
+  .portfolio-carousel-dots button:focus-visible { outline: 1px solid #fff; }
+}
+
+.navigation-dropdown {
+  right: 0;
+  width: min(220px, calc(100vw - 40px));
+  max-height: calc(100dvh - 100px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@media (max-width: 767px) {
+  button[aria-controls="navigation-dropdown"] {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .navigation-dropdown a { min-height: 44px; display: flex; align-items: center; }
+}
+
+/* Equal card geometry keeps the filter and controls steady between categories. */
+.portfolio-carousel-track .interactive-card-media { aspect-ratio: 4 / 3; }
+.portfolio-carousel-track .interactive-card-media img { object-fit: contain; background: #000; }
+.portfolio-carousel-track > button > div:last-child { min-height: 110px; }
+.portfolio-carousel .portfolio-work-filter {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  isolation: isolate;
+  padding: 4px;
+}
+.portfolio-work-filter::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / 2);
+  background: #000;
+  transform: translateX(0);
+  transition: transform 220ms ease;
+}
+.portfolio-work-filter[data-work-type="interactive"]::before { transform: translateX(100%); }
+.portfolio-work-filter .portfolio-filter-button { background: transparent !important; }
+@media (max-width: 767px) {
+  .portfolio-carousel-track > button > div:last-child { min-height: 140px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-work-filter::before { transition: none; }
+}

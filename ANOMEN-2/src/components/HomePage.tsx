@@ -6,6 +6,7 @@
 import { useState } from "react";
 
 // Components
+import { WorkCarousel } from "./WorkCarousel";
 import { PortfolioCard } from "./PortfolioCard";
 import { InteractiveCard } from "./InteractiveCard";
 import { ProjectDetailDialog } from "./ProjectDetailDialog";
@@ -37,6 +38,14 @@ import calendar10 from "../assets/Calender2026-10.jpg";
 import calendar11 from "../assets/Calender2026-11.jpg";
 import calendar12 from "../assets/Calender2026-12.jpg";
 import calendar13 from "../assets/Calender2026-13.jpg";
+import museumExhibit1 from "../assets/Cold_Millions/1.png";
+import museumExhibit2 from "../assets/Cold_Millions/2.png";
+import museumExhibit3 from "../assets/Cold_Millions/3.png";
+import museumExhibit4 from "../assets/Cold_Millions/4.png";
+import museumExhibit5 from "../assets/Cold_Millions/5.png";
+import museumExhibit6 from "../assets/Cold_Millions/6.png";
+import museumExhibit7 from "../assets/Cold_Millions/7.png";
+import museumExhibitPhoto from "../assets/Cold_Millions/cold millions 3.jpg";
 
 // Interactive Work Assets
 import treadmillThumbnail from "../assets/treadmill_thumbnail.png";
@@ -57,7 +66,44 @@ import repurposeLamp from "../assets/Repurpose_Lamp_JIC_10-25.jpg";
 import portfolioPdf from "../assets/Portfolio_0626_JaedenCrow.pdf";
 
 // Portfolio project data
+const knrdImages = Object.entries(
+  import.meta.glob<string>("../assets/KNRD Graphic Standards/*.jpg", {
+    eager: true,
+    query: "?url",
+    import: "default"
+  })
+)
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+  .map(([, url]) => url);
+
 const PORTFOLIO_PROJECTS = [
+  {
+    id: 7,
+    title: "Museum Exhibit",
+    description: "Vinyl wall sticker, retractable banner and foam core wall panels",
+    imageUrl: museumExhibit1,
+    images: [museumExhibit1, museumExhibit2, museumExhibit3, museumExhibit4, museumExhibit5, museumExhibit6, museumExhibit7, museumExhibitPhoto],
+    imageCaptions: [
+      "15' x 10' vinyl wall sticker",
+      "Retractable banner",
+      "Foam core wall panel",
+      "Foam core wall panel",
+      "Foam core wall panel",
+      "Foam core wall panel",
+      "Foam core wall panel"
+    ],
+    details: "Vinyl wall sticker, retractable banner and foam core wall panels",
+    imagePosition: "center"
+  },
+  {
+    id: 8,
+    title: "KNRD Graphic Standards",
+    description: "Complete brand identity and guidelines, including logo variations, colors, typography, templates and merchandise mockups.",
+    imageUrl: knrdImages[0],
+    images: knrdImages,
+    details: "Designed the complete KNRD visual identity—from logo variations, color palette and typography to templates and merchandise mockups—and created the graphic standards document.",
+    imagePosition: "center"
+  },
   {
     id: 1,
     title: "Room Magazine",
@@ -209,7 +255,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
   };
 
   return (
-    <main className="min-h-screen pt-20 md:pt-28 pb-16 md:pb-24">
+    <main className="min-h-screen pt-20 md:pt-28">
       <section className="portfolio-name-hero px-4 md:px-12 lg:px-20">
         <div className="max-w-[1440px] mx-auto">
           <h1 className="portfolio-hero-title font-heading">
@@ -226,8 +272,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
         </div>
       </section>
 
-      <section id="selected-work" className="px-4 md:px-12 lg:px-20 py-16 md:py-24 border-t border-black">
-        <div className="max-w-[1440px] mx-auto">
+      <WorkCarousel workType={workType} maxCardCount={Math.max(PORTFOLIO_PROJECTS.length, INTERACTIVE_PROJECTS.length)} heading={
           <div className="portfolio-work-heading flex gap-8 mb-12 md:mb-16">
             <p className="portfolio-work-kicker uppercase tracking-[0.24em] text-[10px] md:text-xs">
               Selected work
@@ -235,7 +280,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
             <h2 className="portfolio-work-title font-heading text-3xl md:text-5xl tracking-[-0.03em]">
               {workType === "print" ? "Print & identity" : "UX & interactive"}
             </h2>
-            <div className="portfolio-work-filter inline-flex border border-black bg-white" aria-label="Filter portfolio work">
+            <div className="portfolio-work-filter inline-flex border border-black bg-white" data-work-type={workType} aria-label="Filter portfolio work">
               {(["print", "interactive"] as const).map((type) => (
                 <button
                   key={type}
@@ -254,8 +299,9 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
             </div>
           </div>
 
+          }>
           {workType === "print" ? (
-            <div className="portfolio-project-grid grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-16 md:gap-y-24">
+            <div className="portfolio-carousel-track">
               {PORTFOLIO_PROJECTS.map((project) => (
                 <PortfolioCard
                   key={project.id}
@@ -269,7 +315,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
               ))}
             </div>
           ) : (
-            <div className="portfolio-project-grid grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-16 md:gap-y-24">
+            <div className="portfolio-carousel-track">
               {INTERACTIVE_PROJECTS.map((project) => (
                 <InteractiveCard
                   key={project.id}
@@ -282,8 +328,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
               ))}
             </div>
           )}
-        </div>
-      </section>
+      </WorkCarousel>
 
       {/* Project Detail Dialog */}
       <ProjectDetailDialog

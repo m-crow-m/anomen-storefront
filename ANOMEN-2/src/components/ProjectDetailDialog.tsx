@@ -14,6 +14,7 @@ interface ProjectDetailDialogProps {
     title: string;
     description: string;
     images: string[];
+    imageCaptions?: string[];
     details: string;
   } | null;
 }
@@ -126,7 +127,7 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
 
             <div className="border-t border-white/20 pt-4 md:pt-6">
               <p className="text-xs md:text-sm leading-relaxed whitespace-pre-line opacity-90">
-                {project.details}
+                {project.imageCaptions?.[currentImageIndex] ?? project.details}
               </p>
             </div>
           </div>
