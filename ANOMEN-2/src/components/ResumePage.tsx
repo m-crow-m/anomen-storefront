@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf.mjs";
 import pdfWorker from "pdfjs-dist/legacy/build/pdf.worker.mjs?url";
-import resumePdf from "../assets/Jaeden_I-C_Resume-2026.pdf";
+import resumePdf from "../assets/JaedenCrow_Resume.pdf";
 
 GlobalWorkerOptions.workerSrc = pdfWorker;
 
