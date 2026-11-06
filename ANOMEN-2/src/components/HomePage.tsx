@@ -6,6 +6,7 @@
 import { useState } from "react";
 
 // Components
+import { LandingBio } from "./LandingBio";
 import { WorkCarousel } from "./WorkCarousel";
 import { PortfolioCard } from "./PortfolioCard";
 import { InteractiveCard } from "./InteractiveCard";
@@ -63,7 +64,7 @@ import theGreatSong01 from "../assets/theGreatSong01.jpg";
 import theGreatSong02 from "../assets/theGreatSong02.jpg";
 import theGreatSong03 from "../assets/theGreatSong03.jpg";
 import repurposeLamp from "../assets/Repurpose_Lamp_JIC_10-25.jpg";
-import portfolioPdf from "../assets/Portfolio_0626_JaedenCrow.pdf";
+
 
 // Portfolio project data
 const knrdImages = Object.entries(
@@ -110,11 +111,11 @@ const PORTFOLIO_PROJECTS = [
     description: "ergonomic layout design",
     imageUrl: metalMagazine1,
     images: [metalMagazine1, metalMagazine2, metalMagazine3, metalMagazine4, metalMagazine5, metalMagazine6],
-    details: "Editorial spread designed for ROOM Magazine 2025"
+    details: "Editorial spread designed for Room Magazine 2025"
   },
   {
     id: 2,
-    title: "BRANDING 1",
+    title: "Branding 1",
     description: "Poster & logo design for Neon Groove Dance Studio, 2025.",
     imageUrl: brandingInsta3,
     images: [brandingInsta3, brandingBillboard, brandingInsta1, brandingInsta2, brandingPoster],
@@ -122,8 +123,8 @@ const PORTFOLIO_PROJECTS = [
   },
   {
     id: 3,
-    title: "CALENDAR",
-    description: "2026 calendar",
+    title: "Calendar",
+    description: "",
     imageUrl: calendar04,
     images: [calendar01, calendar02, calendar03, calendar04, calendar05, calendar06, calendar07, calendar08, calendar09, calendar10, calendar11, calendar12, calendar13],
     details: "2026 calendar",
@@ -255,41 +256,23 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
   };
 
   return (
-    <main className="min-h-screen pt-20 md:pt-28">
-      <section className="portfolio-name-hero px-4 md:px-12 lg:px-20">
-        <div className="max-w-[1440px] mx-auto">
-          <h1 className="portfolio-hero-title font-heading">
-            <span>Jaeden Ives-Crow</span>
-            <span>Vaughankraska</span>
-          </h1>
-          <a
-            href={portfolioPdf}
-            download="Jaeden-Ives-Crow-Vaughankraska-Portfolio.pdf"
-            className="portfolio-download-button font-heading"
-          >
-            Download portfolio
-          </a>
-        </div>
-      </section>
+    <main className="portfolio-home min-h-screen">
+      <h1 className="sr-only">Jaeden Ives-Crow Vaughankraska design portfolio</h1>
 
-      <WorkCarousel workType={workType} maxCardCount={Math.max(PORTFOLIO_PROJECTS.length, INTERACTIVE_PROJECTS.length)} heading={
+      <LandingBio />
+      <WorkCarousel workType={workType} maxCardCount={PORTFOLIO_PROJECTS.length + INTERACTIVE_PROJECTS.length} printCardCount={PORTFOLIO_PROJECTS.length} onCategoryChange={setWorkType} heading={
           <div className="portfolio-work-heading flex gap-8 mb-12 md:mb-16">
-            <p className="portfolio-work-kicker uppercase tracking-[0.24em] text-[10px] md:text-xs">
-              Selected work
-            </p>
-            <h2 className="portfolio-work-title font-heading text-3xl md:text-5xl tracking-[-0.03em]">
-              {workType === "print" ? "Print & identity" : "UX & interactive"}
-            </h2>
             <div className="portfolio-work-filter inline-flex border border-black bg-white" data-work-type={workType} aria-label="Filter portfolio work">
               {(["print", "interactive"] as const).map((type) => (
                 <button
                   key={type}
                   type="button"
+                  data-category={type}
                   onClick={() => setWorkType(type)}
-                  className={`portfolio-filter-button font-heading uppercase tracking-[0.14em] text-[10px] md:text-xs px-4 md:px-5 py-3 transition-colors ${
+                  className={`portfolio-filter-button font-heading  tracking-[0.14em] text-[10px] md:text-xs px-4 md:px-5 py-3 transition-colors ${
                     workType === type
                       ? "bg-black text-white"
-                      : "bg-transparent hover:text-red-600"
+                      : "bg-transparent "
                   }`}
                   aria-pressed={workType === type}
                 >
@@ -300,11 +283,10 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
           </div>
 
           }>
-          {workType === "print" ? (
-            <div className="portfolio-carousel-track">
+          <div className="portfolio-carousel-track">
               {PORTFOLIO_PROJECTS.map((project) => (
                 <PortfolioCard
-                  key={project.id}
+                  key={`print-${project.id}`}
                   title={project.title}
                   description={project.description}
                   imageUrl={project.imageUrl}
@@ -313,12 +295,10 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
                   onClick={() => handleProjectClick(project)}
                 />
               ))}
-            </div>
-          ) : (
-            <div className="portfolio-carousel-track">
+
               {INTERACTIVE_PROJECTS.map((project) => (
                 <InteractiveCard
-                  key={project.id}
+                  key={`ux-${project.id}`}
                   title={project.title}
                   description={project.description}
                   thumbnailUrl={project.thumbnailUrl}
@@ -326,8 +306,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
                   onClick={() => handleInteractiveClick(project)}
                 />
               ))}
-            </div>
-          )}
+          </div>
       </WorkCarousel>
 
       {/* Project Detail Dialog */}

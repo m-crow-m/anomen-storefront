@@ -4,6 +4,8 @@
  */
 
 import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import bird from "./assets/bird.svg";
+import meadow from "./assets/Meadow.jpg";
 import { useEffect, useState } from "react";
 
 // Layout Components
@@ -40,7 +42,8 @@ export default function App() {
 
   return (
     <Router>
-      <div className="min-h-screen">
+      <div className="site-shell min-h-screen">
+        <div className="meadow-background" style={{ backgroundImage: `url(${meadow})` }} aria-hidden="true" />
         <Navigation workType={workType} setWorkType={setWorkType} />
 
         <Routes>
@@ -54,6 +57,7 @@ export default function App() {
           <Route path="/resume" element={<ResumePage />} />
           <Route path="*" element={<Navigate to="/portfolio" replace />} />
         </Routes>
+        <img className="site-footer-bird" src={bird} alt="" aria-hidden="true" />
       </div>
     </Router>
   );

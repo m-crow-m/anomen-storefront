@@ -3,7 +3,7 @@
  * Fullscreen modal for portfolio project gallery view
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
@@ -20,12 +20,14 @@ interface ProjectDetailDialogProps {
 }
 
 export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailDialogProps) {
+  const mobileGalleryRef = useRef<HTMLDivElement>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Reset image index when project changes
   useEffect(() => {
     setCurrentImageIndex(0);
-  }, [project?.title]);
+    if (mobileGalleryRef.current) mobileGalleryRef.current.scrollLeft = 0;
+  }, [project?.title, isOpen]);
 
   // Preload all images when dialog opens
   useEffect(() => {
@@ -62,7 +64,7 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center dialog-overlay">
+    <div className="fixed inset-0 z-50 flex items-center justify-center dialog-overlay" role="dialog" aria-modal="true" aria-label={project.title}>
       {/* Backdrop with blur */}
       <div 
         className="absolute inset-0 bg-black/95 backdrop-blur-md"
@@ -70,39 +72,64 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
       />
 
       {/* Content */}
-      <div className="relative z-10 w-full h-full flex items-center justify-center p-4 md:p-8 lg:p-16">
+      <div className="project-dialog-content relative z-10 w-full h-full flex items-center justify-center p-4 md:p-8 lg:p-16">
         {/* Close Button - More visible */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 md:top-8 md:right-8 z-50 bg-white text-black p-2 hover:bg-black hover:text-white transition-colors"
+          className="absolute top-4 right-4 md:top-8 md:right-8 z-50 bg-white text-black p-2   transition-colors"
           aria-label="Close"
         >
           <X className="w-6 h-6 md:w-8 md:h-8" />
         </button>
 
-        <div className="w-full h-full flex flex-col lg:flex-row gap-4 md:gap-8 lg:gap-16 max-w-[1800px]">
+        <div className="project-dialog-layout w-full h-full flex flex-col lg:flex-row gap-4 md:gap-8 lg:gap-16 max-w-[1800px]">
           {/* Image Gallery - Takes majority of space */}
-          <div className="flex-1 relative flex flex-col items-center justify-center min-h-0">
+          <div className="project-dialog-gallery flex-1 relative flex flex-col items-center justify-center min-h-0">
             <ImageWithFallback
               src={project.images[currentImageIndex]}
               alt={`${project.title} - Image ${currentImageIndex + 1}`}
-              className="max-w-full max-h-full object-contain dialog-image"
+              className="project-desktop-image max-w-full max-h-full object-contain dialog-image"
             />
 
-            {/* Navigation Arrows */}
+            <div className="project-mobile-viewport" ref={mobileGalleryRef}
+              onScroll={() => {
+                const viewport = mobileGalleryRef.current;
+                if (viewport && viewport.clientWidth) setCurrentImageIndex(Math.max(0, Math.min(project.images.length - 1, Math.round(viewport.scrollLeft / viewport.clientWidth))));
+              }}>
+              <div className="project-mobile-track">
+                {project.images.map((src, index) => (
+                  <ImageWithFallback key={`${src}-${index}`} src={src}
+                    alt={`${project.title} — image ${index + 1} of ${project.images.length}`}
+                    className="dialog-image" />
+                ))}
+              </div>
+            </div>
             {project.images.length > 1 && (
-              <div className="mt-4 md:mt-6 w-full max-w-[520px]">
+              <div className="project-mobile-dots" aria-label="Choose project image">
+                {project.images.map((_, index) => (
+                  <button key={index} type="button" aria-label={`Go to image ${index + 1}`}
+                    aria-current={currentImageIndex === index ? "true" : undefined}
+                    onClick={() => {
+                      const viewport = mobileGalleryRef.current!;
+                      viewport.scrollTo({ left: index * viewport.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+                    }}><span /></button>
+                ))}
+              </div>
+            )}
+            {/* Desktop navigation */}
+            {project.images.length > 1 && (
+              <div className="project-desktop-controls mt-4 md:mt-6 w-full max-w-[520px]">
                 <div className="flex items-center justify-between gap-6">
                   <button
                     onClick={handlePrevious}
-                    className="bg-white border-2 border-white text-black p-2 md:p-3 hover:bg-black hover:text-white transition-colors"
+                    className="bg-white border-2 border-white text-black p-2 md:p-3   transition-colors"
                     aria-label="Previous image"
                   >
                     <ChevronLeft className="w-4 h-4 md:w-6 md:h-6" />
                   </button>
                   <button
                     onClick={handleNext}
-                    className="bg-white border-2 border-white text-black p-2 md:p-3 hover:bg-black hover:text-white transition-colors"
+                    className="bg-white border-2 border-white text-black p-2 md:p-3   transition-colors"
                     aria-label="Next image"
                   >
                     <ChevronRight className="w-4 h-4 md:w-6 md:h-6" />
@@ -118,9 +145,9 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
           </div>
 
           {/* Project Info Sidebar - Smaller text, white on dark */}
-          <div className="lg:w-80 xl:w-96 overflow-y-auto space-y-4 md:space-y-6 text-white max-h-[40vh] lg:max-h-none">
+          <div className="project-dialog-info lg:w-80 xl:w-96 overflow-y-auto space-y-4 md:space-y-6 text-white max-h-[40vh] lg:max-h-none">
             <div>
-              <h2 className="font-heading uppercase tracking-wider text-base md:text-lg lg:text-xl">
+              <h2 className="font-heading  tracking-wider text-base md:text-lg lg:text-xl">
                 {project.title}
               </h2>
             </div>

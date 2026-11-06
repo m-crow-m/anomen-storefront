@@ -26,7 +26,7 @@ export function ErrorToast({ isVisible, message, onClose }: ErrorToastProps) {
           <div className="bg-white text-black border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <p className="font-heading uppercase tracking-wider mb-2">
+                <p className="font-heading  tracking-wider mb-2">
                   Error
                 </p>
                 <p className="text-sm">
@@ -35,7 +35,7 @@ export function ErrorToast({ isVisible, message, onClose }: ErrorToastProps) {
               </div>
               <button
                 onClick={onClose}
-                className="hover:opacity-70 transition-opacity"
+                className=" transition-opacity"
                 aria-label="Close notification"
               >
                 <X className="w-5 h-5" />

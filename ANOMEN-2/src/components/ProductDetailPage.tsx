@@ -61,7 +61,7 @@ export function ProductDetailPage() {
     return (
       <main className="min-h-screen pt-24 pb-32 px-8">
         <div className="max-w-6xl mx-auto">
-          <p className="font-heading uppercase tracking-wider">Loading...</p>
+          <p className="font-heading  tracking-wider">Loading...</p>
         </div>
       </main>
     );
@@ -71,10 +71,10 @@ export function ProductDetailPage() {
     return (
       <main className="min-h-screen pt-24 pb-32 px-8">
         <div className="max-w-6xl mx-auto">
-          <p className="font-heading uppercase tracking-wider">Product not found</p>
+          <p className="font-heading  tracking-wider">Product not found</p>
           <button
             onClick={() => navigate("/store")}
-            className="mt-8 font-heading uppercase tracking-wider hover:opacity-50 transition-opacity"
+            className="mt-8 font-heading  tracking-wider  transition-opacity"
           >
             ← Back to Store
           </button>
@@ -150,7 +150,7 @@ export function ProductDetailPage() {
       <div className="px-4 md:px-8 py-4 md:py-6 border-b border-black">
         <button
           onClick={() => navigate("/store")}
-          className="font-heading uppercase tracking-wider text-xs md:text-sm hover:opacity-50 transition-opacity flex items-center gap-2"
+          className="font-heading  tracking-wider text-xs md:text-sm  transition-opacity flex items-center gap-2"
         >
           <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
           BACK TO STORE
@@ -177,7 +177,7 @@ export function ProductDetailPage() {
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
                   className={`aspect-square border-r last:border-r-0 border-black transition-opacity ${
-                    currentImageIndex === index ? "opacity-100" : "opacity-40 hover:opacity-70"
+                    currentImageIndex === index ? "opacity-100" : "opacity-40 "
                   }`}
                 >
                   <ImageWithFallback
@@ -194,7 +194,7 @@ export function ProductDetailPage() {
         {/* Product Info */}
         <div className="p-4 md:p-8 lg:p-16 space-y-6 md:space-y-8">
           <div>
-            <h1 className="font-heading uppercase tracking-wider text-xl md:text-3xl lg:text-4xl mb-3 md:mb-4">
+            <h1 className="font-heading  tracking-wider text-xl md:text-3xl lg:text-4xl mb-3 md:mb-4">
               {product.title}
             </h1>
             <p className="text-lg md:text-2xl italic">
@@ -224,7 +224,7 @@ export function ProductDetailPage() {
             
             return (
               <div key={option.name} className="border-t-2 border-black pt-6 md:pt-8 space-y-3 md:space-y-4">
-                <label className="font-heading uppercase tracking-wider block text-xs md:text-sm">
+                <label className="font-heading  tracking-wider block text-xs md:text-sm">
                   Select {option.name}
                 </label>
                 
@@ -239,10 +239,10 @@ export function ProductDetailPage() {
                         <button
                           key={value}
                           onClick={() => handleOptionChange(option.name, value)}
-                          className={`px-6 py-3 border-2 border-black font-heading uppercase tracking-wider text-xs md:text-sm transition-colors ${
+                          className={`px-6 py-3 border-2 border-black font-heading  tracking-wider text-xs md:text-sm transition-colors ${
                             isSelected
                               ? "bg-black text-white"
-                              : "bg-white text-black hover:bg-black hover:text-white"
+                              : "bg-white text-black  "
                           }`}
                         >
                           {value}
@@ -260,10 +260,10 @@ export function ProductDetailPage() {
                         <button
                           key={value}
                           onClick={() => handleOptionChange(option.name, value)}
-                          className={`border-2 border-black py-2 md:py-3 font-heading uppercase tracking-wider text-xs md:text-sm transition-colors ${
+                          className={`border-2 border-black py-2 md:py-3 font-heading  tracking-wider text-xs md:text-sm transition-colors ${
                             isSelected
                               ? "bg-black text-white"
-                              : "bg-white text-black hover:bg-black hover:text-white"
+                              : "bg-white text-black  "
                           }`}
                         >
                           {value}
@@ -279,7 +279,7 @@ export function ProductDetailPage() {
           {/* Add to Cart */}
           <button
             onClick={handleAddToCart}
-            className="w-full border-2 border-black py-3 md:py-4 font-heading uppercase tracking-wider text-xs md:text-sm bg-black text-white hover:bg-white hover:text-black transition-colors"
+            className="w-full border-2 border-black py-3 md:py-4 font-heading  tracking-wider text-xs md:text-sm bg-black text-white   transition-colors"
           >
             Add to Cart
           </button>

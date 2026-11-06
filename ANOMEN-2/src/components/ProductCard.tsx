@@ -27,7 +27,7 @@ export function ProductCard({ name, price, imageUrl, productId, productHandle }:
   
   return (
     <div className="group cursor-pointer" onClick={handleClick}>
-      <div className="aspect-square overflow-visible border border-black mb-4 md:mb-6 relative bg-white transition-shadow duration-300 group-hover:shadow-[0_0_0_4px_rgba(0,0,0,1)] md:group-hover:shadow-[0_0_0_8px_rgba(0,0,0,1)]">
+      <div className="aspect-square overflow-visible border border-black mb-4 md:mb-6 relative bg-white transition-shadow duration-300  md:">
         <ImageWithFallback
           src={imageUrl}
           alt={name}
@@ -36,7 +36,7 @@ export function ProductCard({ name, price, imageUrl, productId, productHandle }:
       </div>
       
       <div className="space-y-2 md:space-y-3">
-        <h3 className="font-heading uppercase tracking-wider text-xs md:text-sm">
+        <h3 className="font-heading  tracking-wider text-xs md:text-sm">
           {name}
         </h3>
         <p className="text-xs md:text-sm">

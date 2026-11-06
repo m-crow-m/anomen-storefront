@@ -2,15 +2,26 @@
  * About Page Component
  */
 
+import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { aboutCopy } from "./aboutCopy";
 import jaedenPortrait from "../assets/JaedenCrow.jpeg";
 
 export function AboutPage() {
+  const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 768px)").matches);
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const update = () => setDesktop(media.matches);
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  if (desktop) return <Navigate to="/portfolio" replace />;
   return (
-    <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
+    <main className="about-page min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
       <section className="px-4 md:px-12 lg:px-20">
         <div className="about-layout mx-auto">
           <h1
-            className="about-heading font-heading text-3xl md:text-5xl tracking-wider uppercase"
+            className="sr-only"
           >
             ABOUT ME
           </h1>
@@ -22,26 +33,7 @@ export function AboutPage() {
             />
           </div>
           <div className="about-copy text-sm md:text-base leading-relaxed text-neutral-700">
-            <p className="mt-0">
-              Passionate about people. Curating experiences that remind us of
-              our humanity; creating problems to solve out of spite; tending to
-              my two adorable felines.
-            </p>
-            <p className="mt-8">
-              I am Jaeden, and I often think too hard about nothing. I balance
-              this out with an overflowing store of empathy that can sometimes
-              get me into trouble. I think my work reflects that. I create with
-              the hope that my humanhood will be apparent. I try to find out
-              what choice I can make that is so wrong it actually becomes the
-              only right one. The most absolutely rightest choice there ever
-              was.
-            </p>
-            <p className="mt-8">
-              This can all be attributed to my Type 4 personality. I want to be
-              part of a community, but I want to stand out, to be unique. I want
-              so desperately to be understood, though no one will ever
-              understand me. This is my superpower.
-            </p>
+            {aboutCopy.map((paragraph, index) => <p className={index ? "mt-8" : "mt-0"} key={index}>{paragraph}</p>)}
           </div>
         </div>
       </section>

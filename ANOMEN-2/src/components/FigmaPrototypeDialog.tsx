@@ -55,7 +55,7 @@ export function FigmaPrototypeDialog({ isOpen, onClose, project }: FigmaPrototyp
       
       {/* Modal Content */}
       <div 
-        className="relative bg-white border-2 border-black flex flex-col overflow-hidden z-10"
+        className="prototype-dialog relative bg-white border-2 border-black flex flex-col overflow-hidden z-10"
         style={{ 
           width: 'calc(100vw - 40px)', 
           height: 'calc(100vh - 40px)',
@@ -66,7 +66,7 @@ export function FigmaPrototypeDialog({ isOpen, onClose, project }: FigmaPrototyp
         <div className="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 border-b border-black bg-white" style={{ flexShrink: 0 }}>
           <div className="flex items-center gap-4">
             <div>
-              <h2 className="font-heading uppercase tracking-wider text-sm md:text-base">
+              <h2 className="font-heading  tracking-wider text-sm md:text-base">
                 {project.title}
               </h2>
               <p className="text-xs text-neutral-500 mt-1">
@@ -78,7 +78,7 @@ export function FigmaPrototypeDialog({ isOpen, onClose, project }: FigmaPrototyp
           <div className="flex items-center gap-2 md:gap-4">
             <button
               onClick={handleOpenInFigma}
-              className="flex items-center gap-2 px-3 py-1.5 text-xs uppercase tracking-wider border border-black hover:bg-black hover:text-white transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 text-xs  tracking-wider border border-black   transition-colors"
               title="Open in Figma"
             >
               <ExternalLink className="w-3.5 h-3.5" />
@@ -86,7 +86,7 @@ export function FigmaPrototypeDialog({ isOpen, onClose, project }: FigmaPrototyp
             </button>
             <button
               onClick={onClose}
-              className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border border-black hover:bg-black hover:text-white transition-colors"
+              className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border border-black   transition-colors"
               aria-label="Close dialog"
             >
               <X className="w-4 h-4 md:w-5 md:h-5" />

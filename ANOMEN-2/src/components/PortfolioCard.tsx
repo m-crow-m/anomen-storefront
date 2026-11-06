@@ -33,11 +33,11 @@ export function PortfolioCard({ title, description, imageUrl, images, imagePosit
       onMouseEnter={handleMouseEnter}
       aria-label={`View ${title} project`}
     >
-      <div className="aspect-[4/3] overflow-hidden border border-black mb-5 md:mb-6 relative bg-white transition-transform duration-300 group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:outline-2 group-focus-visible:outline-offset-4">
+      <div className="aspect-[4/3] overflow-hidden border border-black mb-5 md:mb-6 relative bg-white transition-transform duration-300  group-focus-visible:-translate-y-1 group-focus-visible:outline-2 group-focus-visible:outline-offset-4">
         <ImageWithFallback
           src={imageUrl}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          className="w-full h-full object-cover transition-transform duration-500 "
           style={imagePosition ? { objectPosition: imagePosition } : undefined}
         />
       </div>
@@ -46,9 +46,11 @@ export function PortfolioCard({ title, description, imageUrl, images, imagePosit
         <h3 className="font-heading tracking-wide text-base md:text-lg">
           {title}
         </h3>
-        <p className="leading-relaxed text-sm max-w-lg text-neutral-700">
-          {description}
-        </p>
+        {description && (
+          <p className="leading-relaxed text-sm max-w-lg text-neutral-700">
+            {description}
+          </p>
+        )}
       </div>
     </button>
   );

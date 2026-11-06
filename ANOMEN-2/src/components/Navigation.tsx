@@ -4,34 +4,32 @@
  */
 
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { useEffect, useRef, useState } from "react";
+import bird from "../assets/bird.svg";
+import portfolioPdf from "../assets/Portfolio_0626_JaedenCrow.pdf";
+import { ChevronDown, Download, X } from "lucide-react";
+
 
 interface NavigationProps {
   workType: "print" | "interactive";
   setWorkType: (value: "print" | "interactive") => void;
 }
 
-export function Navigation({ workType, setWorkType }: NavigationProps) {
+export function Navigation(_props: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const navRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeTimeoutRef = useRef<number | null>(null);
-  const logoRef = useRef<HTMLAnchorElement | null>(null);
-  const [logoOffset, setLogoOffset] = useState({ x: 0, y: 0, scale: 1 });
-  const [logoReady, setLogoReady] = useState(false);
-  const showWorkType = isScrolled && location.pathname === "/portfolio";
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+    document.getElementById("root")?.scrollTo({ top: 0, behavior: "instant" });
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     const root = document.getElementById("root");
@@ -88,45 +86,32 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
     };
   }, [isMenuOpen]);
 
-  useLayoutEffect(() => {
-    const updateLogoOffset = () => {
-      const logo = logoRef.current;
-      if (!logo) return;
-      const rect = logo.getBoundingClientRect();
-      const isMobile = window.matchMedia("(max-width: 640px)").matches;
-      const targetLeft = isMobile ? 4 : 8;
-      const targetTop = isMobile ? 4 : 6;
-      setLogoOffset({
-        x: rect.left - targetLeft,
-        y: rect.top - targetTop,
-        scale: 1,
-      });
-      setLogoReady(true);
+  useEffect(() => {
+    if (!isMenuOpen || !window.matchMedia("(max-width: 767px)").matches) return;
+    const previousOverflow = document.body.style.overflow;
+    const main = document.querySelector("main");
+    const wasInert = main?.hasAttribute("inert");
+    document.body.style.overflow = "hidden";
+    main?.setAttribute("inert", "");
+    const trapFocus = (event: KeyboardEvent) => {
+      if (event.key !== "Tab") return;
+      const items = Array.from(navRef.current?.querySelectorAll<HTMLElement>("a[href], button") ?? [])
+        .filter((item) => getComputedStyle(item).visibility !== "hidden");
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault(); last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); first?.focus();
+      }
     };
-
-    updateLogoOffset();
-    window.addEventListener("resize", updateLogoOffset);
-
-    return () => window.removeEventListener("resize", updateLogoOffset);
-  }, []);
-
-  const openMenu = () => {
-    if (closeTimeoutRef.current) {
-      window.clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-    setIsMenuOpen(true);
-  };
-
-  const closeMenu = () => {
-    if (closeTimeoutRef.current) {
-      window.clearTimeout(closeTimeoutRef.current);
-    }
-    closeTimeoutRef.current = window.setTimeout(() => {
-      setIsMenuOpen(false);
-      closeTimeoutRef.current = null;
-    }, 120);
-  };
+    document.addEventListener("keydown", trapFocus);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      if (!wasInert) main?.removeAttribute("inert");
+      document.removeEventListener("keydown", trapFocus);
+    };
+  }, [isMenuOpen]);
 
   const scrollToTop = () => {
     const root = document.getElementById("root");
@@ -147,128 +132,51 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
   };
 
   return (
-    <nav className="nav-clear fixed top-0 left-0 right-0 z-50 bg-transparent border-none">
+    <nav ref={navRef} className={`nav-clear fixed top-0 left-0 right-0 z-50 bg-transparent border-none ${isScrolled ? "nav-scrolled" : ""} ${isMenuOpen ? "nav-menu-open" : ""}`}>
       <div className="nav-shell px-4 md:px-12 lg:px-20 py-4 md:py-6 lg:py-8 flex items-center justify-between relative">
         <div className="flex items-center gap-4 md:gap-8 text-xs md:text-sm">
           <Link
-            ref={logoRef}
             to="/portfolio"
-            aria-label="CROW design"
-            className={`font-heading tracking-wider text-xs md:text-sm ${
-              isScrolled && isLogoHovered ? "logo-hover" : ""
-            }`}
+            aria-label="Jaeden Ives-Crow Vaughankraska — home"
+            className={`site-name ${isScrolled ? "site-name-scrolled" : ""}`}
             onClick={handleLogoClick}
-            onMouseEnter={() => setIsLogoHovered(true)}
-            onMouseLeave={() => setIsLogoHovered(false)}
-            style={{
-              position: "relative",
-              zIndex: 60,
-              whiteSpace: "nowrap",
-              lineHeight: 1,
-              display: "inline-flex",
-              alignItems: "baseline",
-              transformOrigin: "top left",
-              opacity: logoReady ? 1 : 0,
-            transform: "translate(0, 0) scale(1)",
-              transition:
-                "transform 600ms ease, opacity 300ms ease, letter-spacing 600ms ease",
-            }}
           >
-            <span
-              className="uppercase"
-              style={{
-                lineHeight: 1,
-                display: "inline-block",
-                transform: isScrolled ? "scale(2.6)" : "scale(1)",
-                transformOrigin: "left center",
-                transition: "transform 600ms ease",
-              }}
-            >
-              C
-            </span>
-            <span
-              className="inline-block overflow-hidden align-baseline"
-              style={{
-                maxWidth: isScrolled ? 0 : 200,
-                opacity: isScrolled ? 0 : 1,
-                marginLeft: isScrolled ? 0 : 1,
-                transition: "max-width 600ms ease, opacity 400ms ease",
-              }}
-            >
-              <span className="uppercase">ROW</span>{" "}
-              <span className="lowercase" style={{ fontWeight: 100 }}>
-                design
-              </span>
-            </span>
+            Jaeden Ives-crow Vaughankraska
           </Link>
-          {showWorkType ? (
-            <div className="nav-work-type flex items-center gap-2">
-              <span
-                className="text-xs md:text-sm uppercase tracking-wider"
-                style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
-              >
-                Viewing:
-              </span>
-              <Select
-                value={workType}
-                onValueChange={(value: "print" | "interactive") =>
-                  setWorkType(value)
-                }
-              >
-                <SelectTrigger
-                  className="w-[150px] md:w-[180px] border-black bg-transparent text-xs md:text-sm uppercase tracking-wider px-4 py-3"
-                  style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
-                >
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-white border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
-                  <SelectItem
-                    value="print"
-                    className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3 hover:bg-black hover:text-white"
-                    style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
-                  >
-                    print
-                  </SelectItem>
-                  <SelectItem
-                    value="interactive"
-                    className="text-xs md:text-sm uppercase tracking-wider cursor-pointer px-4 py-3 hover:bg-black hover:text-white"
-                    style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
-                  >
-                    ux / ui
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          ) : null}
         </div>
 
         <div className="flex items-center gap-4 md:gap-8 lg:gap-12 text-xs md:text-sm">
           <div
             className="relative group"
             ref={menuRef}
-            onPointerEnter={(event) => { if (event.pointerType === "mouse") openMenu(); }}
-            onPointerLeave={(event) => { if (event.pointerType === "mouse") closeMenu(); }}
+            onPointerEnter={(event) => {
+              if (event.pointerType !== "mouse" || !window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)").matches) return;
+              if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
+              setIsMenuOpen(true);
+            }}
+            onPointerLeave={(event) => {
+              if (event.pointerType !== "mouse" || !window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)").matches) return;
+              closeTimeoutRef.current = window.setTimeout(() => setIsMenuOpen(false), 180);
+            }}
+
           >
             <button
               type="button"
-              className="uppercase tracking-wider hover:text-red-600 transition-colors flex items-center"
+              className=" tracking-wider  transition-colors flex items-center"
               ref={menuButtonRef}
               aria-controls="navigation-dropdown"
               aria-haspopup="true"
               aria-expanded={isMenuOpen}
-              aria-label="Open navigation menu"
-              onClick={() => {
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              onClick={(event) => {
                 if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
-                setIsMenuOpen((open) => !open);
+                if (event.detail > 0 && window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)").matches) setIsMenuOpen(true);
+                else setIsMenuOpen((open) => !open);
               }}
             >
               <span className="sr-only">Menu</span>
-              <ChevronDown
-                className={`w-4 h-4 md:w-5 md:h-5 transition-transform ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
-                strokeWidth={2.5}
-              />
+              <ChevronDown className={`menu-toggle-icon menu-chevron ${isMenuOpen ? "menu-chevron-open" : ""}`} strokeWidth={3} aria-hidden="true" />
+              {isMenuOpen && <X className="menu-toggle-icon menu-mobile-close" strokeWidth={2.5} aria-hidden="true" />}
             </button>
             <div
               id="navigation-dropdown"
@@ -279,7 +187,7 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
               <NavLink
                 to="/portfolio"
                 className={({ isActive }) =>
-                  `block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-red-600 transition-colors ${
+                  `block px-4 py-3 text-xs  tracking-wider   transition-colors ${
                     isActive ? "nav-active" : ""
                   }`
                 }
@@ -290,7 +198,7 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
               <NavLink
                 to="/contact"
                 className={({ isActive }) =>
-                  `block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-red-600 transition-colors ${
+                  `block px-4 py-3 text-xs  tracking-wider   transition-colors ${
                     isActive ? "nav-active" : ""
                   }`
                 }
@@ -301,7 +209,7 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
               <NavLink
                 to="/about"
                 className={({ isActive }) =>
-                  `block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-red-600 transition-colors ${
+                  `desktop-about-link block px-4 py-3 text-xs  tracking-wider   transition-colors ${
                     isActive ? "nav-active" : ""
                   }`
                 }
@@ -312,7 +220,7 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
               <NavLink
                 to="/resume"
                 className={({ isActive }) =>
-                  `block px-4 py-3 text-xs uppercase tracking-wider hover:bg-black hover:text-red-600 transition-colors ${
+                  `block px-4 py-3 text-xs  tracking-wider   transition-colors ${
                     isActive ? "nav-active" : ""
                   }`
                 }
@@ -320,6 +228,12 @@ export function Navigation({ workType, setWorkType }: NavigationProps) {
               >
                 Resume
               </NavLink>
+              <a href={portfolioPdf} download="Jaeden-Ives-Crow-Vaughankraska-Portfolio.pdf"
+                className="block px-4 py-3 text-xs  tracking-wider"
+                onClick={() => setIsMenuOpen(false)}>
+                Portfolio <Download className="portfolio-menu-download-icon" aria-hidden="true" />
+              </a>
+              <img className="mobile-menu-bird" src={bird} alt="" aria-hidden="true" />
             </div>
           </div>
         </div>

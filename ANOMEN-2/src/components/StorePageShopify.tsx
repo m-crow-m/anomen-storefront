@@ -63,7 +63,7 @@ export function StorePageShopify() {
       <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
         <div className="flex items-center justify-center h-[50vh]">
           <div className="text-center">
-            <div className="font-heading uppercase tracking-wider">Loading...</div>
+            <div className="font-heading  tracking-wider">Loading...</div>
           </div>
         </div>
       </main>
@@ -75,7 +75,7 @@ export function StorePageShopify() {
       <main className="min-h-screen pt-16 md:pt-24 pb-16 md:pb-32">
         <div className="flex items-center justify-center h-[50vh]">
           <div className="text-center max-w-2xl px-4">
-            <div className="font-heading uppercase tracking-wider mb-4">Shopify Not Configured</div>
+            <div className="font-heading  tracking-wider mb-4">Shopify Not Configured</div>
             <p className="text-sm mb-6 leading-relaxed">
               To load products from Shopify, please add your credentials to the .env file.
               <br />
@@ -83,7 +83,7 @@ export function StorePageShopify() {
             </p>
             <a 
               href="/#/store" 
-              className="inline-block border-2 border-black px-6 py-3 font-heading uppercase tracking-wider text-xs hover:bg-black hover:text-white transition-colors"
+              className="inline-block border-2 border-black px-6 py-3 font-heading  tracking-wider text-xs   transition-colors"
             >
               Use Demo Store Instead
             </a>
@@ -124,7 +124,7 @@ export function StorePageShopify() {
             P. 02
           </motion.div>
 
-          <h1 className="font-heading uppercase tracking-tight text-[12vw] md:text-[8vw] leading-[0.85] mb-8 md:mb-16 lg:mb-24">
+          <h1 className="font-heading  tracking-tight text-[12vw] md:text-[8vw] leading-[0.85] mb-8 md:mb-16 lg:mb-24">
             STORE
           </h1>
         </div>

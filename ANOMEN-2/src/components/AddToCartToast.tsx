@@ -27,7 +27,7 @@ export function AddToCartToast({ isVisible, productName, size, onClose }: AddToC
           <div className="bg-black text-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <p className="font-heading uppercase tracking-wider mb-2">
+                <p className="font-heading  tracking-wider mb-2">
                   Added to Cart
                 </p>
                 <p className="text-sm">
@@ -41,7 +41,7 @@ export function AddToCartToast({ isVisible, productName, size, onClose }: AddToC
               </div>
               <button
                 onClick={onClose}
-                className="hover:opacity-70 transition-opacity"
+                className=" transition-opacity"
                 aria-label="Close notification"
               >
                 <X className="w-5 h-5" />

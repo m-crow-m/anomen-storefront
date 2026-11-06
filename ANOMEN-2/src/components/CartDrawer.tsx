@@ -44,7 +44,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="cart-drawer bg-black text-white border-l border-white w-full sm:max-w-md">
         <SheetHeader className="border-b border-white pb-6 text-white">
-          <SheetTitle className="font-heading uppercase tracking-wider text-white">
+          <SheetTitle className="font-heading  tracking-wider text-white">
             CART
           </SheetTitle>
           <SheetDescription className="sr-only">
@@ -61,7 +61,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 <div key={item.variantId} className="border-b border-white pb-6">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <h3 className="font-heading uppercase tracking-wider text-xs mb-2">
+                      <h3 className="font-heading  tracking-wider text-xs mb-2">
                         {item.name}
                       </h3>
                       {item.size && (
@@ -75,7 +75,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       <div className="flex items-center gap-3 mt-3">
                         <button
                           onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                          className="border border-white p-1 hover:bg-white hover:text-black transition-colors"
+                          className="border border-white p-1   transition-colors"
                           aria-label="Decrease quantity"
                           disabled={isLoading}
                         >
@@ -84,7 +84,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                         <span className="text-sm w-8 text-center">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                          className="border border-white p-1 hover:bg-white hover:text-black transition-colors"
+                          className="border border-white p-1   transition-colors"
                           aria-label="Increase quantity"
                           disabled={isLoading}
                         >
@@ -94,7 +94,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     </div>
                     <button
                       onClick={() => removeFromCart(item.variantId)}
-                      className="hover:opacity-50 transition-opacity"
+                      className=" transition-opacity"
                       aria-label="Remove item"
                       disabled={isLoading}
                     >
@@ -106,7 +106,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
               <div className="pt-8 space-y-6">
                 <div className="flex justify-between items-center border-t border-white pt-6">
-                  <span className="font-heading uppercase tracking-wider">TOTAL</span>
+                  <span className="font-heading  tracking-wider">TOTAL</span>
                   <span className="font-heading">
                     ${getCartTotal().toFixed(2)}
                   </span>
@@ -115,7 +115,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 <button 
                   onClick={handleCheckout}
                   disabled={isCheckoutDisabled}
-                  className="cart-cta w-full bg-white text-black py-4 font-heading uppercase tracking-wider text-sm hover:opacity-80 transition-opacity border border-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="cart-cta w-full bg-white text-black py-4 font-heading  tracking-wider text-sm  transition-opacity border border-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {checkoutLabel}
                 </button>

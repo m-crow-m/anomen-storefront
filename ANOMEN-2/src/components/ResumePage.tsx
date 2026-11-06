@@ -20,14 +20,16 @@ export function ResumePage() {
     let cancelled = false;
     let resizeTimer: number | null = null;
     let lastRenderedWidth = 0;
+    let lastRenderedHeight = 0;
     let renderRunId = 0;
 
     const renderDocument = async (force = false) => {
       if (!viewer || !container || cancelled) return;
       const currentRunId = ++renderRunId;
 
-      const containerWidth = Math.max(viewer.clientWidth - 48, 320);
-      if (!force && Math.abs(containerWidth - lastRenderedWidth) < 8) {
+      const containerWidth = Math.max(viewer.clientWidth, 1);
+      const containerHeight = Math.max(viewer.clientHeight, 1);
+      if (!force && Math.abs(containerWidth - lastRenderedWidth) < 2 && Math.abs(containerHeight - lastRenderedHeight) < 2) {
         return;
       }
 
@@ -43,7 +45,8 @@ export function ResumePage() {
 
         const pdfDoc = pdfDocRef.current;
         lastRenderedWidth = containerWidth;
-        const deviceScale = Math.min(window.devicePixelRatio || 1, 2);
+        lastRenderedHeight = containerHeight;
+        const deviceScale = Math.min(4, Math.max(2, (window.devicePixelRatio || 1) * 1.5));
 
         for (let pageNumber = 1; pageNumber <= pdfDoc.numPages; pageNumber += 1) {
           if (cancelled || currentRunId !== renderRunId) return;
@@ -51,14 +54,14 @@ export function ResumePage() {
           if (cancelled || currentRunId !== renderRunId) return;
           const baseViewport = page.getViewport({ scale: 1 });
           const targetWidth = Math.min(containerWidth, 1080);
-          const fitScale = targetWidth / baseViewport.width;
-          const renderScale = fitScale * deviceScale;
+          const fitScale = Math.min(targetWidth / baseViewport.width, containerHeight / baseViewport.height);
+          const displayWidth = Math.floor(baseViewport.width * fitScale);
+          const displayHeight = displayWidth * baseViewport.height / baseViewport.width;
+          const renderScale = (displayWidth / baseViewport.width) * deviceScale;
           const viewport = page.getViewport({ scale: renderScale });
-          const displayWidth = Math.ceil(viewport.width / deviceScale);
-          const displayHeight = Math.ceil(viewport.height / deviceScale);
 
           const pageShell = document.createElement("div");
-          pageShell.className = "mx-auto mb-8 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.12)]";
+          pageShell.className = "resume-sheet";
           pageShell.style.width = `${displayWidth}px`;
 
           const canvas = document.createElement("canvas");
@@ -102,14 +105,15 @@ export function ResumePage() {
     };
 
     void renderDocument(true);
+    const resizeObserver = new ResizeObserver(queueRender);
+    resizeObserver.observe(viewer);
     window.addEventListener("resize", queueRender);
 
     return () => {
       cancelled = true;
       renderRunId += 1;
-      if (resizeTimer) {
-        window.clearTimeout(resizeTimer);
-      }
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      resizeObserver.disconnect();
       window.removeEventListener("resize", queueRender);
       container.replaceChildren();
       if (pdfDocRef.current) {
@@ -120,36 +124,18 @@ export function ResumePage() {
   }, []);
 
   return (
-    <main className="min-h-screen pt-20 md:pt-24 pb-10 md:pb-16 px-4 md:px-8 lg:px-12">
-      <div className="mx-auto max-w-[1280px]">
-        {isLoading ? (
-          <div className="py-24 text-center text-xs uppercase tracking-[0.28em] text-neutral-500">
-            Loading
-          </div>
-        ) : null}
-
-        {error ? (
-          <div className="py-24 text-center text-sm text-neutral-700">
-            {error}
-          </div>
-        ) : null}
-
-        <div ref={viewerRef} className="mx-auto flex min-h-[60vh] justify-center">
-          <div
-            ref={containerRef}
-            className={`mx-auto flex flex-col items-center ${error ? "hidden" : ""} ${isLoading ? "opacity-0" : "opacity-100"}`}
-          />
-        </div>
-
-        <div className="mt-8 flex justify-center">
-          <a
-            href={resumePdf}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center border border-black px-6 py-3 text-[11px] uppercase tracking-[0.28em] transition-colors hover:bg-black hover:text-white"
-          >
+    <main className="resume-page">
+      <div className="resume-layout">
+        <div className="resume-toolbar">
+          <h1 className="sr-only">Résumé</h1>
+          <a href={resumePdf} download="Jaeden-Crow-Resume.pdf" className="resume-download">
             Download
           </a>
+        </div>
+        <div ref={viewerRef} className="resume-viewer" aria-busy={isLoading}>
+          {isLoading && <p className="resume-status" role="status">Loading résumé…</p>}
+          {error && <p className="resume-status" role="alert">{error}</p>}
+          <div ref={containerRef} className={`resume-pages ${error || isLoading ? "opacity-0" : "opacity-100"}`} role="img" aria-label="Jaeden Crow résumé. Download the PDF using the link above." />
         </div>
       </div>
     </main>
