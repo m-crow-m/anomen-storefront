@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import bird from "../assets/bird.svg";
-import { ChevronDown } from "lucide-react";
 
 export function WorkCarousel({ heading, children, workType, maxCardCount, printCardCount, onCategoryChange }: {
   heading: ReactNode;
@@ -233,20 +232,6 @@ export function WorkCarousel({ heading, children, workType, maxCardCount, printC
             if (left < 0 || left + card.offsetWidth > viewport.clientWidth) go(viewport.clientWidth + card.offsetLeft);
           }}>
           {children}
-        </div>
-        <div className="portfolio-carousel-controls">
-          <div>
-            {([-1, 1] as const).map((direction) => (
-              <button key={direction} type="button" aria-label={direction < 0 ? "Previous projects" : "Next projects"}
-                onClick={() => {
-                  const viewport = viewportRef.current!;
-                  const track = viewport.firstElementChild as HTMLElement;
-                  const card = track.firstElementChild as HTMLElement;
-                  const step = card.offsetWidth + (parseFloat(getComputedStyle(track).columnGap) || 0);
-                  go(progressRef.current + direction * step);
-                }}><ChevronDown aria-hidden="true" strokeWidth={2.5} style={{ transform: `rotate(${direction < 0 ? 90 : -90}deg)` }} /></button>
-            ))}
-          </div>
         </div>
         <img className="mobile-work-bird" src={bird} alt="" aria-hidden="true" />
         <div className="portfolio-carousel-dots" aria-label="Choose project">
