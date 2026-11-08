@@ -6,6 +6,7 @@
 import { useState } from "react";
 
 // Components
+import { VideoDialog } from "./VideoDialog";
 import { LandingBio } from "./LandingBio";
 import { WorkCarousel } from "./WorkCarousel";
 import { PortfolioCard } from "./PortfolioCard";
@@ -178,15 +179,16 @@ type ExternalProject = {
 
 type InteractiveProject = FigmaProject | ExternalProject;
 
-// Interactive prototypes and external projects data
-const INTERACTIVE_PROJECTS: InteractiveProject[] = [
-  {
+const AI_MOTION_PROJECT: ExternalProject = {
     id: 9,
     title: "AI Research Project",
     description: "Short film exploring AI research and human connection",
     thumbnailUrl: aiProjectThumbnail,
     externalUrl: "https://m-crow-m.github.io/notalone/",
-  },
+  };
+
+// Interactive prototypes and external projects data
+const INTERACTIVE_PROJECTS: InteractiveProject[] = [
   {
     id: 8,
     title: "Project 8",
@@ -230,8 +232,8 @@ const INTERACTIVE_PROJECTS: InteractiveProject[] = [
 ];
 
 interface HomePageProps {
-  workType: "print" | "interactive";
-  setWorkType: (value: "print" | "interactive") => void;
+  workType: "print" | "interactive" | "motion";
+  setWorkType: (value: "print" | "interactive" | "motion") => void;
 }
 
 export function HomePage({ workType, setWorkType }: HomePageProps) {
@@ -239,6 +241,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedInteractive, setSelectedInteractive] = useState<FigmaProject | null>(null);
   const [isFigmaDialogOpen, setIsFigmaDialogOpen] = useState(false);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   const handleProjectClick = (project: typeof PORTFOLIO_PROJECTS[0]) => {
     setSelectedProject(project);
@@ -260,10 +263,10 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
       <h1 className="sr-only">Jaeden Ives-Crow Vaughankraska design portfolio</h1>
 
       <LandingBio />
-      <WorkCarousel workType={workType} maxCardCount={PORTFOLIO_PROJECTS.length + INTERACTIVE_PROJECTS.length} printCardCount={PORTFOLIO_PROJECTS.length} onCategoryChange={setWorkType} heading={
+      <WorkCarousel workType={workType} maxCardCount={PORTFOLIO_PROJECTS.length + INTERACTIVE_PROJECTS.length + 2} motionStartIndex={PORTFOLIO_PROJECTS.length + INTERACTIVE_PROJECTS.length} printCardCount={PORTFOLIO_PROJECTS.length} onCategoryChange={setWorkType} heading={
           <div className="portfolio-work-heading flex gap-8 mb-12 md:mb-16">
             <div className="portfolio-work-filter inline-flex border border-black bg-white" data-work-type={workType} aria-label="Filter portfolio work">
-              {(["print", "interactive"] as const).map((type) => (
+              {(["print", "interactive", "motion"] as const).map((type) => (
                 <button
                   key={type}
                   type="button"
@@ -276,7 +279,7 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
                   }`}
                   aria-pressed={workType === type}
                 >
-                  {type === "print" ? "Print / brand" : "UX / UI"}
+                  {type === "print" ? "Print / brand" : type === "interactive" ? "UX / UI" : "Motion"}
                 </button>
               ))}
             </div>
@@ -306,8 +309,25 @@ export function HomePage({ workType, setWorkType }: HomePageProps) {
                   onClick={() => handleInteractiveClick(project)}
                 />
               ))}
+              <InteractiveCard
+                title={AI_MOTION_PROJECT.title}
+                description={AI_MOTION_PROJECT.description}
+                thumbnailUrl={AI_MOTION_PROJECT.thumbnailUrl}
+                badgeLabel="Motion"
+                onClick={() => handleInteractiveClick(AI_MOTION_PROJECT)}
+              />
+              <InteractiveCard
+                title="calgare en sole."
+                description="Motion project"
+                thumbnailUrl="https://i.ytimg.com/vi/7EjkYXYm2G0/hqdefault.jpg"
+                badgeLabel="Motion"
+                onClick={() => setIsVideoOpen(true)}
+              />
           </div>
       </WorkCarousel>
+
+      <VideoDialog isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)}
+        title="calgare en sole." videoId="7EjkYXYm2G0" />
 
       {/* Project Detail Dialog */}
       <ProjectDetailDialog

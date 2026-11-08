@@ -22,7 +22,7 @@ import { ResumePage } from "./components/ResumePage";
  * Handles routing, global state, and custom cursor interactions
  */
 export default function App() {
-  const [workType, setWorkType] = useState<"print" | "interactive">("print");
+  const [workType, setWorkType] = useState<"print" | "interactive" | "motion">("print");
 
   // Custom cursor effect for brutalist aesthetic
   useEffect(() => {

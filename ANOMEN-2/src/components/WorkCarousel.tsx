@@ -1,13 +1,14 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import bird from "../assets/bird.svg";
 
-export function WorkCarousel({ heading, children, workType, maxCardCount, printCardCount, onCategoryChange }: {
+export function WorkCarousel({ heading, children, workType, maxCardCount, printCardCount, motionStartIndex, onCategoryChange }: {
   heading: ReactNode;
   children: ReactNode;
   workType: string;
   maxCardCount: number;
   printCardCount: number;
-  onCategoryChange: (category: "print" | "interactive") => void;
+  motionStartIndex: number;
+  onCategoryChange: (category: "print" | "interactive" | "motion") => void;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -35,7 +36,7 @@ export function WorkCarousel({ heading, children, workType, maxCardCount, printC
       const cards = Array.from(track.children) as HTMLElement[];
       const center = progress - viewport.clientWidth / 2;
       const index = cards.reduce((best, card, i) => Math.abs(card.offsetLeft + card.offsetWidth / 2 - center) < Math.abs(cards[best].offsetLeft + cards[best].offsetWidth / 2 - center) ? i : best, 0);
-      onCategoryChange(index < printCardCount ? "print" : "interactive");
+      onCategoryChange(index < printCardCount ? "print" : index < motionStartIndex ? "interactive" : "motion");
       const reveal = Math.min(1, progress / 240);
       section.style.setProperty("--filter-reveal", String(reveal));
       section.style.setProperty("--filter-entry", `${(1 - reveal) * 100}px`);
@@ -78,7 +79,7 @@ export function WorkCarousel({ heading, children, workType, maxCardCount, printC
       window.removeEventListener("resize", measure);
       mobile.removeEventListener("change", measure);
     };
-  }, [maxCardCount, printCardCount, onCategoryChange]);
+  }, [maxCardCount, printCardCount, motionStartIndex, onCategoryChange]);
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)");
@@ -194,7 +195,7 @@ export function WorkCarousel({ heading, children, workType, maxCardCount, printC
         const button = (event.target as HTMLElement).closest<HTMLButtonElement>("button[data-category]");
         if (!button) return;
         const viewport = viewportRef.current!;
-        const index = button.dataset.category === "interactive" ? printCardCount : 0;
+        const index = button.dataset.category === "motion" ? motionStartIndex : button.dataset.category === "interactive" ? printCardCount : 0;
         const card = viewport.firstElementChild!.children[index] as HTMLElement;
         const left = card.offsetLeft - (viewport.clientWidth - card.offsetWidth) / 2;
         const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
@@ -215,7 +216,7 @@ export function WorkCarousel({ heading, children, workType, maxCardCount, printC
             const step = cards[1] ? cards[1].offsetLeft - first.offsetLeft : viewport.clientWidth;
             const index = viewport.scrollLeft < first.offsetLeft / 2 ? -1 : Math.max(0, Math.min(cards.length - 1, Math.round((viewport.scrollLeft - first.offsetLeft) / step)));
             setActiveIndex(index);
-            if (index >= 0) onCategoryChange(index < printCardCount ? "print" : "interactive");
+            if (index >= 0) onCategoryChange(index < printCardCount ? "print" : index < motionStartIndex ? "interactive" : "motion");
             const reveal = Math.min(1, viewport.scrollLeft / 100);
             sectionRef.current!.style.setProperty("--filter-reveal", String(reveal));
             sectionRef.current!.style.setProperty("--filter-entry", `${(1 - reveal) * 100}px`);

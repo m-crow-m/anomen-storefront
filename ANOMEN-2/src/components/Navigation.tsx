@@ -11,8 +11,8 @@ import { ChevronDown, Download, X } from "lucide-react";
 
 
 interface NavigationProps {
-  workType: "print" | "interactive";
-  setWorkType: (value: "print" | "interactive") => void;
+  workType: "print" | "interactive" | "motion";
+  setWorkType: (value: "print" | "interactive" | "motion") => void;
 }
 
 export function Navigation(_props: NavigationProps) {

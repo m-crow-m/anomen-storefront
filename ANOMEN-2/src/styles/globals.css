@@ -1902,3 +1902,29 @@ body:has(.nav-menu-open) .site-footer-bird { visibility: hidden; }
   }
   .resume-download { min-height: 44px; padding: 12px 24px; }
 }
+
+/* Three category anchors share the same continuous carousel. */
+.portfolio-carousel .portfolio-work-filter { grid-template-columns: repeat(3, 1fr); }
+.portfolio-work-filter::before { width: calc((100% - 8px) / 3); }
+.portfolio-work-filter[data-work-type="motion"]::before { transform: translateX(200%); }
+.video-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #000d;
+  backdrop-filter: blur(16px);
+}
+.video-dialog-panel { width: min(1100px, 100%); color: #fff; }
+.video-dialog-panel header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.video-dialog-panel h2 { margin: 0; font: 500 20px/1.3 Helvetica, Arial, sans-serif; }
+.video-dialog-panel button { display: grid; place-items: center; width: 44px; height: 44px; background: #fff; color: #171717; flex: none; }
+.video-dialog-player { aspect-ratio: 16 / 9; max-height: calc(100dvh - 170px); }
+.video-dialog-player iframe { display: block; width: 100%; height: 100%; border: 0; }
+.video-dialog-panel > a { display: inline-block; padding: 16px 0; color: #fff; font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 767px) {
+  .portfolio-work-filter .portfolio-filter-button { padding-inline: 14px; }
+  .video-dialog { padding: 16px; }
+}
