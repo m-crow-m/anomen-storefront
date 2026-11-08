@@ -1928,3 +1928,16 @@ body:has(.nav-menu-open) .site-footer-bird { visibility: hidden; }
   .portfolio-work-filter .portfolio-filter-button { padding-inline: 14px; }
   .video-dialog { padding: 16px; }
 }
+
+.project-image-caption { margin-bottom: 16px !important; opacity: .75; }
+.project-case-copy { white-space: pre-line; }
+.prototype-dialog-header { gap: 20px; align-items: flex-start; max-height: 36dvh; overflow-y: auto; }
+.prototype-dialog-header > div:first-child { flex: 1; min-width: 0; }
+.prototype-dialog-header > div:last-child { flex: none; }
+.prototype-case-study { margin-top: 12px; font-size: 13px; }
+.prototype-case-study summary { cursor: pointer; text-decoration: underline; text-underline-offset: 4px; padding: 4px 0; }
+.prototype-case-study p { white-space: pre-line; line-height: 1.6; margin-top: 12px; max-width: 850px; }
+@media (max-width: 767px) {
+  .prototype-dialog-header { gap: 12px; }
+  .prototype-case-study { font-size: 12px; }
+}

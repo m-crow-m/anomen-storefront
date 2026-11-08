@@ -13,6 +13,7 @@ interface FigmaPrototypeDialogProps {
     id: number;
     title: string;
     description: string;
+    details?: string;
     thumbnailUrl: string;
     figmaEmbedUrl: string;
     figmaUrl?: string;
@@ -63,7 +64,7 @@ export function FigmaPrototypeDialog({ isOpen, onClose, project }: FigmaPrototyp
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 border-b border-black bg-white" style={{ flexShrink: 0 }}>
+        <div className="prototype-dialog-header flex items-center justify-between px-4 md:px-6 py-3 md:py-4 border-b border-black bg-white" style={{ flexShrink: 0 }}>
           <div className="flex items-center gap-4">
             <div>
               <h2 className="font-heading  tracking-wider text-sm md:text-base">
@@ -72,6 +73,12 @@ export function FigmaPrototypeDialog({ isOpen, onClose, project }: FigmaPrototyp
               <p className="text-xs text-neutral-500 mt-1">
                 {project.description}
               </p>
+              {project.details && (
+                <details className="prototype-case-study">
+                  <summary>About this project</summary>
+                  <p>{project.details}</p>
+                </details>
+              )}
             </div>
           </div>
           

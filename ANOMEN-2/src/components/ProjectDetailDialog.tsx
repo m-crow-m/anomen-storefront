@@ -153,8 +153,13 @@ export function ProjectDetailDialog({ isOpen, onClose, project }: ProjectDetailD
             </div>
 
             <div className="border-t border-white/20 pt-4 md:pt-6">
-              <p className="text-xs md:text-sm leading-relaxed whitespace-pre-line opacity-90">
-                {project.imageCaptions?.[currentImageIndex] ?? project.details}
+              {project.imageCaptions?.[currentImageIndex] && (
+                <p className="project-image-caption text-xs md:text-sm leading-relaxed opacity-90">
+                  {project.imageCaptions[currentImageIndex]}
+                </p>
+              )}
+              <p className="project-case-copy text-xs md:text-sm leading-relaxed whitespace-pre-line opacity-90">
+                {project.details}
               </p>
             </div>
           </div>

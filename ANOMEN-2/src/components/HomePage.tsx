@@ -82,7 +82,7 @@ const PORTFOLIO_PROJECTS = [
   {
     id: 7,
     title: "Museum Exhibit",
-    description: "Vinyl wall sticker, retractable banner and foam core wall panels",
+    description: "Exhibition graphics connecting The Cold Millions to Spokane's labor history.",
     imageUrl: museumExhibit1,
     images: [museumExhibit1, museumExhibit2, museumExhibit3, museumExhibit4, museumExhibit5, museumExhibit6, museumExhibit7, museumExhibitPhoto],
     imageCaptions: [
@@ -94,7 +94,7 @@ const PORTFOLIO_PROJECTS = [
       "Foam core wall panel",
       "Foam core wall panel"
     ],
-    details: "Vinyl wall sticker, retractable banner and foam core wall panels",
+    details: "The Cold Millions\nRole: Exhibition graphic designer\nClient: Spokane Public Library and EWU History Department\nExhibited: February 11 - March 31, 2026, Spokane Public Library\n\nCreated a historical exhibition system exploring labor history, class conflict, and the Industrial Workers of the World in early-1900s Spokane, using Jess Walter's novel as a cultural reference. The challenge was to make dense historical content approachable in a public space.\n\nEarly Spokane newspapers and archival typography informed the visual direction. Red represented labor organizing and collective action; blue represented police authority. A flashlight, ladder, and prison bars became symbols of surveillance, precarious opportunity, and the criminalization of protest. Client meetings and iteration moved the work from traditional newspaper references toward a darker, more symbolic system with clear hierarchy.\n\nDeliverables included a 15-foot vinyl wall graphic, a retractable banner, five foam core panels, and 23 object cards. The banner and panels were later shown at the EWU Research Symposium.",
     imagePosition: "center"
   },
   {
@@ -143,10 +143,10 @@ const PORTFOLIO_PROJECTS = [
   {
     id: 5,
     title: "The Great Song",
-    description: "Personal Project / Risograph printing file",
+    description: "A risograph study of identity, family, and self-discovery.",
     imageUrl: theGreatSong01,
     images: [theGreatSong01, theGreatSong02, theGreatSong03],
-    details: "Personal Project / Risograph printing file",
+    details: "An Identity Crisis\nA risograph study turned self-discovery\n\nCreated for a collaborative exhibition of risograph-printed work at Eastern Washington University, with the theme of the designers themselves. What began as an uncomfortable self-portrait assignment became an exploration of identity, family, and parenthood.\n\nReading Herman Hesse's Siddhartha, particularly its depiction of the river, prompted a more intuitive drawing process. Rather than planning every mark, I let the pencil make unexpected decisions. The drawing led to thoughts about parenthood, and I incorporated family photographs of my mother with her mother into the final image.",
     imagePosition: "center"
   },
   {
@@ -161,6 +161,7 @@ const PORTFOLIO_PROJECTS = [
 ];
 
 type FigmaProject = {
+  details?: string;
   id: number;
   title: string;
   description: string;
@@ -192,7 +193,8 @@ const INTERACTIVE_PROJECTS: InteractiveProject[] = [
   {
     id: 8,
     title: "Project 8",
-    description: "UN sustainability interactive prototype",
+    details: "Role: Visual identity, brand direction, and high-fidelity prototype\nTools: Figma, Illustrator, Photoshop\nMethods: Research, comparative assessment, persona development, flow mapping\n\nA safety-focused mobile concept supporting UN Sustainable Development Goal 5.2: eliminating violence against women and girls. The group explored how people in rural communities could recognize intimate partner violence, respond safely, and find support despite barriers involving distance, privacy, transportation, and limited services.\n\nResearch and comparison with existing resources informed three core content areas: Recognize Signs, Respond Safely, and Get Help. The concept also explored private documentation and location-based resources. Group flow mapping considered both people experiencing violence and people trying to help someone else.\n\nI developed a discreet visual identity and a calm, welcoming high-fidelity prototype. Purple references domestic violence awareness, survival, and solidarity; orange draws on UN Women's Orange the World campaign. The name and eight-part identity aimed to support sensitive needs without making the resource's purpose immediately visible.",
+    description: "A discreet mobile support concept for people affected by intimate partner violence.",
     thumbnailUrl: project8Thumbnail,
     figmaUrl: "https://www.figma.com/proto/9YXXgAKfZzPukrSJOJniQA/UX3-Project-2--UN-Sustainability--Copy-?node-id=341-1606&t=SJQXgpRx0fAPrMkZ-0&scaling=scale-down&content-scaling=fixed&page-id=171%3A58&starting-point-node-id=341%3A1606",
     figmaEmbedUrl: "https://embed.figma.com/proto/9YXXgAKfZzPukrSJOJniQA/UX3-Project-2--UN-Sustainability--Copy-?node-id=341-1606&scaling=scale-down&content-scaling=fixed&page-id=171%3A58&starting-point-node-id=341%3A1606&embed-host=share",
@@ -200,7 +202,8 @@ const INTERACTIVE_PROJECTS: InteractiveProject[] = [
   {
     id: 7,
     title: "Design Library App",
-    description: "Interactive design library app prototype",
+    details: "PXL - Design Library App\nRole: UX designer\nTools: Figma, Illustrator, Photoshop\nMethods: Kano model, collage interviews, sketching, user testing\n\nAn app concept for discovering, saving, organizing, and sharing visual inspiration while learning design tools and theory. I defined the core features, mapped user flows, and developed the visual and brand identity.\n\nCollage interviews showed a preference for calm, self-paced learning, short visual lessons, useful exercises, and feedback that felt different from traditional social media. A Kano analysis prioritized saved collections, structured critique, and learning resources over follower counts, direct messages, and other social features.\n\nTesting the low-fidelity prototype revealed a need for clearer instructions, stronger contrast, readable type, labeled controls, and more obvious entry points. The final design brings guided learning modules together with a personal inspiration library and organized collections.",
+    description: "A calm place for designers to learn, collect inspiration, and exchange feedback.",
     thumbnailUrl: pxlThumbnail,
     figmaUrl: "https://www.figma.com/proto/QItpaDkIozGTucRAvCC5s2/Design-Library-App?node-id=2439-457&t=GGBrJahxiIvNihrm-1&scaling=scale-down&content-scaling=fixed&page-id=1%3A21&starting-point-node-id=2439%3A457",
     figmaEmbedUrl: "https://embed.figma.com/proto/QItpaDkIozGTucRAvCC5s2/Design-Library-App?node-id=2439-457&scaling=scale-down&content-scaling=fixed&page-id=1%3A21&starting-point-node-id=2439%3A457&embed-host=share",
@@ -224,7 +227,8 @@ const INTERACTIVE_PROJECTS: InteractiveProject[] = [
   {
     id: 3,
     title: "Moses Lake Food Bank Redesign",
-    description: "Website redesign prototype for the Moses Lake Food Bank focused on pantry access, updates, and outreach",
+    details: "Community Services of Moses Lake - Website Redesign\nRole: UX designer\nTools: Figma, Illustrator, Photoshop\nMethods: Listening tour, content inventory and audit, card sorting, testing and critique\n\nA redesign focused on making food, resources, donations, and community support easier to find. Discovery with users and staff identified hours, location, food access, donations, and volunteering requirements as priorities. Research found that 98% of site visits came from mobile devices, making a mobile-first structure central to the work.\n\nA content audit evaluated what should stay, move, combine, or be removed. Card sorting clarified scattered information and reduced overlap between sections such as About, Team, Services, and History. Staff needs also informed simple update areas for announcements, events, and pantry availability.\n\nThe final design uses warmer visuals, clearer navigation, and stronger information hierarchy to help visitors find practical support without feeling overwhelmed.",
+    description: "A mobile-first redesign making food access, services, and community support easier to find.",
     thumbnailUrl: mlFoodBankThumbnail,
     figmaUrl: "https://www.figma.com/proto/PEBxrKI8xvgE4PLZNY4F0Y/UX-2-Project--3--ML-Food-Bank-Website--Community-?node-id=4301-1108&t=73WcGuNGu7DHGLco-1&scaling=scale-down&content-scaling=fixed&page-id=2001%3A6",
     figmaEmbedUrl: "https://embed.figma.com/proto/PEBxrKI8xvgE4PLZNY4F0Y/UX-2-Project--3--ML-Food-Bank-Website--Community-?node-id=4301-1108&scaling=scale-down&content-scaling=fixed&page-id=2001%3A6&embed-host=share",
